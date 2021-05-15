@@ -5,4 +5,11 @@ func _ready() -> void:
     pass
 
 func _process(delta: float) -> void:
-    text = "%s:%s" % [OS.get_time().hour, OS.get_time().minute]
+    _update_time()
+
+func _update_time():
+    var h = str(OS.get_time().hour)
+    var m = str(OS.get_time().minute)
+    h = h if len(h) == 2 else "0" + h
+    m = m if len(m) == 2 else "0" + m
+    text = "%s:%s" % [h, m]
