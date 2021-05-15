@@ -11,8 +11,16 @@ config_version=4
 [application]
 
 config/name="ovr-utils"
-run/main_scene="res://main.tscn"
+run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+OverlayInit="*res://addons/openvr_overlay/overlay_init.gd"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/openvr_overlay/plugin.cfg" )
 
 [gdnative]
 

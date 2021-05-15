@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/openvr_overlay/overlay_instance.gd" type="Script" id=1]
+[ext_resource path="res://addons/godot-openvr/OpenVROverlay.gdns" type="Script" id=3]
+
+[node name="OverlayInstance" type="Node"]
+script = ExtResource( 1 )
+
+[node name="OverlayViewport" type="Viewport" parent="."]
+size = Vector2( 2160, 2160 )
+transparent_bg = true
+handle_input_locally = false
+msaa = 3
+hdr = false
+render_target_update_mode = 3
+script = ExtResource( 3 )
+overlay_width_in_meters = 0.4
+
+[node name="Offset" type="Spatial" parent="."]
