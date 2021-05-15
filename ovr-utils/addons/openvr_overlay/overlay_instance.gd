@@ -6,7 +6,7 @@ export var overlay_scene = preload("res://addons/openvr_overlay/MissingOverlay.t
 export var offset_pos := Vector3(0, 0, -1) setget _set_offset_pos
 export var offset_rot: Vector3 setget _set_offset_rot
 export var width_meters = 0.4
-export var fallback_to_hmd = false
+export var fallback_to_hmd = false # fallback is only applied if tracker is not present at startup
 
 var _tracker_id: int = 0 setget ,get_tracker_id
 
@@ -38,8 +38,8 @@ func update_tracker_id() -> void:
                 _tracker_id = int(tracker.get_name().split("_")[-1])
 
         if _tracker_id == -1:
-            print("cound not find controller")
             # could not find controller, overlay will revert to fallback
+            # only happens if controller is missing on startup, otherwise it will register as being at origin
             if fallback_to_hmd:
                 _tracker_id = 0 # HMD
             else:

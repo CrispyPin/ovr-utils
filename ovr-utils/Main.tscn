@@ -1,17 +1,23 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/openvr_overlay/OverlayInstance.tscn" type="PackedScene" id=1]
-[ext_resource path="res://DemoOverlay.tscn" type="PackedScene" id=2]
+[ext_resource path="res://overlays/FPSOverlay.tscn" type="PackedScene" id=2]
+[ext_resource path="res://overlays/TimeOverlay.tscn" type="PackedScene" id=3]
+[ext_resource path="res://temp.gd" type="Script" id=4]
 
 [node name="Overlays" type="Node"]
+script = ExtResource( 4 )
 
 [node name="OverlayInstance" parent="." instance=ExtResource( 1 )]
 target = 1
 overlay_scene = ExtResource( 2 )
-offset_pos = Vector3( 0, 0, 0.2 )
-offset_rot = Vector3( 0, -60, -45 )
+offset_pos = Vector3( 0.05, -0.01, 0.15 )
+offset_rot = Vector3( 0, -90, 0 )
 fallback_to_hmd = true
 
 [node name="OverlayInstance2" parent="." instance=ExtResource( 1 )]
-target = 2
-offset_pos = Vector3( 0, 0, -0.2 )
+target = 1
+overlay_scene = ExtResource( 3 )
+offset_pos = Vector3( 0.05, 0, 0.15 )
+offset_rot = Vector3( 0, -90, 0 )
+fallback_to_hmd = true
