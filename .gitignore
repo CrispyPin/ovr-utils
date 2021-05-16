@@ -4,5 +4,3 @@
 # Mono-specific ignores
 .mono/
 data_*/
-
-builds/
