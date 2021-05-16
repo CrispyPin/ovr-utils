@@ -9,8 +9,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="TextureRect" type="TextureRect" parent="AspectRatioContainer"]
+margin_left = 212.0
+margin_right = 812.0
+margin_bottom = 600.0
 texture = ExtResource( 1 )
 expand = true
