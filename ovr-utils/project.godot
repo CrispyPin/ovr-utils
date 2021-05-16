@@ -19,10 +19,11 @@ config/icon="res://icon.png"
 [autoload]
 
 OverlayInit="*res://addons/openvr_overlay/overlay_init.gd"
+Settings="*res://addons/settings-manager/settings.gd"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/openvr_overlay/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/openvr_overlay/plugin.cfg", "res://addons/settings-manager/plugin.cfg" )
 
 [gdnative]
 

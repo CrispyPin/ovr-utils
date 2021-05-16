@@ -3,14 +3,14 @@
 [ext_resource path="res://overlays/time.gd" type="Script" id=1]
 [ext_resource path="res://fonts/OpenSans-Regular.ttf" type="DynamicFontData" id=2]
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.705882 )
 expand_margin_left = 8.0
 expand_margin_right = 8.0
 expand_margin_top = 8.0
 expand_margin_bottom = 8.0
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 size = 48
 font_data = ExtResource( 2 )
 
@@ -33,7 +33,7 @@ margin_top = -32.0
 margin_right = 61.0
 margin_bottom = 35.0
 size_flags_horizontal = 0
-custom_styles/panel = SubResource( 2 )
+custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -41,7 +41,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="ColorRect"]
 margin_right = 121.0
 margin_bottom = 67.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "00:00"
 align = 1
 script = ExtResource( 1 )
