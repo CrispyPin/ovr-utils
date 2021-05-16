@@ -1,7 +1,7 @@
 extends Node
 
 enum TARGETS { head, left, right, world }
-export (TARGETS) var target = TARGETS.head
+export (TARGETS) var target = TARGETS.head setget _set_target
 export var overlay_scene = preload("res://addons/openvr_overlay/MissingOverlay.tscn") setget _set_overlay_scene
 export var offset_pos := Vector3(0, 0, -1) setget _set_offset_pos
 export var offset_rot: Vector3 setget _set_offset_rot
@@ -67,6 +67,12 @@ func _tracker_changed(tracker_name: String, type: int, id: int):
 
 func get_tracker_id() -> int:
 	return _tracker_id
+
+
+func _set_target(new: int):
+	target = new
+	update_tracker_id()
+	update_offset()
 
 
 func _set_offset_pos(pos: Vector3):
