@@ -8,16 +8,17 @@
 [node name="Overlays" type="Node"]
 script = ExtResource( 4 )
 
-[node name="OverlayInstance" parent="." instance=ExtResource( 1 )]
+[node name="OverlayInstance FPS" parent="." instance=ExtResource( 1 )]
 target = 1
 overlay_scene = ExtResource( 2 )
 offset_pos = Vector3( 0.05, -0.01, 0.15 )
-offset_rot = Vector3( 0, -90, 0 )
+offset_rot = Vector3( 0, -90, -135 )
 fallback_to_hmd = true
 
-[node name="OverlayInstance2" parent="." instance=ExtResource( 1 )]
+[node name="OverlayInstance Time" parent="." instance=ExtResource( 1 )]
 target = 1
 overlay_scene = ExtResource( 3 )
-offset_pos = Vector3( 0.05, 0, 0.15 )
-offset_rot = Vector3( 0, -90, 0 )
+offset_pos = Vector3( -0.05, 0.02, 0.15 )
+offset_rot = Vector3( 0, -90, -135 )
+width_meters = 0.8
 fallback_to_hmd = true

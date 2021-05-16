@@ -2,6 +2,7 @@ extends Node
 
 var ovr_interface: ARVRInterface
 
+
 func _init() -> void:
     var ovr_config = preload("res://addons/godot-openvr/OpenVRConfig.gdns").new()
     ovr_config.set_application_type(2) # Set to OVERLAY MODE = 2, NORMAL MODE = 1
@@ -12,7 +13,9 @@ func _init() -> void:
     if ovr_interface and ovr_interface.initialize():
         pass
 
+
 func _ready() -> void:
     for i in ARVRServer.get_tracker_count():
         var tracker = ARVRServer.get_tracker(i)
-        print(tracker.get_name(), ": hand ",  tracker.get_hand())
+        print(tracker.get_name(), ": hand ", tracker.get_hand())
+
