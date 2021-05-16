@@ -18,14 +18,10 @@ func _ready() -> void:
 	$OverlayViewport.overlay_width_in_meters = width_meters
 	$OverlayViewport.size = OverlayInit.ovr_interface.get_render_targetsize()
 	if overlay_scene:
-		$OverlayViewport.add_child(overlay_scene.instance())
+		$OverlayViewport/PanelContainer.add_child(overlay_scene.instance())
 
 	update_tracker_id()
 	update_offset()
-
-
-#func _process(_delta: float) -> void:
-#    update_offset()
 
 
 func update_tracker_id() -> void:
@@ -49,7 +45,7 @@ func update_tracker_id() -> void:
 func update_offset() -> void:
 	$Offset.translation = offset_pos
 	$Offset.rotation_degrees = offset_rot
-	print(_tracker_id)
+#	print(_tracker_id)
 	match target:
 		TARGETS.head:
 			$OverlayViewport.track_relative_to_device(0, $Offset.transform)
@@ -92,7 +88,7 @@ func _set_width_meters(width: float):
 
 func _set_overlay_scene(scene: PackedScene):
 	overlay_scene = scene
-	if $OverlayViewport.get_children():
-		$OverlayViewport.get_child(0).queue_free()
-	$OverlayViewport.add_child(overlay_scene.instance())
+	if $OverlayViewport/PanelContainer.get_children():
+		$OverlayViewport/PanelContainer.get_child(0).queue_free()
+	$OverlayViewport/PanelContainer.add_child(overlay_scene.instance())
 
