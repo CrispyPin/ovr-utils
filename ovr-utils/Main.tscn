@@ -21,7 +21,7 @@ target = 1
 overlay_scene = ExtResource( 3 )
 offset_pos = Vector3( -0.05, 0.02, 0.15 )
 offset_rot = Vector3( 0, -90, -135 )
-width_meters = 0.8
+width_meters = 0.1
 
 [node name="XYZ Widget" type="Node" parent="."]
 
