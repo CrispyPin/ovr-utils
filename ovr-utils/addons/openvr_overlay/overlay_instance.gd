@@ -5,7 +5,7 @@ export (TARGETS) var target = TARGETS.head setget _set_target
 export var overlay_scene = preload("res://addons/openvr_overlay/MissingOverlay.tscn") setget _set_overlay_scene
 export var offset_pos := Vector3(0, 0, -1) setget _set_offset_pos
 export var offset_rot: Vector3 setget _set_offset_rot
-export var width_meters = 0.4
+export var width_meters = 0.4 setget _set_width_meters
 export var fallback_to_hmd = false # fallback is only applied if tracker is not present at startup
 
 var _tracker_id: int = 0 setget ,get_tracker_id
@@ -83,6 +83,11 @@ func _set_offset_pos(pos: Vector3):
 func _set_offset_rot(rot: Vector3):
 	offset_rot = rot
 	update_offset()
+
+
+func _set_width_meters(width: float):
+	width_meters = width
+	$OverlayViewport.overlay_width_in_meters = width_meters
 
 
 func _set_overlay_scene(scene: PackedScene):
