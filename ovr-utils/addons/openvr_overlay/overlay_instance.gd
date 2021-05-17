@@ -1,5 +1,7 @@
 extends Node
 
+signal width_changed
+
 enum TARGETS { head, left, right, world }
 export (TARGETS) var target = TARGETS.head setget _set_target
 export var overlay_scene = preload("res://addons/openvr_overlay/MissingOverlay.tscn") setget _set_overlay_scene
@@ -10,6 +12,8 @@ export var fallback_to_hmd = false # fallback is only applied if tracker is not 
 
 var _tracker_id: int = 0 setget ,get_tracker_id
 
+onready var container = $OverlayViewport/PanelContainer
+
 
 func _ready() -> void:
 	ARVRServer.connect("tracker_added", self, "_tracker_changed")
@@ -18,7 +22,7 @@ func _ready() -> void:
 	$OverlayViewport.overlay_width_in_meters = width_meters
 	$OverlayViewport.size = OverlayInit.ovr_interface.get_render_targetsize()
 	if overlay_scene:
-		$OverlayViewport/PanelContainer.add_child(overlay_scene.instance())
+		container.add_child(overlay_scene.instance())
 
 	update_tracker_id()
 	update_offset()
@@ -84,11 +88,15 @@ func _set_offset_rot(rot: Vector3):
 func _set_width_meters(width: float):
 	width_meters = width
 	$OverlayViewport.overlay_width_in_meters = width_meters
+	emit_signal("width_changed", width)
 
 
 func _set_overlay_scene(scene: PackedScene):
 	overlay_scene = scene
-	if $OverlayViewport/PanelContainer.get_children():
-		$OverlayViewport/PanelContainer.get_child(0).queue_free()
-	$OverlayViewport/PanelContainer.add_child(overlay_scene.instance())
+	if not container:
+		print("container missing")
+		return
+	if container.get_child_count() > 0:
+		container.get_child(0).queue_free()
+	container.add_child(overlay_scene.instance())
 

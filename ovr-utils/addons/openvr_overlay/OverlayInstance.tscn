@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/openvr_overlay/overlay_instance.gd" type="Script" id=1]
+[ext_resource path="res://addons/openvr_overlay/interaction/OverlayInteraction.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/godot-openvr/OpenVROverlay.gdns" type="Script" id=3]
+[ext_resource path="res://addons/openvr_overlay/styles/normal.theme" type="Theme" id=5]
 
 [node name="OverlayInstance" type="Node"]
 script = ExtResource( 1 )
@@ -12,6 +14,9 @@ transparent_bg = true
 handle_input_locally = false
 msaa = 3
 hdr = false
+disable_3d = true
+keep_3d_linear = true
+usage = 0
 render_target_update_mode = 3
 script = ExtResource( 3 )
 overlay_width_in_meters = 0.4
@@ -19,5 +24,11 @@ overlay_width_in_meters = 0.4
 [node name="PanelContainer" type="PanelContainer" parent="OverlayViewport"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 5 )
 
-[node name="Offset" type="Spatial" parent="."]
+[node name="Offset" type="RemoteTransform" parent="."]
+remote_path = NodePath("../ARVROrigin/LeftHand/Area")
+use_global_coordinates = false
+update_scale = false
+
+[node name="OverlayInteraction" parent="." instance=ExtResource( 2 )]
