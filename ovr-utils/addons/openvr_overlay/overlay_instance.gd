@@ -48,7 +48,13 @@ func update_tracker_id() -> void:
 
 func update_offset() -> void:
 	$Offset.translation = offset_pos
+	$OffsetInv.translation = offset_pos
 	$Offset.rotation_degrees = offset_rot
+	$OffsetInv.rotation_degrees = offset_rot
+	$OffsetInv.rotation_degrees.x *= -1
+	$OffsetInv.rotation_degrees.y *= -1
+	$OffsetInv.rotation_degrees.z *= -1
+
 #	print(_tracker_id)
 	match target:
 		TARGETS.head:
