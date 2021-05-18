@@ -22,7 +22,7 @@ func _ready() -> void:
 	get_parent().connect("width_changed", self, "_on_width_changed")
 	_on_width_changed(get_parent().width_meters)
 
-	get_node("../OffsetInv").remote_path = $Offset.get_path()
+	get_node("../Offset").remote_path = $Offset.get_path()
 	$Offset.remote_path = $LeftHand/Area.get_path()
 
 

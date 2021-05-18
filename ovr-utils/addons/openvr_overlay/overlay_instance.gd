@@ -48,12 +48,7 @@ func update_tracker_id() -> void:
 
 func update_offset() -> void:
 	$Offset.translation = offset_pos
-	$OffsetInv.translation = offset_pos
 	$Offset.rotation_degrees = offset_rot
-	$OffsetInv.rotation_degrees = offset_rot
-	$OffsetInv.rotation_degrees.x *= -1
-	$OffsetInv.rotation_degrees.y *= -1
-	$OffsetInv.rotation_degrees.z *= -1
 
 #	print(_tracker_id)
 	match target:
@@ -66,7 +61,7 @@ func update_offset() -> void:
 
 
 func _tracker_changed(tracker_name: String, type: int, id: int):
-	print("tracker changed: ", tracker_name)
+#	print("tracker changed: ", tracker_name)
 	update_tracker_id()
 	update_offset()
 
