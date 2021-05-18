@@ -56,7 +56,7 @@ func update_offset() -> void:
 
 
 func _tracker_changed(tracker_name: String, type: int, id: int):
-	print("tracker changed: ", tracker_name)
+#	print("tracker changed: ", tracker_name)
 	update_tracker_id()
 	update_offset()
 
