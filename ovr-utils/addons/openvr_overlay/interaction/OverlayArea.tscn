@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="BoxShape" id=1]
+resource_local_to_scene = true
+extents = Vector3( 0.2, 0.2, 0.01 )
+
+[node name="OverlayArea" type="Area"]
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )

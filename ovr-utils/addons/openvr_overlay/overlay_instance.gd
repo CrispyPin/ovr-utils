@@ -1,10 +1,14 @@
+class_name OverlayInstance
 extends Node
 
 signal width_changed
+signal offset_changed
+signal target_changed
 
 enum TARGETS { head, left, right, world }
 export (TARGETS) var target = TARGETS.head setget _set_target
-export var overlay_scene = preload("res://addons/openvr_overlay/MissingOverlay.tscn") setget _set_overlay_scene
+export var overlay_scene = preload("res://addons/openvr_overlay/MissingOverlay.tscn")\
+		setget _set_overlay_scene
 export var offset_pos := Vector3(0, 0, -1) setget _set_offset_pos
 export var offset_rot: Vector3 setget _set_offset_rot
 export var width_meters = 0.4 setget _set_width_meters
@@ -61,7 +65,6 @@ func update_offset() -> void:
 
 
 func _tracker_changed(tracker_name: String, type: int, id: int):
-#	print("tracker changed: ", tracker_name)
 	update_tracker_id()
 	update_offset()
 
@@ -74,22 +77,25 @@ func _set_target(new: int):
 	target = new
 	update_tracker_id()
 	update_offset()
+	emit_signal("target_changed")
 
 
 func _set_offset_pos(pos: Vector3):
 	offset_pos = pos
 	update_offset()
+	emit_signal("offset_changed")
 
 
 func _set_offset_rot(rot: Vector3):
 	offset_rot = rot
 	update_offset()
+	emit_signal("offset_changed")
 
 
 func _set_width_meters(width: float):
 	width_meters = width
 	$OverlayViewport.overlay_width_in_meters = width_meters
-	emit_signal("width_changed", width)
+	emit_signal("width_changed")
 
 
 func _set_overlay_scene(scene: PackedScene):

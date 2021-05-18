@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "OverlayInstance",
+"language": "GDScript",
+"path": "res://addons/openvr_overlay/overlay_instance.gd"
+} ]
+_global_script_class_icons={
+"OverlayInstance": ""
+}
+
 [application]
 
 config/name="ovr-utils"

@@ -61,3 +61,9 @@ offset_rot = Vector3( -90, 0, 0 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 1 )
+
+[node name="OverlayInstance" parent="." instance=ExtResource( 1 )]
+target = 2
+offset_pos = Vector3( 0, 0, -0.2 )
+
+[node name="OverlayInteraction" parent="OverlayInstance" instance=ExtResource( 8 )]
