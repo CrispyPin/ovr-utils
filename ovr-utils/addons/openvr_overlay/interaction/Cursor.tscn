@@ -5,13 +5,17 @@
 [node name="Cursor" type="Control"]
 margin_right = 1024.0
 margin_bottom = 600.0
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="TextureRect" type="TextureRect" parent="."]
+margin_left = -70.0
+margin_top = -70.0
 margin_right = 70.0
 margin_bottom = 70.0
+mouse_filter = 2
 texture = ExtResource( 1 )
 expand = true
 __meta__ = {

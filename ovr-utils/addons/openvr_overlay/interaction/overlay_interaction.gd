@@ -20,8 +20,8 @@ var _cursor_node = preload("res://addons/openvr_overlay/interaction/Cursor.tscn"
 var _right_is_activator = false
 var _left_is_activator = false
 
-
-onready var panel = get_node("../OverlayViewport/PanelContainer")
+onready var viewport: Viewport = get_node("../OverlayViewport")
+onready var panel: PanelContainer = get_node("../OverlayViewport/PanelContainer")
 
 
 func _ready() -> void:
@@ -66,10 +66,19 @@ func _update_cursor():
 	_cursor_node.rect_position = get_canvas_pos()
 
 
+func _send_click_event(state: bool):
+	var click_event = InputEventMouseButton.new()
+	click_event.position = get_canvas_pos()
+	click_event.pressed = state
+	click_event.button_index = 1
+	viewport.input(click_event)
+
+
 func _trigger_on(controller):
 	if _touch_state:
 		_active_controller = controller
 		_trigger_state = true
+		_send_click_event(true)
 		_update_selection()
 		emit_signal("trigger_on")
 
@@ -77,6 +86,7 @@ func _trigger_on(controller):
 func _trigger_off():
 	_trigger_state = false
 	_update_selection()
+	_send_click_event(false)
 	emit_signal("trigger_off")
 
 
@@ -100,6 +110,7 @@ func _on_OverlayArea_exited(body: Node) -> void:
 
 
 func _update_selection():
+	return
 	if _trigger_state:
 		panel.theme = active_theme
 	elif _touch_state:
