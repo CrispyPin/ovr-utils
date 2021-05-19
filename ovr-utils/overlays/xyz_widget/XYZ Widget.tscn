@@ -7,7 +7,7 @@
 [ext_resource path="res://addons/openvr_overlay/interaction/overlay_interaction.gd" type="Script" id=5]
 [ext_resource path="res://addons/openvr_overlay/styles/touching.theme" type="Theme" id=6]
 [ext_resource path="res://overlays/xyz_widget/yz.tscn" type="PackedScene" id=7]
-[ext_resource path="res://addons/openvr_overlay/interaction/OverlayInteraction.tscn" type="PackedScene" id=8]
+[ext_resource path="res://addons/openvr_overlay/OverlayInteraction.tscn" type="PackedScene" id=8]
 [ext_resource path="res://addons/openvr_overlay/OverlayInstance.tscn" type="PackedScene" id=9]
 
 [node name="XYZ Widget" type="Node"]
