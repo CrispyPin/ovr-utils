@@ -9,14 +9,14 @@ export var active_theme: Theme
 export var normal_theme: Theme
 export var touching_theme: Theme
 
-const OVERLAY_AREA = preload("res://addons/openvr_overlay/interaction/OverlayArea.tscn")
-
 var _touch_state = false setget ,get_touch_state
 var _trigger_state = false setget ,get_trigger_state
 
 # controller that currently the  trigger down
 var _active_controller: ARVRController setget ,get_active_controller
-var _overlay_area: Area # reference to the area node thats used for touch
+# reference to the area node thats used for touch
+var _overlay_area = preload("res://addons/openvr_overlay/interaction/OverlayArea.tscn").instance()
+var _cursor_node = preload("res://addons/openvr_overlay/interaction/Cursor.tscn").instance()
 var _right_is_activator = false
 var _left_is_activator = false
 
@@ -25,11 +25,8 @@ onready var panel = get_node("../OverlayViewport/PanelContainer")
 
 
 func _ready() -> void:
-	# TEMP
-	_right_is_activator = true
-	###############
-	_overlay_area = OVERLAY_AREA.instance()
 	add_child(_overlay_area)
+	get_node("../OverlayViewport").add_child(_cursor_node)
 	_overlay_area.connect("body_entered", self, "_on_OverlayArea_entered")
 	_overlay_area.connect("body_exited", self, "_on_OverlayArea_exited")
 
@@ -43,7 +40,30 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	pass
+	_update_cursor()
+
+
+#get canvas position of active controller
+func get_canvas_pos() -> Vector2:
+	if _active_controller == null:
+		return Vector2(-1000, 1000) # offscreen
+
+	var controller_local_pos = _overlay_area.global_transform.xform_inv(\
+			_active_controller.global_transform.origin)
+	var pos = Vector2(controller_local_pos.x, controller_local_pos.y)
+
+	var overlay_size = OverlayInit.ovr_interface.get_render_targetsize()
+	# scale to pixels
+	pos *= overlay_size.x
+	pos /= get_parent().width_meters
+	# adjust to center
+	pos.y *= -1
+	pos += overlay_size * 0.5
+	return pos
+
+
+func _update_cursor():
+	_cursor_node.rect_position = get_canvas_pos()
 
 
 func _trigger_on(controller):
@@ -55,7 +75,6 @@ func _trigger_on(controller):
 
 
 func _trigger_off():
-	_active_controller = null
 	_trigger_state = false
 	_update_selection()
 	emit_signal("trigger_off")
@@ -65,13 +84,16 @@ func _on_OverlayArea_entered(body: Node) -> void:
 	if body.get_parent().get_parent() != self:
 		return
 	_touch_state = true
+	_active_controller = body.get_parent()
 	_update_selection()
+	_update_cursor()
 	emit_signal("touch_on")
 
 
 func _on_OverlayArea_exited(body: Node) -> void:
 	if body.get_parent().get_parent() != self:
 		return
+	_active_controller = null # TODO revert to other controller if both were touching (edge case)
 	_touch_state = false
 	_update_selection()
 	emit_signal("touch_off")

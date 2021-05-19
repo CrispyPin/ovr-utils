@@ -101,7 +101,7 @@ func _set_width_meters(width: float):
 func _set_overlay_scene(scene: PackedScene):
 	overlay_scene = scene
 	if not container:
-		print("container missing")
+		print("container does not exist yet [overlay_instance.set_overlay_scene]")
 		return
 	if container.get_child_count() > 0:
 		container.get_child(0).queue_free()
