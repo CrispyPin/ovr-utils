@@ -1,4 +1,4 @@
-extends ARVROrigin
+extends Node
 
 signal touch_on #  a controller entered
 signal touch_off # a controller exited
@@ -17,7 +17,6 @@ var _right_is_activator = false
 var _left_is_activator = false
 
 onready var viewport: Viewport = get_node("../OverlayViewport")
-onready var panel: PanelContainer = get_node("../OverlayViewport/PanelContainer")
 
 
 func _ready() -> void:
@@ -85,7 +84,7 @@ func _trigger_off():
 
 
 func _on_OverlayArea_entered(body: Node) -> void:
-	if body.get_parent().get_parent() != self:
+	if body.get_node("../../..") != self:
 		return
 	_touch_state = true
 	_active_controller = body.get_parent()
@@ -93,7 +92,7 @@ func _on_OverlayArea_entered(body: Node) -> void:
 
 
 func _on_OverlayArea_exited(body: Node) -> void:
-	if body.get_parent().get_parent() != self:
+	if body.get_node("../../..") != self:
 		return
 	_active_controller = null # TODO revert to other controller if both were touching (edge case)
 	_touch_state = false
@@ -116,38 +115,38 @@ func _update_target():
 	_overlay_area.get_parent().remove_child(_overlay_area)
 	match get_parent().target:
 		OverlayInstance.TARGETS.head:
-			$Head.add_child(_overlay_area)
+			$VR/Head.add_child(_overlay_area)
 		OverlayInstance.TARGETS.left:
-			$LeftHand.add_child(_overlay_area)
+			$VR/LeftHand.add_child(_overlay_area)
 		OverlayInstance.TARGETS.right:
-			$RightHand.add_child(_overlay_area)
+			$VR/RightHand.add_child(_overlay_area)
 		OverlayInstance.TARGETS.world:
-			add_child(_overlay_area)
+			$VR.add_child(_overlay_area)
 
 	_left_is_activator = get_parent().target != OverlayInstance.TARGETS.left
 	_right_is_activator = get_parent().target != OverlayInstance.TARGETS.right
 	# toggle appropriate colliders
-	$LeftHand/OverlayActivator/Collision.disabled = !_left_is_activator
-	$RightHand/OverlayActivator/Collision.disabled = !_right_is_activator
+	$VR/LeftHand/OverlayActivator/Collision.disabled = !_left_is_activator
+	$VR/RightHand/OverlayActivator/Collision.disabled = !_right_is_activator
 
 
 func _on_RightHand_button_pressed(button: int) -> void:
 	if button == JOY_VR_TRIGGER and _right_is_activator:
-		_trigger_on($RightHand)
+		_trigger_on($VR/RightHand)
 
 
 func _on_RightHand_button_release(button: int) -> void:
-	if button == JOY_VR_TRIGGER and _active_controller == $RightHand:
+	if button == JOY_VR_TRIGGER and _active_controller == $VR/RightHand:
 		_trigger_off()
 
 
 func _on_LeftHand_button_pressed(button: int) -> void:
 	if button == JOY_VR_TRIGGER and _left_is_activator:
-		_trigger_on($LeftHand)
+		_trigger_on($VR/LeftHand)
 
 
 func _on_LeftHand_button_release(button: int) -> void:
-	if button == JOY_VR_TRIGGER and _active_controller == $LeftHand:
+	if button == JOY_VR_TRIGGER and _active_controller == $VR/LeftHand:
 		 _trigger_off()
 
 

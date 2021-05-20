@@ -28,7 +28,7 @@ func _tracker_changed(tracker_name: String, type: int, id: int):
 func update_hand_ids():
 	for i in ARVRServer.get_tracker_count():
 		var tracker = ARVRServer.get_tracker(i)
-		print(tracker.get_name(), ": hand ", tracker.get_hand())
+#		print(tracker.get_name(), ": hand ", tracker.get_hand())
 
 		var tracking_id = tracker.get_name().split("_")[-1]
 		if tracker.get_hand() == 1:

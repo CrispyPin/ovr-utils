@@ -6,7 +6,7 @@ signal offset_changed
 signal target_changed
 
 enum TARGETS { head, left, right, world }
-export (TARGETS) var target = TARGETS.head setget _set_target
+export (TARGETS) var target = TARGETS.head setget set_target
 export var overlay_scene = preload("res://addons/openvr_overlay/MissingOverlay.tscn")\
 		setget set_overlay_scene
 export var width_meters = 0.4 setget set_width_in_meters
@@ -15,7 +15,7 @@ export var fallback_to_hmd = false # fallback is only applied if tracker is not 
 
 var _tracker_id: int = 0
 
-onready var container = $OverlayViewport/PanelContainer
+onready var container = $OverlayViewport/Container
 
 
 func _ready() -> void:
@@ -32,15 +32,8 @@ func _ready() -> void:
 	set_notify_transform(true)
 
 
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_TRANSFORM_CHANGED:
-		update_offset()
-		emit_signal("offset_changed")
-
-
 func update_tracker_id() -> void:
 	_tracker_id = -1
-
 	if target in [TARGETS.left, TARGETS.right]: # target is a controller
 		for i in ARVRServer.get_tracker_count():
 			var tracker = ARVRServer.get_tracker(i)
@@ -75,7 +68,7 @@ func get_tracker_id() -> int:
 	return _tracker_id
 
 
-func _set_target(new: int):
+func set_target(new: int):
 	target = new
 	update_tracker_id()
 	call_deferred("update_offset")
@@ -96,4 +89,10 @@ func set_overlay_scene(scene: PackedScene):
 	if container.get_child_count() > 0:
 		container.get_child(0).queue_free()
 	container.add_child(overlay_scene.instance())
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSFORM_CHANGED:
+		update_offset()
+		emit_signal("offset_changed")
 

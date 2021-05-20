@@ -1,14 +1,21 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://fonts/OpenSans-Regular.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://addons/openvr_overlay/styles/active.stylebox" type="StyleBox" id=3]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 size = 100
 font_data = ExtResource( 2 )
 
-[sub_resource type="Theme" id=3]
-default_font = SubResource( 2 )
+[sub_resource type="Theme" id=2]
+default_font = SubResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+border_width_left = 16
+border_width_top = 16
+border_width_right = 16
+border_width_bottom = 16
+border_color = Color( 0, 0.505882, 1, 1 )
+corner_detail = 1
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -20,7 +27,7 @@ __meta__ = {
 [node name="OptionButton" type="OptionButton" parent="."]
 margin_right = 111.0
 margin_bottom = 41.0
-theme = SubResource( 3 )
+theme = SubResource( 2 )
 text = "Item 0"
 items = [ "Item 0", null, false, 0, null, "Item 1", null, false, 1, null, "Item 2", null, false, 2, null, "Item 3", null, false, 3, null ]
 selected = 0
@@ -32,7 +39,7 @@ __meta__ = {
 margin_top = 600.0
 margin_right = 315.0
 margin_bottom = 778.0
-custom_styles/pressed = ExtResource( 3 )
+custom_styles/pressed = SubResource( 3 )
 toggle_mode = true
 __meta__ = {
 "_edit_use_anchors_": false
