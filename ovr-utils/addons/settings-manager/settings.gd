@@ -3,7 +3,7 @@ extends Node
 signal setting_changed # emitted with name, value
 signal settings_loaded # emitted when settings are loaded from file, needs to be connected in _init()
 
-const DEBUG_SETTINGS = true
+const DEBUG_SETTINGS = false
 const SETTINGS_PATH = "user://settings.json"
 const SETTINGS_DEF = {
 	"example_1": {

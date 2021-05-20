@@ -1,15 +1,16 @@
 extends Label
 
-
-func _ready() -> void:
-	pass
+var _delay = 0
 
 
-func _process(_delta: float) -> void:
-	_update_time()
+func _process(delta: float) -> void:
+	_delay += delta
+	if _delay > 0.5:
+		update_time()
+		_delay = 0
 
 
-func _update_time():
+func update_time():
 	var h = str(OS.get_time().hour)
 	var m = str(OS.get_time().minute)
 	h = h if len(h) == 2 else "0" + h

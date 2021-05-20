@@ -9,8 +9,6 @@ enum TARGETS { head, left, right, world }
 export (TARGETS) var target = TARGETS.head setget _set_target
 export var overlay_scene = preload("res://addons/openvr_overlay/MissingOverlay.tscn")\
 		setget set_overlay_scene
-#export var offset_pos := Vector3(0, 0, -1) setget set_offset_pos
-#export var offset_rot: Vector3 setget set_offset_rot
 export var width_meters = 0.4 setget set_width_in_meters
 export var fallback_to_hmd = false # fallback is only applied if tracker is not present at startup
 # so this is not fully implemented
@@ -80,7 +78,7 @@ func get_tracker_id() -> int:
 func _set_target(new: int):
 	target = new
 	update_tracker_id()
-	update_offset()
+	call_deferred("update_offset")
 	emit_signal("target_changed")
 
 
