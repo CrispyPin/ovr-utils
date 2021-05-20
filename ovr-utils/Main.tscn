@@ -43,4 +43,3 @@ overlay_scene = ExtResource( 5 )
 [node name="OverlayInteraction" parent="OverlayInstance UI demo" instance=ExtResource( 8 )]
 
 [node name="XYZ Widget" parent="." instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.123379, 0, 0 )
