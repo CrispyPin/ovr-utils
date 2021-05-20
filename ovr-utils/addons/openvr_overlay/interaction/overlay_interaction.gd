@@ -107,8 +107,8 @@ func _update_width():
 
 
 func _update_offset():
-	_overlay_area.translation = get_parent().offset_pos
-	_overlay_area.rotation_degrees = get_parent().offset_rot
+	_overlay_area.translation = get_parent().translation
+	_overlay_area.rotation_degrees = get_parent().rotation_degrees
 
 
 func _update_target():

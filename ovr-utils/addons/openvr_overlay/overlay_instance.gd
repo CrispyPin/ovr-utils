@@ -1,5 +1,5 @@
 class_name OverlayInstance
-extends Node
+extends Spatial
 
 signal width_changed
 signal offset_changed
@@ -9,8 +9,8 @@ enum TARGETS { head, left, right, world }
 export (TARGETS) var target = TARGETS.head setget _set_target
 export var overlay_scene = preload("res://addons/openvr_overlay/MissingOverlay.tscn")\
 		setget set_overlay_scene
-export var offset_pos := Vector3(0, 0, -1) setget set_offset_pos
-export var offset_rot: Vector3 setget set_offset_rot
+#export var offset_pos := Vector3(0, 0, -1) setget set_offset_pos
+#export var offset_rot: Vector3 setget set_offset_rot
 export var width_meters = 0.4 setget set_width_in_meters
 export var fallback_to_hmd = false # fallback is only applied if tracker is not present at startup
 # so this is not fully implemented
@@ -31,6 +31,13 @@ func _ready() -> void:
 
 	update_tracker_id()
 	update_offset()
+	set_notify_transform(true)
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSFORM_CHANGED:
+		update_offset()
+		emit_signal("offset_changed")
 
 
 func update_tracker_id() -> void:
@@ -52,16 +59,13 @@ func update_tracker_id() -> void:
 
 
 func update_offset() -> void:
-	$Offset.translation = offset_pos
-	$Offset.rotation_degrees = offset_rot
-
 	match target:
 		TARGETS.head:
-			$OverlayViewport.track_relative_to_device(0, $Offset.transform)
+			$OverlayViewport.track_relative_to_device(0, global_transform)
 		TARGETS.world:
-			$OverlayViewport.overlay_position_absolute($Offset.transform)
+			$OverlayViewport.overlay_position_absolute(global_transform)
 		_:
-			$OverlayViewport.track_relative_to_device(_tracker_id, $Offset.transform)
+			$OverlayViewport.track_relative_to_device(_tracker_id, global_transform)
 
 
 func _tracker_changed(tracker_name: String, type: int, id: int):
@@ -78,18 +82,6 @@ func _set_target(new: int):
 	update_tracker_id()
 	update_offset()
 	emit_signal("target_changed")
-
-
-func set_offset_pos(pos: Vector3):
-	offset_pos = pos
-	update_offset()
-	emit_signal("offset_changed")
-
-
-func set_offset_rot(rot: Vector3):
-	offset_rot = rot
-	update_offset()
-	emit_signal("offset_changed")
 
 
 func set_width_in_meters(width: float):

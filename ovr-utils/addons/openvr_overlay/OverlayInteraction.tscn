@@ -1,16 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://addons/openvr_overlay/interaction/overlay_interaction.gd" type="Script" id=1]
-[ext_resource path="res://addons/openvr_overlay/styles/active.theme" type="Theme" id=2]
-[ext_resource path="res://addons/openvr_overlay/styles/normal.theme" type="Theme" id=3]
-[ext_resource path="res://addons/openvr_overlay/styles/touching.theme" type="Theme" id=4]
 [ext_resource path="res://addons/openvr_overlay/interaction/OverlayActivator.tscn" type="PackedScene" id=6]
 
 [node name="OverlayInteraction" type="ARVROrigin"]
 script = ExtResource( 1 )
-active_theme = ExtResource( 2 )
-normal_theme = ExtResource( 3 )
-touching_theme = ExtResource( 4 )
 
 [node name="LeftHand" type="ARVRController" parent="."]
 
@@ -22,6 +16,7 @@ controller_id = 2
 [node name="OverlayActivator" parent="RightHand" instance=ExtResource( 6 )]
 
 [node name="Head" type="ARVRCamera" parent="."]
+visible = false
 
 [connection signal="button_pressed" from="LeftHand" to="." method="_on_LeftHand_button_pressed"]
 [connection signal="button_release" from="LeftHand" to="." method="_on_LeftHand_button_release"]

@@ -1,39 +1,17 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://addons/openvr_overlay/styles/normal.theme" type="Theme" id=1]
 [ext_resource path="res://overlays/xyz_widget/zx.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/openvr_overlay/overlay_instance.gd" type="Script" id=3]
-[ext_resource path="res://addons/openvr_overlay/styles/active.theme" type="Theme" id=4]
-[ext_resource path="res://addons/openvr_overlay/interaction/overlay_interaction.gd" type="Script" id=5]
-[ext_resource path="res://addons/openvr_overlay/styles/touching.theme" type="Theme" id=6]
 [ext_resource path="res://overlays/xyz_widget/yz.tscn" type="PackedScene" id=7]
-[ext_resource path="res://addons/openvr_overlay/OverlayInteraction.tscn" type="PackedScene" id=8]
 [ext_resource path="res://addons/openvr_overlay/OverlayInstance.tscn" type="PackedScene" id=9]
 
-[node name="XYZ Widget" type="Node"]
+[node name="XYZ Widget" type="Spatial"]
 
-[node name="YZ" type="Node" parent="." instance=ExtResource( 9 )]
-script = ExtResource( 3 )
+[node name="YZ" parent="." instance=ExtResource( 9 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
 target = 1
 overlay_scene = ExtResource( 7 )
-offset_pos = Vector3( 0, 0, 0 )
-offset_rot = Vector3( 0, 90, 0 )
 
-[node name="OverlayInteraction" type="ARVROrigin" parent="YZ" instance=ExtResource( 8 )]
-script = ExtResource( 5 )
-active_theme = ExtResource( 4 )
-normal_theme = ExtResource( 1 )
-touching_theme = ExtResource( 6 )
-
-[node name="ZX" type="Node" parent="." instance=ExtResource( 9 )]
-script = ExtResource( 3 )
+[node name="ZX" parent="." instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
 target = 1
 overlay_scene = ExtResource( 2 )
-offset_pos = Vector3( 0, 0, 0 )
-offset_rot = Vector3( -90, 0, 0 )
-
-[node name="OverlayInteraction" type="ARVROrigin" parent="ZX" instance=ExtResource( 8 )]
-script = ExtResource( 5 )
-active_theme = ExtResource( 4 )
-normal_theme = ExtResource( 1 )
-touching_theme = ExtResource( 6 )
