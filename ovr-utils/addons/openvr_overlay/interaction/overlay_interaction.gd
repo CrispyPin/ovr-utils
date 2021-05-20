@@ -16,6 +16,10 @@ var _cursor_node = preload("res://addons/openvr_overlay/interaction/Cursor.tscn"
 var _right_is_activator = false
 var _left_is_activator = false
 
+var is_moving := false
+var move_grab_pos: Vector3
+var move_grab_rot: Vector3
+
 onready var viewport: Viewport = get_node("../OverlayViewport")
 
 
@@ -34,8 +38,29 @@ func _ready() -> void:
 	_update_target()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	_update_cursor()
+	if is_moving:
+#		var controller_new = _overlay_area.global_transform.inverse() * _active_controller.global_transform
+#		var controller_delta = move_grab_offset.inverse() * controller_new
+#		get_parent().transform = move_start_offset * controller_delta
+		var global_target = move_grab_pos + _active_controller.translation
+		get_parent().translation = global_target - _overlay_area.get_parent().translation
+
+
+func begin_move():
+	if not _active_controller:
+		print("Could not begin moving overlay, no controller active. ", get_parent().name)
+		return
+	is_moving = true
+	# offset from active controller to overlay
+#	move_grab_pos = _active_controller.transform.xform_inv(_overlay_area.global_transform.origin)
+	move_grab_pos = _overlay_area.global_transform.origin - _active_controller.translation
+	move_grab_rot = Vector3()
+
+
+func finish_move():
+	is_moving = false
 
 
 #get canvas position of active controller
@@ -94,7 +119,9 @@ func _on_OverlayArea_entered(body: Node) -> void:
 func _on_OverlayArea_exited(body: Node) -> void:
 	if body.get_node("../../..") != self:
 		return
-	_active_controller = null # TODO revert to other controller if both were touching (edge case)
+	# TEMP
+	if not is_moving:
+		_active_controller = null # TODO revert to other controller if both were touching (edge case)
 	_touch_state = false
 	emit_signal("touch_off")
 

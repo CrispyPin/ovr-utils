@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
+[ext_resource path="res://addons/openvr_overlay/move_overlay.gd" type="Script" id=1]
 [ext_resource path="res://fonts/OpenSans-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://fonts/OpenSans-Bold.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 100
@@ -10,6 +12,7 @@ font_data = ExtResource( 2 )
 default_font = SubResource( 1 )
 
 [sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.419608, 0.419608, 0.419608, 1 )
 border_width_left = 16
 border_width_top = 16
 border_width_right = 16
@@ -17,9 +20,16 @@ border_width_bottom = 16
 border_color = Color( 0, 0.505882, 1, 1 )
 corner_detail = 1
 
+[sub_resource type="StyleBoxFlat" id=4]
+
+[sub_resource type="DynamicFont" id=5]
+size = 64
+font_data = ExtResource( 3 )
+
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -35,12 +45,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="."]
-margin_top = 600.0
-margin_right = 315.0
-margin_bottom = 778.0
+[node name="DragButton" type="Button" parent="."]
+margin_left = 335.0
+margin_right = 650.0
+margin_bottom = 143.0
 custom_styles/pressed = SubResource( 3 )
-toggle_mode = true
+custom_styles/normal = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Drag"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[connection signal="button_down" from="DragButton" to="." method="_on_DragButton_button_down"]
+[connection signal="button_up" from="DragButton" to="." method="_on_DragButton_button_up"]
