@@ -1,11 +1,14 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://fonts/OpenSans-Bold.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://fonts/OpenSans-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://addons/openvr_overlay/styles/active.stylebox" type="StyleBox" id=3]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 size = 100
-font_data = ExtResource( 1 )
+font_data = ExtResource( 2 )
+
+[sub_resource type="Theme" id=3]
+default_font = SubResource( 2 )
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -15,17 +18,9 @@ __meta__ = {
 }
 
 [node name="OptionButton" type="OptionButton" parent="."]
-anchor_left = 0.144
-anchor_top = 0.483
-anchor_right = 0.856
-anchor_bottom = 0.517
-margin_left = -0.456009
-margin_top = -17.8
-margin_right = 0.455933
-margin_bottom = 16.8
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 1 )
+margin_right = 111.0
+margin_bottom = 41.0
+theme = SubResource( 3 )
 text = "Item 0"
 items = [ "Item 0", null, false, 0, null, "Item 1", null, false, 1, null, "Item 2", null, false, 2, null, "Item 3", null, false, 3, null ]
 selected = 0
@@ -34,10 +29,9 @@ __meta__ = {
 }
 
 [node name="Button" type="Button" parent="."]
-margin_left = 158.089
-margin_top = 45.4084
-margin_right = 473.089
-margin_bottom = 223.408
+margin_top = 600.0
+margin_right = 315.0
+margin_bottom = 778.0
 custom_styles/pressed = ExtResource( 3 )
 toggle_mode = true
 __meta__ = {

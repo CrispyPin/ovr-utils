@@ -5,10 +5,6 @@ signal touch_off # a controller exited
 signal trigger_on  # trigger pushed while touching
 signal trigger_off # trigger released
 
-export var active_theme: Theme
-export var normal_theme: Theme
-export var touching_theme: Theme
-
 var _touch_state = false setget ,get_touch_state
 var _trigger_state = false setget ,get_trigger_state
 
@@ -79,13 +75,11 @@ func _trigger_on(controller):
 		_active_controller = controller
 		_trigger_state = true
 		_send_click_event(true)
-		_update_selection()
 		emit_signal("trigger_on")
 
 
 func _trigger_off():
 	_trigger_state = false
-	_update_selection()
 	_send_click_event(false)
 	emit_signal("trigger_off")
 
@@ -95,8 +89,6 @@ func _on_OverlayArea_entered(body: Node) -> void:
 		return
 	_touch_state = true
 	_active_controller = body.get_parent()
-	_update_selection()
-	_update_cursor()
 	emit_signal("touch_on")
 
 
@@ -105,24 +97,13 @@ func _on_OverlayArea_exited(body: Node) -> void:
 		return
 	_active_controller = null # TODO revert to other controller if both were touching (edge case)
 	_touch_state = false
-	_update_selection()
 	emit_signal("touch_off")
-
-
-func _update_selection():
-	return
-	if _trigger_state:
-		panel.theme = active_theme
-	elif _touch_state:
-		panel.theme = touching_theme
-	else:
-		panel.theme = normal_theme
 
 
 func _update_width():
 	var ratio = OverlayInit.ovr_interface.get_render_targetsize()
 	var extents = get_parent().width_meters * 0.5
-	_overlay_area.get_child(0).shape.set_extents(Vector3(extents, extents * ratio.y/ratio.x, 0.01))
+	_overlay_area.get_child(0).shape.set_extents(Vector3(extents, extents * ratio.y/ratio.x, 0.1))
 
 
 func _update_offset():

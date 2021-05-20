@@ -8,13 +8,14 @@ signal target_changed
 enum TARGETS { head, left, right, world }
 export (TARGETS) var target = TARGETS.head setget _set_target
 export var overlay_scene = preload("res://addons/openvr_overlay/MissingOverlay.tscn")\
-		setget _set_overlay_scene
-export var offset_pos := Vector3(0, 0, -1) setget _set_offset_pos
-export var offset_rot: Vector3 setget _set_offset_rot
-export var width_meters = 0.4 setget _set_width_meters
+		setget set_overlay_scene
+export var offset_pos := Vector3(0, 0, -1) setget set_offset_pos
+export var offset_rot: Vector3 setget set_offset_rot
+export var width_meters = 0.4 setget set_width_in_meters
 export var fallback_to_hmd = false # fallback is only applied if tracker is not present at startup
+# so this is not fully implemented
 
-var _tracker_id: int = 0 setget ,get_tracker_id
+var _tracker_id: int = 0
 
 onready var container = $OverlayViewport/PanelContainer
 
@@ -54,7 +55,6 @@ func update_offset() -> void:
 	$Offset.translation = offset_pos
 	$Offset.rotation_degrees = offset_rot
 
-#	print(_tracker_id)
 	match target:
 		TARGETS.head:
 			$OverlayViewport.track_relative_to_device(0, $Offset.transform)
@@ -80,25 +80,25 @@ func _set_target(new: int):
 	emit_signal("target_changed")
 
 
-func _set_offset_pos(pos: Vector3):
+func set_offset_pos(pos: Vector3):
 	offset_pos = pos
 	update_offset()
 	emit_signal("offset_changed")
 
 
-func _set_offset_rot(rot: Vector3):
+func set_offset_rot(rot: Vector3):
 	offset_rot = rot
 	update_offset()
 	emit_signal("offset_changed")
 
 
-func _set_width_meters(width: float):
+func set_width_in_meters(width: float):
 	width_meters = width
 	$OverlayViewport.overlay_width_in_meters = width_meters
 	emit_signal("width_changed")
 
 
-func _set_overlay_scene(scene: PackedScene):
+func set_overlay_scene(scene: PackedScene):
 	overlay_scene = scene
 	if not container:
 #		print("container does not exist yet [overlay_instance.set_overlay_scene]")
