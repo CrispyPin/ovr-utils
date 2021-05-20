@@ -41,11 +41,10 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	_update_cursor()
 	if is_moving:
-#		var controller_new = _overlay_area.global_transform.inverse() * _active_controller.global_transform
-#		var controller_delta = move_grab_offset.inverse() * controller_new
-#		get_parent().transform = move_start_offset * controller_delta
+		var oc:Transform=_overlay_area.get_parent().transform # controller that overlay is attached to
 		var global_target = move_grab_pos + _active_controller.translation
-		get_parent().translation = global_target - _overlay_area.get_parent().translation
+		global_target = oc.xform_inv(global_target)
+		get_parent().translation = global_target# - _overlay_area.get_parent().translation
 
 
 func begin_move():
