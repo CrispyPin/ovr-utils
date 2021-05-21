@@ -12,23 +12,19 @@
 
 [node name="OverlayInstance FPS" parent="." instance=ExtResource( 1 )]
 transform = Transform( -4.37114e-08, -0.707107, -0.707107, 0, -0.707107, 0.707107, -1, 3.09086e-08, 3.09086e-08, 0.05, -0.01, 0.15 )
-target = 1
 overlay_scene = ExtResource( 2 )
 
 [node name="OverlayInstance Time" parent="." instance=ExtResource( 1 )]
 transform = Transform( -4.37114e-08, -0.707107, -0.707107, 0, -0.707107, 0.707107, -1, 3.09086e-08, 3.09086e-08, -0.05, 0.02, 0.15 )
-target = 1
 overlay_scene = ExtResource( 3 )
 width_meters = 0.1
 
 [node name="OverlayInstance Battery" parent="." instance=ExtResource( 1 )]
 transform = Transform( -4.37114e-08, -0.707107, -0.707107, 0, -0.707107, 0.707107, -1, 3.09086e-08, 3.09086e-08, -0.12, 0, 0.1 )
-target = 1
 overlay_scene = ExtResource( 7 )
 
 [node name="OverlayInstance UI demo" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.25 )
-target = 1
 overlay_scene = ExtResource( 5 )
 
 [node name="OverlayInteraction" parent="OverlayInstance UI demo" instance=ExtResource( 8 )]

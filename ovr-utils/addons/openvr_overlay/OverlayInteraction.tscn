@@ -8,19 +8,19 @@ script = ExtResource( 1 )
 
 [node name="VR" type="ARVROrigin" parent="."]
 
-[node name="LeftHand" type="ARVRController" parent="VR"]
+[node name="left" type="ARVRController" parent="VR"]
 
-[node name="OverlayActivator" parent="VR/LeftHand" instance=ExtResource( 6 )]
+[node name="OverlayActivator" parent="VR/left" instance=ExtResource( 6 )]
 
-[node name="RightHand" type="ARVRController" parent="VR"]
+[node name="right" type="ARVRController" parent="VR"]
 controller_id = 2
 
-[node name="OverlayActivator" parent="VR/RightHand" instance=ExtResource( 6 )]
+[node name="OverlayActivator" parent="VR/right" instance=ExtResource( 6 )]
 
-[node name="Head" type="ARVRCamera" parent="VR"]
+[node name="head" type="ARVRCamera" parent="VR"]
 visible = false
 
-[connection signal="button_pressed" from="VR/LeftHand" to="." method="_on_LeftHand_button_pressed"]
-[connection signal="button_release" from="VR/LeftHand" to="." method="_on_LeftHand_button_release"]
-[connection signal="button_pressed" from="VR/RightHand" to="." method="_on_RightHand_button_pressed"]
-[connection signal="button_release" from="VR/RightHand" to="." method="_on_RightHand_button_release"]
+[connection signal="button_pressed" from="VR/left" to="." method="_on_LeftHand_button_pressed"]
+[connection signal="button_release" from="VR/left" to="." method="_on_LeftHand_button_release"]
+[connection signal="button_pressed" from="VR/right" to="." method="_on_RightHand_button_pressed"]
+[connection signal="button_release" from="VR/right" to="." method="_on_RightHand_button_release"]

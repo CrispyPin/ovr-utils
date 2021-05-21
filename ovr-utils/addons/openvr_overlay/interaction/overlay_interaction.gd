@@ -17,10 +17,17 @@ var _right_is_activator = false
 var _left_is_activator = false
 
 var is_moving := false
-var move_grab_pos: Vector3
-var move_grab_rot: Vector3
+var _pre_move_target = ""# what offset is being changed
+var _mover_hand_name = ""# left or right, which hand is grabbing (/active controller)
+var _mover_hand_offsets = {"pos": Vector3(), "rot": Vector3()} # original offsets for grabbing hand
 
 onready var viewport: Viewport = get_node("../OverlayViewport")
+onready var tracker_nodes = {
+	"head": $VR/head,
+	"left": $VR/left,
+	"right": $VR/right,
+	"world": $VR
+}
 
 
 func _ready() -> void:
@@ -40,11 +47,6 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	_update_cursor()
-	if is_moving:
-		var oc:Transform=_overlay_area.get_parent().transform # controller that overlay is attached to
-		var global_target = move_grab_pos + _active_controller.translation
-		global_target = oc.xform_inv(global_target)
-		get_parent().translation = global_target# - _overlay_area.get_parent().translation
 
 
 func begin_move():
@@ -52,14 +54,36 @@ func begin_move():
 		print("Could not begin moving overlay, no controller active. ", get_parent().name)
 		return
 	is_moving = true
+	_pre_move_target = get_parent().current_target
+	_mover_hand_name = _active_controller.name
+	_mover_hand_offsets.pos = get_parent().translation
+	_mover_hand_offsets.rot = get_parent().rotation_degrees
+
 	# offset from active controller to overlay
-#	move_grab_pos = _active_controller.transform.xform_inv(_overlay_area.global_transform.origin)
-	move_grab_pos = _overlay_area.global_transform.origin - _active_controller.translation
-	move_grab_rot = Vector3()
+	var rel_t = _active_controller.transform * _overlay_area.global_transform.inverse()
+#	get_parent().offsets[_mover_hand_name].rot = (_overlay_area.global_transform.basis * _active_controller.transform.basis).get_euler() * 57.295
+	get_parent().offsets[_mover_hand_name].rot = _active_controller.transform.xform_inv(_overlay_area.global_transform.basis.get_euler())*57
+
+
+	get_parent().offsets[_mover_hand_name].pos = _active_controller.transform.xform_inv(_overlay_area.global_transform.origin)
+#	get_parent().offsets[_mover_hand_name].pos = _active_controller.transform.xform_inv(_overlay_area.global_transform.origin)
+#	get_parent().offsets[_mover_hand_name].rot = _overlay_area.get_parent().rotation_degrees + _overlay_area.rotation_degrees - _active_controller.rotation_degrees
+
+	get_parent().current_target = _mover_hand_name
+	get_parent().update_tracker_id()
+	get_parent().update_offset()
 
 
 func finish_move():
 	is_moving = false
+	var new_pos = tracker_nodes[_pre_move_target].transform.xform_inv(_overlay_area.global_transform.origin)
+	# this is only local rotations??
+	var new_rot = _overlay_area.get_parent().rotation_degrees + _overlay_area.rotation_degrees - tracker_nodes[_pre_move_target].rotation_degrees
+	get_parent().update_current_target()
+	get_parent().update_tracker_id()
+	get_parent().offsets[get_parent().current_target].pos = new_pos
+	get_parent().offsets[get_parent().current_target].rot = new_rot
+	get_parent().update_offset()
 
 
 #get canvas position of active controller
@@ -139,40 +163,44 @@ func _update_offset():
 func _update_target():
 	# move _overlay_area
 	_overlay_area.get_parent().remove_child(_overlay_area)
-	match get_parent().target:
-		OverlayInstance.TARGETS.head:
-			$VR/Head.add_child(_overlay_area)
-		OverlayInstance.TARGETS.left:
-			$VR/LeftHand.add_child(_overlay_area)
-		OverlayInstance.TARGETS.right:
-			$VR/RightHand.add_child(_overlay_area)
-		OverlayInstance.TARGETS.world:
-			$VR.add_child(_overlay_area)
+	tracker_nodes[get_parent().current_target].add_child(_overlay_area)
+#	match get_parent().target:
+#		"head":
+#			$VR/Head.add_child(_overlay_area)
+#		"left":
+#			$VR/LeftHand.add_child(_overlay_area)
+#		"right":
+#			$VR/RightHand.add_child(_overlay_area)
+#		"world":
+#			$VR.add_child(_overlay_area)
 
-	_left_is_activator = get_parent().target != OverlayInstance.TARGETS.left
-	_right_is_activator = get_parent().target != OverlayInstance.TARGETS.right
+	if is_moving:
+		return
+
+	_left_is_activator = get_parent().current_target != "left"
+	_right_is_activator = get_parent().current_target != "right"
 	# toggle appropriate colliders
-	$VR/LeftHand/OverlayActivator/Collision.disabled = !_left_is_activator
-	$VR/RightHand/OverlayActivator/Collision.disabled = !_right_is_activator
+	$VR/left/OverlayActivator/Collision.disabled = !_left_is_activator
+	$VR/right/OverlayActivator/Collision.disabled = !_right_is_activator
 
 
 func _on_RightHand_button_pressed(button: int) -> void:
 	if button == JOY_VR_TRIGGER and _right_is_activator:
-		_trigger_on($VR/RightHand)
+		_trigger_on(tracker_nodes.right)
 
 
 func _on_RightHand_button_release(button: int) -> void:
-	if button == JOY_VR_TRIGGER and _active_controller == $VR/RightHand:
+	if button == JOY_VR_TRIGGER and _active_controller == tracker_nodes.right:
 		_trigger_off()
 
 
 func _on_LeftHand_button_pressed(button: int) -> void:
 	if button == JOY_VR_TRIGGER and _left_is_activator:
-		_trigger_on($VR/LeftHand)
+		_trigger_on(tracker_nodes.left)
 
 
 func _on_LeftHand_button_release(button: int) -> void:
-	if button == JOY_VR_TRIGGER and _active_controller == $VR/LeftHand:
+	if button == JOY_VR_TRIGGER and _active_controller == tracker_nodes.right:
 		 _trigger_off()
 
 

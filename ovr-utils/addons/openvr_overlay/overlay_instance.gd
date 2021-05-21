@@ -5,13 +5,21 @@ signal width_changed
 signal offset_changed
 signal target_changed
 
-enum TARGETS { head, left, right, world }
-export (TARGETS) var target = TARGETS.head setget set_target
-export var overlay_scene = preload("res://addons/openvr_overlay/MissingOverlay.tscn")\
-		setget set_overlay_scene
+const TARGETS = ["head", "left", "right", "world"]
+export (String,  "head", "left", "right", "world") var target = "left" setget set_target
+export var overlay_scene =\
+		preload("res://addons/openvr_overlay/MissingOverlay.tscn") setget set_overlay_scene
 export var width_meters = 0.4 setget set_width_in_meters
-export var fallback_to_hmd = false # fallback is only applied if tracker is not present at startup
-# so this is not fully implemented
+
+export var offsets:Dictionary = {
+	"head": {"pos": Vector3(), "rot": Vector3()},
+	"left": {"pos": Vector3(), "rot": Vector3()},
+	"right": {"pos": Vector3(), "rot": Vector3()},
+	"world": {"pos": Vector3(), "rot": Vector3()}
+}# also contains temp offset that is created when dragged
+
+# what's actually tracking
+var current_target = target# most of the time the actual target, but will fall back
 
 var _tracker_id: int = 0
 
@@ -19,6 +27,11 @@ onready var container = $OverlayViewport/Container
 
 
 func _ready() -> void:
+	# TEMP
+	offsets.left.pos = translation
+	offsets.left.rot = rotation_degrees
+	###
+
 	ARVRServer.connect("tracker_added", self, "_tracker_changed")
 	ARVRServer.connect("tracker_removed", self, "_tracker_changed")
 
@@ -34,29 +47,35 @@ func _ready() -> void:
 
 func update_tracker_id() -> void:
 	_tracker_id = -1
-	if target in [TARGETS.left, TARGETS.right]: # target is a controller
+	if current_target in ["left", "right"]: # target is a controller
+		var target_id = TARGETS.find(current_target)
+
 		for i in ARVRServer.get_tracker_count():
 			var tracker = ARVRServer.get_tracker(i)
-			if tracker.get_hand() == target:
+			if tracker.get_hand() == target_id:
 				_tracker_id = int(tracker.get_name().split("_")[-1])
 
 		if _tracker_id == -1:
 			# could not find controller, overlay will revert to fallback
-			# only happens if controller is missing on startup, otherwise it will register as being at origin
-			if fallback_to_hmd:
-				_tracker_id = 0 # HMD
-			else:
-				_tracker_id = 63 # World origin
+			_tracker_id = 63 # highest tracker id (unused, at origin)
 
 
 func update_offset() -> void:
-	match target:
-		TARGETS.head:
+	translation = offsets[current_target].pos
+	rotation_degrees = offsets[current_target].rot
+
+	match current_target:
+		"head":
 			$OverlayViewport.track_relative_to_device(0, global_transform)
-		TARGETS.world:
+		"world":
 			$OverlayViewport.overlay_position_absolute(global_transform)
 		_:
 			$OverlayViewport.track_relative_to_device(_tracker_id, global_transform)
+
+
+func update_current_target():
+	current_target = target
+	# TODO fallback if not found
 
 
 func _tracker_changed(tracker_name: String, type: int, id: int):
@@ -68,7 +87,7 @@ func get_tracker_id() -> int:
 	return _tracker_id
 
 
-func set_target(new: int):
+func set_target(new: String):
 	target = new
 	update_tracker_id()
 	call_deferred("update_offset")
