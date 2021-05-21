@@ -57,17 +57,14 @@ func begin_move():
 	_pre_move_target = get_parent().current_target
 	_mover_hand_name = _active_controller.name
 	_mover_hand_offsets.pos = get_parent().translation
-	_mover_hand_offsets.rot = get_parent().rotation_degrees
+	_mover_hand_offsets.rot = get_parent().rotation
 
 	# offset from active controller to overlay
-	var rel_t = _active_controller.transform * _overlay_area.global_transform.inverse()
-#	get_parent().offsets[_mover_hand_name].rot = (_overlay_area.global_transform.basis * _active_controller.transform.basis).get_euler() * 57.295
-	get_parent().offsets[_mover_hand_name].rot = _active_controller.transform.xform_inv(_overlay_area.global_transform.basis.get_euler())*57
 
+	var global_rot = _overlay_area.global_transform.basis.get_euler()
+	get_parent().offsets[_mover_hand_name].rot = global_rot - _active_controller.rotation
 
 	get_parent().offsets[_mover_hand_name].pos = _active_controller.transform.xform_inv(_overlay_area.global_transform.origin)
-#	get_parent().offsets[_mover_hand_name].pos = _active_controller.transform.xform_inv(_overlay_area.global_transform.origin)
-#	get_parent().offsets[_mover_hand_name].rot = _overlay_area.get_parent().rotation_degrees + _overlay_area.rotation_degrees - _active_controller.rotation_degrees
 
 	get_parent().current_target = _mover_hand_name
 	get_parent().update_tracker_id()
@@ -78,12 +75,13 @@ func finish_move():
 	is_moving = false
 	var new_pos = tracker_nodes[_pre_move_target].transform.xform_inv(_overlay_area.global_transform.origin)
 	# this is only local rotations??
-	var new_rot = _overlay_area.get_parent().rotation_degrees + _overlay_area.rotation_degrees - tracker_nodes[_pre_move_target].rotation_degrees
+	var new_rot = _overlay_area.get_parent().rotation + _overlay_area.rotation - tracker_nodes[_pre_move_target].rotation
 	get_parent().update_current_target()
 	get_parent().update_tracker_id()
 	get_parent().offsets[get_parent().current_target].pos = new_pos
 	get_parent().offsets[get_parent().current_target].rot = new_rot
 	get_parent().update_offset()
+	_update_target()
 
 
 #get canvas position of active controller
@@ -132,7 +130,7 @@ func _trigger_off():
 
 
 func _on_OverlayArea_entered(body: Node) -> void:
-	if body.get_node("../../..") != self:
+	if body.get_node("../../..") != self or is_moving:
 		return
 	_touch_state = true
 	_active_controller = body.get_parent()
@@ -157,7 +155,7 @@ func _update_width():
 
 func _update_offset():
 	_overlay_area.translation = get_parent().translation
-	_overlay_area.rotation_degrees = get_parent().rotation_degrees
+	_overlay_area.rotation = get_parent().rotation
 
 
 func _update_target():
@@ -174,8 +172,8 @@ func _update_target():
 #		"world":
 #			$VR.add_child(_overlay_area)
 
-	if is_moving:
-		return
+#	if is_moving:
+#		return
 
 	_left_is_activator = get_parent().current_target != "left"
 	_right_is_activator = get_parent().current_target != "right"

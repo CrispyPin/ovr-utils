@@ -16,10 +16,11 @@ export var offsets:Dictionary = {
 	"left": {"pos": Vector3(), "rot": Vector3()},
 	"right": {"pos": Vector3(), "rot": Vector3()},
 	"world": {"pos": Vector3(), "rot": Vector3()}
-}# also contains temp offset that is created when dragged
+}
+# also contains temp offset that is created when dragged
 
 # what's actually tracking
-var current_target = target# most of the time the actual target, but will fall back
+var current_target = target setget _set_current_target# most of the time the actual target, but will fall back
 
 var _tracker_id: int = 0
 
@@ -29,7 +30,7 @@ onready var container = $OverlayViewport/Container
 func _ready() -> void:
 	# TEMP
 	offsets.left.pos = translation
-	offsets.left.rot = rotation_degrees
+	offsets.left.rot = rotation
 	###
 
 	ARVRServer.connect("tracker_added", self, "_tracker_changed")
@@ -62,7 +63,7 @@ func update_tracker_id() -> void:
 
 func update_offset() -> void:
 	translation = offsets[current_target].pos
-	rotation_degrees = offsets[current_target].rot
+	rotation = offsets[current_target].rot
 
 	match current_target:
 		"head":
@@ -91,6 +92,12 @@ func set_target(new: String):
 	target = new
 	update_tracker_id()
 	call_deferred("update_offset")
+	emit_signal("target_changed")
+
+
+func _set_current_target(new: String): # overrides target
+	current_target = new
+	update_offset()
 	emit_signal("target_changed")
 
 
