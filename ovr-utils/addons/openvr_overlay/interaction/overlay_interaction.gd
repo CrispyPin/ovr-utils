@@ -1,15 +1,15 @@
 extends Node
 
-signal touch_on #  a controller entered
-signal touch_off # a controller exited
-signal trigger_on  # trigger pushed while touching
-signal trigger_off # trigger released
+signal touch_on   # a controller entered
+signal touch_off  # a controller exited
+signal trigger_on # trigger pushed while touching
+signal trigger_off# trigger released
 
 var _touch_state   = false
 var _trigger_state = false
 
 # controller that currently the  trigger down
-var _active_controller: ARVRController setget ,get_active_controller
+var _active_controller: String = ""
 # reference to the area node thats used for touch
 var _overlay_area = preload("res://addons/openvr_overlay/interaction/OverlayArea.tscn").instance()
 var _cursor_node  = preload("res://addons/openvr_overlay/interaction/Cursor.tscn").instance()
@@ -24,8 +24,8 @@ var _mover_hand_offsets = {"pos": Vector3(), "rot": Quat()} # original offsets f
 
 onready var viewport: Viewport = get_node("../OverlayViewport")
 onready var tracker_nodes = {
-	"head": $VR/head,
-	"left": $VR/left,
+	"head":  $VR/head,
+	"left":  $VR/left,
 	"right": $VR/right,
 	"world": $VR
 }
@@ -58,12 +58,12 @@ func begin_move():
 	is_moving = true
 	# store current states to revert after move
 	_pre_move_target = get_parent().current_target
-	_mover_hand_name = _active_controller.name
+	_mover_hand_name = _active_controller
 	_mover_hand_offsets.pos = get_parent().offsets[_mover_hand_name].pos
 	_mover_hand_offsets.rot = get_parent().offsets[_mover_hand_name].rot
 
 	# calculate offsets from active controller to overlay
-	var controller_t = _active_controller.transform
+	var controller_t = tracker_nodes[_active_controller].transform
 	var overlay_t = _overlay_area.global_transform
 
 	get_parent().offsets[_mover_hand_name].rot = Quat(controller_t.basis).inverse() * Quat(overlay_t.basis)
@@ -95,11 +95,11 @@ func finish_move():
 
 #get canvas position of active controller
 func get_canvas_pos() -> Vector2:
-	if _active_controller == null:
+	if _active_controller == "":
 		return Vector2(-1000, 1000) # offscreen
 
 	var controller_local_pos = _overlay_area.global_transform.xform_inv(\
-			_active_controller.global_transform.origin)
+			tracker_nodes[_active_controller].translation)
 	var pos = Vector2(controller_local_pos.x, controller_local_pos.y)
 
 	var overlay_size = OverlayInit.ovr_interface.get_render_targetsize()
@@ -143,7 +143,7 @@ func _on_OverlayArea_entered(body: Node) -> void:
 		return
 	_touch_state = true
 	if not is_moving:
-		_active_controller = body.get_parent()
+		_active_controller = body.get_parent().name
 	emit_signal("touch_on")
 
 
@@ -151,7 +151,7 @@ func _on_OverlayArea_exited(body: Node) -> void:
 	if body.get_node("../../..") != self or is_moving:
 		return
 	# TEMP
-	_active_controller = null # TODO revert to other controller if both were touching (edge case)
+	_active_controller = "" # TODO revert to other controller if both were touching (edge case)
 	_touch_state = false
 	emit_signal("touch_off")
 
@@ -168,21 +168,10 @@ func _update_offset():
 
 
 func _update_target():
-	# move _overlay_area
+	# reparent _overlay_area
 	_overlay_area.get_parent().remove_child(_overlay_area)
 	tracker_nodes[get_parent().current_target].add_child(_overlay_area)
-#	match get_parent().target:
-#		"head":
-#			$VR/Head.add_child(_overlay_area)
-#		"left":
-#			$VR/LeftHand.add_child(_overlay_area)
-#		"right":
-#			$VR/RightHand.add_child(_overlay_area)
-#		"world":
-#			$VR.add_child(_overlay_area)
 
-#	if is_moving:
-#		return
 
 	_left_is_activator = get_parent().current_target != "left"
 	_right_is_activator = get_parent().current_target != "right"
@@ -193,21 +182,21 @@ func _update_target():
 
 func _on_RightHand_button_pressed(button: int) -> void:
 	if button == JOY_VR_TRIGGER and _right_is_activator:
-		_trigger_on(tracker_nodes.right)
+		_trigger_on("right")
 
 
 func _on_RightHand_button_release(button: int) -> void:
-	if button == JOY_VR_TRIGGER and _active_controller == tracker_nodes.right:
+	if button == JOY_VR_TRIGGER and _active_controller == "right":
 		_trigger_off()
 
 
 func _on_LeftHand_button_pressed(button: int) -> void:
 	if button == JOY_VR_TRIGGER and _left_is_activator:
-		_trigger_on(tracker_nodes.left)
+		_trigger_on("left")
 
 
 func _on_LeftHand_button_release(button: int) -> void:
-	if button == JOY_VR_TRIGGER and _active_controller == tracker_nodes.right:
+	if button == JOY_VR_TRIGGER and _active_controller == "left":
 		 _trigger_off()
 
 

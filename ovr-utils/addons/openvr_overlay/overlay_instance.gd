@@ -21,7 +21,7 @@ var offsets:Dictionary = {
 }
 
 # what's actually tracking
-var current_target = target setget _set_current_target# most of the time the actual target, but will fall back
+var current_target: String = "world" setget _set_current_target# most of the time the actual target, but will fall back
 
 var _tracker_id: int = 0
 
@@ -29,9 +29,10 @@ onready var container = $OverlayViewport/Container
 
 
 func _ready() -> void:
+	current_target = target
 	# TEMP
-	offsets.left.pos = translation
-	offsets.left.rot = transform.basis.get_rotation_quat()
+	offsets[current_target].pos = translation
+	offsets[current_target].rot = transform.basis.get_rotation_quat()
 	###
 
 	ARVRServer.connect("tracker_added", self, "_tracker_changed")
@@ -44,6 +45,7 @@ func _ready() -> void:
 
 	update_tracker_id()
 	update_offset()
+	emit_signal("target_changed")
 	set_notify_transform(true)
 
 
@@ -93,7 +95,7 @@ func set_target(new: String):
 	target = new
 	update_tracker_id()
 	call_deferred("update_offset")
-	emit_signal("target_changed")
+	update_current_target()
 
 
 func _set_current_target(new: String): # overrides target
