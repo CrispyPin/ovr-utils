@@ -60,26 +60,27 @@ func begin_move():
 	_mover_hand_offsets.rot = get_parent().rotation
 
 	# offset from active controller to overlay
-
-	var global_rot = _overlay_area.global_transform.basis.get_euler()
-	get_parent().offsets[_mover_hand_name].rot = global_rot - _active_controller.rotation
+	var global_rot = _overlay_area.global_transform.basis.get_rotation_quat()
+#	var global_rot = _overlay_area.get_parent().transform.basis.get_rotation_quat() * _overlay_area.transform.basis.get_rotation_quat()
+	var hand_rot = _active_controller.transform.basis.get_rotation_quat()
+	get_parent().offsets[_mover_hand_name].rot = global_rot * (hand_rot.inverse())
 
 	get_parent().offsets[_mover_hand_name].pos = _active_controller.transform.xform_inv(_overlay_area.global_transform.origin)
 
 	get_parent().current_target = _mover_hand_name
-	get_parent().update_tracker_id()
-	get_parent().update_offset()
+#	get_parent().update_tracker_id()
+#	get_parent().update_offset()
 
 
 func finish_move():
 	is_moving = false
 	var new_pos = tracker_nodes[_pre_move_target].transform.xform_inv(_overlay_area.global_transform.origin)
-	# this is only local rotations??
+
 	var new_rot = _overlay_area.get_parent().rotation + _overlay_area.rotation - tracker_nodes[_pre_move_target].rotation
 	get_parent().update_current_target()
 	get_parent().update_tracker_id()
 	get_parent().offsets[get_parent().current_target].pos = new_pos
-	get_parent().offsets[get_parent().current_target].rot = new_rot
+#	get_parent().offsets[get_parent().current_target].rot = new_rot
 	get_parent().update_offset()
 	_update_target()
 
@@ -133,16 +134,16 @@ func _on_OverlayArea_entered(body: Node) -> void:
 	if body.get_node("../../..") != self or is_moving:
 		return
 	_touch_state = true
-	_active_controller = body.get_parent()
+	if not is_moving:
+		_active_controller = body.get_parent()
 	emit_signal("touch_on")
 
 
 func _on_OverlayArea_exited(body: Node) -> void:
-	if body.get_node("../../..") != self:
+	if body.get_node("../../..") != self or is_moving:
 		return
 	# TEMP
-	if not is_moving:
-		_active_controller = null # TODO revert to other controller if both were touching (edge case)
+	_active_controller = null # TODO revert to other controller if both were touching (edge case)
 	_touch_state = false
 	emit_signal("touch_off")
 

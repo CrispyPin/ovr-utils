@@ -12,10 +12,10 @@ export var overlay_scene =\
 export var width_meters = 0.4 setget set_width_in_meters
 
 export var offsets:Dictionary = {
-	"head": {"pos": Vector3(), "rot": Vector3()},
-	"left": {"pos": Vector3(), "rot": Vector3()},
-	"right": {"pos": Vector3(), "rot": Vector3()},
-	"world": {"pos": Vector3(), "rot": Vector3()}
+	"head": {"pos": Vector3(), "rot": Quat()},
+	"left": {"pos": Vector3(), "rot": Quat()},
+	"right": {"pos": Vector3(), "rot": Quat()},
+	"world": {"pos": Vector3(), "rot": Quat()}
 }
 # also contains temp offset that is created when dragged
 
@@ -30,7 +30,7 @@ onready var container = $OverlayViewport/Container
 func _ready() -> void:
 	# TEMP
 	offsets.left.pos = translation
-	offsets.left.rot = rotation
+	offsets.left.rot = transform.basis.get_rotation_quat()
 	###
 
 	ARVRServer.connect("tracker_added", self, "_tracker_changed")
@@ -63,7 +63,7 @@ func update_tracker_id() -> void:
 
 func update_offset() -> void:
 	translation = offsets[current_target].pos
-	rotation = offsets[current_target].rot
+	transform.basis = Basis(offsets[current_target].rot)
 
 	match current_target:
 		"head":
@@ -97,6 +97,7 @@ func set_target(new: String):
 
 func _set_current_target(new: String): # overrides target
 	current_target = new
+	update_tracker_id()
 	update_offset()
 	emit_signal("target_changed")
 

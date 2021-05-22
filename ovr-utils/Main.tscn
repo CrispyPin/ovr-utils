@@ -19,10 +19,6 @@ transform = Transform( -4.37114e-08, -0.707107, -0.707107, 0, -0.707107, 0.70710
 overlay_scene = ExtResource( 3 )
 width_meters = 0.1
 
-[node name="OverlayInstance Battery" parent="." instance=ExtResource( 1 )]
-transform = Transform( -4.37114e-08, -0.707107, -0.707107, 0, -0.707107, 0.707107, -1, 3.09086e-08, 3.09086e-08, -0.12, 0, 0.1 )
-overlay_scene = ExtResource( 7 )
-
 [node name="OverlayInstance UI demo" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.25 )
 overlay_scene = ExtResource( 5 )
@@ -31,5 +27,8 @@ overlay_scene = ExtResource( 5 )
 
 [node name="XYZ Widget" parent="." instance=ExtResource( 4 )]
 
-[editable path="OverlayInstance UI demo"]
+[node name="OverlayInstance Battery" parent="." instance=ExtResource( 1 )]
+transform = Transform( -4.37114e-08, -0.707107, -0.707107, 0, -0.707107, 0.707107, -1, 3.09086e-08, 3.09086e-08, -0.12, 0, 0.1 )
+overlay_scene = ExtResource( 7 )
+
 [editable path="OverlayInstance UI demo/OverlayInteraction"]
