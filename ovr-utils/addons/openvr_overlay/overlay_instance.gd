@@ -11,7 +11,9 @@ export var overlay_scene =\
 		preload("res://addons/openvr_overlay/MissingOverlay.tscn") setget set_overlay_scene
 export var width_meters = 0.4 setget set_width_in_meters
 
-export var offsets:Dictionary = {
+# if this is exported, all overlays sync offset when a controller is turned off/on
+# this seems to be a bug with the godot editor-
+var offsets:Dictionary = {
 	"head": {"pos": Vector3(), "rot": Quat()},
 	"left": {"pos": Vector3(), "rot": Quat()},
 	"right": {"pos": Vector3(), "rot": Quat()},
@@ -76,7 +78,6 @@ func update_offset() -> void:
 func update_current_target():
 	_set_current_target(target)
 	# TODO fallback if not found
-
 
 
 func _tracker_changed(tracker_name: String, type: int, id: int):
