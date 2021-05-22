@@ -61,26 +61,24 @@ func begin_move():
 
 	# offset from active controller to overlay
 	var global_rot = _overlay_area.global_transform.basis.get_rotation_quat()
-#	var global_rot = _overlay_area.get_parent().transform.basis.get_rotation_quat() * _overlay_area.transform.basis.get_rotation_quat()
 	var hand_rot = _active_controller.transform.basis.get_rotation_quat()
-	get_parent().offsets[_mover_hand_name].rot = global_rot * (hand_rot.inverse())
+	get_parent().offsets[_mover_hand_name].rot = hand_rot.inverse() * global_rot
 
 	get_parent().offsets[_mover_hand_name].pos = _active_controller.transform.xform_inv(_overlay_area.global_transform.origin)
 
 	get_parent().current_target = _mover_hand_name
-#	get_parent().update_tracker_id()
-#	get_parent().update_offset()
 
 
 func finish_move():
 	is_moving = false
 	var new_pos = tracker_nodes[_pre_move_target].transform.xform_inv(_overlay_area.global_transform.origin)
 
-	var new_rot = _overlay_area.get_parent().rotation + _overlay_area.rotation - tracker_nodes[_pre_move_target].rotation
+	var new_rot = tracker_nodes[_pre_move_target].transform.basis.get_rotation_quat().inverse() * _overlay_area.global_transform.basis.get_rotation_quat()
+
 	get_parent().update_current_target()
 	get_parent().update_tracker_id()
 	get_parent().offsets[get_parent().current_target].pos = new_pos
-#	get_parent().offsets[get_parent().current_target].rot = new_rot
+	get_parent().offsets[get_parent().current_target].rot = new_rot
 	get_parent().update_offset()
 	_update_target()
 
