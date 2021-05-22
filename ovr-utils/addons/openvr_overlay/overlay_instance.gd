@@ -14,10 +14,10 @@ export var width_meters = 0.4 setget set_width_in_meters
 # if this is exported, all overlays sync offset when a controller is turned off/on
 # this seems to be a bug with the godot editor-
 var offsets:Dictionary = {
-	"head": {"pos": Vector3(), "rot": Quat()},
+	"head": {"pos": Vector3(0,0,-0.4), "rot": Quat()},
 	"left": {"pos": Vector3(), "rot": Quat()},
 	"right": {"pos": Vector3(), "rot": Quat()},
-	"world": {"pos": Vector3(), "rot": Quat()}
+	"world": {"pos": Vector3(0,1,0), "rot": Quat()}
 }
 
 # what's actually tracking

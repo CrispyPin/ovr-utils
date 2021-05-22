@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://addons/openvr_overlay/move_overlay.gd" type="Script" id=1]
+[ext_resource path="res://overlays/move_overlay.gd" type="Script" id=1]
 [ext_resource path="res://fonts/OpenSans-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://fonts/OpenSans-Bold.ttf" type="DynamicFontData" id=3]
 
@@ -47,7 +47,6 @@ margin_right = 111.0
 margin_bottom = 41.0
 theme = SubResource( 2 )
 text = "Item 0"
-items = [ "Item 0", null, false, 0, null, "Item 1", null, false, 1, null, "Item 2", null, false, 2, null, "Item 3", null, false, 3, null ]
 selected = 0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -66,5 +65,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[connection signal="item_selected" from="OptionButton" to="." method="_on_OptionButton_item_selected"]
 [connection signal="button_down" from="DragButton" to="." method="_on_DragButton_button_down"]
 [connection signal="button_up" from="DragButton" to="." method="_on_DragButton_button_up"]
