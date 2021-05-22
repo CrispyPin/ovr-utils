@@ -1,6 +1,5 @@
 extends Control
 
-
 var ihandler
 
 func _ready() -> void:
@@ -8,10 +7,8 @@ func _ready() -> void:
 
 
 func _on_DragButton_button_down() -> void:
-	if ihandler:
-		ihandler.begin_move()
+	ihandler.begin_move()
 
 
 func _on_DragButton_button_up() -> void:
-	if ihandler:
-		ihandler.finish_move()
+	ihandler.finish_move()

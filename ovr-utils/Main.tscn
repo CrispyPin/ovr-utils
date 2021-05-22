@@ -25,6 +25,9 @@ overlay_scene = ExtResource( 5 )
 
 [node name="OverlayInteraction" parent="OverlayInstance UI demo" instance=ExtResource( 8 )]
 
+[node name="head" parent="OverlayInstance UI demo/OverlayInteraction/VR" index="2"]
+current = true
+
 [node name="XYZ Widget" parent="." instance=ExtResource( 4 )]
 
 [node name="OverlayInstance Battery" parent="." instance=ExtResource( 1 )]

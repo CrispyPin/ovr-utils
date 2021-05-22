@@ -5,21 +5,22 @@ signal touch_off # a controller exited
 signal trigger_on  # trigger pushed while touching
 signal trigger_off # trigger released
 
-var _touch_state = false setget ,get_touch_state
-var _trigger_state = false setget ,get_trigger_state
+var _touch_state   = false
+var _trigger_state = false
 
 # controller that currently the  trigger down
 var _active_controller: ARVRController setget ,get_active_controller
 # reference to the area node thats used for touch
 var _overlay_area = preload("res://addons/openvr_overlay/interaction/OverlayArea.tscn").instance()
-var _cursor_node = preload("res://addons/openvr_overlay/interaction/Cursor.tscn").instance()
+var _cursor_node  = preload("res://addons/openvr_overlay/interaction/Cursor.tscn").instance()
 var _right_is_activator = false
-var _left_is_activator = false
+var _left_is_activator  = false
 
 var is_moving := false
 var _pre_move_target = ""# what offset is being changed
 var _mover_hand_name = ""# left or right, which hand is grabbing (/active controller)
-var _mover_hand_offsets = {"pos": Vector3(), "rot": Vector3()} # original offsets for grabbing hand
+var _mover_hand_offsets = {"pos": Vector3(), "rot": Quat()} # original offsets for grabbing hand
+
 
 onready var viewport: Viewport = get_node("../OverlayViewport")
 onready var tracker_nodes = {
@@ -31,8 +32,9 @@ onready var tracker_nodes = {
 
 
 func _ready() -> void:
+	viewport.add_child(_cursor_node)
+
 	add_child(_overlay_area)
-	get_node("../OverlayViewport").add_child(_cursor_node)
 	_overlay_area.connect("body_entered", self, "_on_OverlayArea_entered")
 	_overlay_area.connect("body_exited", self, "_on_OverlayArea_exited")
 
@@ -54,33 +56,41 @@ func begin_move():
 		print("Could not begin moving overlay, no controller active. ", get_parent().name)
 		return
 	is_moving = true
+	# store current states to revert after move
 	_pre_move_target = get_parent().current_target
 	_mover_hand_name = _active_controller.name
-	_mover_hand_offsets.pos = get_parent().translation
-	_mover_hand_offsets.rot = get_parent().rotation
+	_mover_hand_offsets.pos = get_parent().offsets[_mover_hand_name].pos
+	_mover_hand_offsets.rot = get_parent().offsets[_mover_hand_name].rot
 
-	# offset from active controller to overlay
-	var global_rot = _overlay_area.global_transform.basis.get_rotation_quat()
-	var hand_rot = _active_controller.transform.basis.get_rotation_quat()
-	get_parent().offsets[_mover_hand_name].rot = hand_rot.inverse() * global_rot
+	# calculate offsets from active controller to overlay
+	var controller_t = _active_controller.transform
+	var overlay_t = _overlay_area.global_transform
 
-	get_parent().offsets[_mover_hand_name].pos = _active_controller.transform.xform_inv(_overlay_area.global_transform.origin)
+	get_parent().offsets[_mover_hand_name].rot = Quat(controller_t.basis).inverse() * Quat(overlay_t.basis)
+	get_parent().offsets[_mover_hand_name].pos = controller_t.xform_inv(overlay_t.origin)
 
 	get_parent().current_target = _mover_hand_name
 
 
 func finish_move():
-	is_moving = false
-	var new_pos = tracker_nodes[_pre_move_target].transform.xform_inv(_overlay_area.global_transform.origin)
+	# calculate and apply the new offsets
+	var new_target_t = tracker_nodes[_pre_move_target].transform
+	var ovelay_t = _overlay_area.global_transform
 
-	var new_rot = tracker_nodes[_pre_move_target].transform.basis.get_rotation_quat().inverse() * _overlay_area.global_transform.basis.get_rotation_quat()
+	var new_pos = new_target_t.xform_inv(ovelay_t.origin)
+	var new_rot = Quat(new_target_t.basis).inverse() * Quat(ovelay_t.basis)
+	get_parent().offsets[_pre_move_target].pos = new_pos
+	get_parent().offsets[_pre_move_target].rot = new_rot
 
+	# revert the grabbing hands offsets in case it's used as a fallback
+	get_parent().offsets[_mover_hand_name].pos = _mover_hand_offsets.pos
+	get_parent().offsets[_mover_hand_name].rot = _mover_hand_offsets.rot
+
+	# reset current_target (parent handles fallback)
 	get_parent().update_current_target()
-	get_parent().update_tracker_id()
-	get_parent().offsets[get_parent().current_target].pos = new_pos
-	get_parent().offsets[get_parent().current_target].rot = new_rot
-	get_parent().update_offset()
+
 	_update_target()
+	is_moving = false
 
 
 #get canvas position of active controller

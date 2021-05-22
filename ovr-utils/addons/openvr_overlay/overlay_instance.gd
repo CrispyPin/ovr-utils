@@ -1,4 +1,3 @@
-class_name OverlayInstance
 extends Spatial
 
 signal width_changed
@@ -7,6 +6,7 @@ signal target_changed
 
 const TARGETS = ["head", "left", "right", "world"]
 export (String,  "head", "left", "right", "world") var target = "left" setget set_target
+
 export var overlay_scene =\
 		preload("res://addons/openvr_overlay/MissingOverlay.tscn") setget set_overlay_scene
 export var width_meters = 0.4 setget set_width_in_meters
@@ -17,7 +17,6 @@ export var offsets:Dictionary = {
 	"right": {"pos": Vector3(), "rot": Quat()},
 	"world": {"pos": Vector3(), "rot": Quat()}
 }
-# also contains temp offset that is created when dragged
 
 # what's actually tracking
 var current_target = target setget _set_current_target# most of the time the actual target, but will fall back
@@ -75,8 +74,9 @@ func update_offset() -> void:
 
 
 func update_current_target():
-	current_target = target
+	_set_current_target(target)
 	# TODO fallback if not found
+
 
 
 func _tracker_changed(tracker_name: String, type: int, id: int):
