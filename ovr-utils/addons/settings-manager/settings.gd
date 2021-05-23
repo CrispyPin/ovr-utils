@@ -6,73 +6,55 @@ signal settings_loaded # emitted when settings are loaded from file, needs to be
 var DEBUG_SETTINGS = true
 var SETTINGS_PATH = "user://settings.json"
 const SETTINGS_DEF = {
-	"example_1": {
-		"name": "Example Toggle",
-		"description": "resets every restart", # optional
-		"flags": ["no_save"], # optional
+	"grab_mode": {
+		"name": "Grab mode",
+		"description": "Grab and drag around any overlay",
+		"flags": ["no_save"],
 		"type": "bool",
 		"default": false
 	},
-	"example_2": {
-		"name": "Example Number",
-		"type": "number",
-		"default": 42
-	},
-	"example_3": {
-		"name": "Example section",
-		"type": "dict",
-		"definition": {
-			"example_4": {
-				"name": "Example text",
-				"type": "string",
-				"default": "hello world"
-			},
-			"example_5": {
-				"name": "Example Vector3",
-				"type": "vector3",
-				"default": Vector3(1,2,3)
-			},
-			"example_6": {
-				"name": "Example Quat",
-				"type": "quat",
-				"default": Quat()
-			}
-		}
-	},
-	"example_7": {
-		"name": "Example array",
-		"type": "array",
-		"default": [1,23,4]
-	},
-	"example_8": {
-		"name": "Example dict with varying size containing arrays",
-		"type": "dict",
-		"flags": ["resize"],
-		"definition": {
-			"type": "array",
-			"default": [99,45,1]
-		}
-	},
-	"example_9": {
-		"name": "Example dict with varying size containing more dicts",
+	"overlays": {
+		"name": "Settings for all overlays",
 		"type": "dict",
 		"flags": ["resize"],
 		"definition": {
 			"type": "dict",
 			"definition": {
-				"property1": {
-					"name": "Property 1",
+				"width": {
+					"name": "Width (m)",
 					"type": "number",
-					"default": 123
+					"default": 0.4
 				},
-				"property2": {
-					"name": "Property 2",
-					"type": "number",
-					"default": 345
+				"target": {
+					"name": "Tracking target",
+					"type": "string",
+					"default": "world"
 				},
+				"fallback": {
+					"name": "Target fallback priority order",
+					"type": "array",
+					"default": ["world"]
+				},
+				"offsets": {
+					"name": "Offsets",
+					"flags": ["resize"],
+					"type": "dict",
+					"definition": {
+						"pos": {
+							"name": "Offset position",
+							"type": "vector3",
+							"default": Vector3()
+						},
+						"rot": {
+							"name": "Offset rotation",
+							"type": "quat",
+							"default": Quat()
+						}
+					}
+				}
 			}
 		}
-	},
+	}
 }
 
 var s: Dictionary = {}
