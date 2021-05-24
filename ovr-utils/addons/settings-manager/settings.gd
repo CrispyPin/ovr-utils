@@ -5,57 +5,7 @@ signal settings_loaded # emitted when settings are loaded from file, needs to be
 
 var DEBUG_SETTINGS = true
 var SETTINGS_PATH = "user://settings.json"
-const SETTINGS_DEF = {
-	"grab_mode": {
-		"name": "Grab mode",
-		"description": "Grab and drag around any overlay",
-		"flags": ["no_save"],
-		"type": "bool",
-		"default": false
-	},
-	"overlays": {
-		"name": "Settings for all overlays",
-		"type": "dict",
-		"flags": ["resize"],
-		"definition": {
-			"type": "dict",
-			"definition": {
-				"width": {
-					"name": "Width (m)",
-					"type": "number",
-					"default": 0.4
-				},
-				"target": {
-					"name": "Tracking target",
-					"type": "string",
-					"default": "world"
-				},
-				"fallback": {
-					"name": "Target fallback priority order",
-					"type": "array",
-					"default": ["world"]
-				},
-				"offsets": {
-					"name": "Offsets",
-					"flags": ["resize"],
-					"type": "dict",
-					"definition": {
-						"pos": {
-							"name": "Offset position",
-							"type": "vector3",
-							"default": Vector3()
-						},
-						"rot": {
-							"name": "Offset rotation",
-							"type": "quat",
-							"default": Quat()
-						}
-					}
-				}
-			}
-		}
-	}
-}
+const SETTINGS_DEF = preload("res://addons/settings-manager/settings_definition.gd").DEF
 
 var s: Dictionary = {}
 
@@ -77,7 +27,7 @@ func _init_sub_setting(def):
 	match def.type:
 		"dict":
 			if has_flag(def, "resize"):
-				return {}
+				return def.default
 			var _s = {}
 			for key in def.definition:
 				_s[key] = _init_sub_setting(def.definition[key])
