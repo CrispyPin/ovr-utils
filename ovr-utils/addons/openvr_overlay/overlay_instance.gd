@@ -30,10 +30,6 @@ onready var container = $OverlayViewport/Container
 
 func _ready() -> void:
 	current_target = target
-	# TEMP
-	offsets[current_target].pos = translation
-	offsets[current_target].rot = transform.basis.get_rotation_quat()
-	###
 
 	ARVRServer.connect("tracker_added", self, "_tracker_changed")
 	ARVRServer.connect("tracker_removed", self, "_tracker_changed")
@@ -47,6 +43,46 @@ func _ready() -> void:
 	update_offset()
 	emit_signal("target_changed")
 	set_notify_transform(true)
+
+	call_deferred("load_settings")
+
+
+func load_settings():
+	if Settings.s.overlays.has(name):
+		target = Settings.s.overlays[name].target
+		# TODO target fallback
+		update_current_target()
+		set_width_in_meters(Settings.s.overlays[name].width)
+		for t_key in Settings.s.overlays[name].offsets:
+			var t_offset = Settings.s.overlays[name].offsets[t_key]
+			offsets[t_key].pos = t_offset.pos
+			offsets[t_key].rot = t_offset.rot
+		update_offset()
+	else:
+		#TEMP defaults
+		offsets[current_target].pos = translation
+		offsets[current_target].rot = transform.basis.get_rotation_quat()
+		update_offset()
+		####
+
+		Settings.s.overlays[name] = {}
+		save_settings()
+
+
+func save_settings():
+	Settings.s.overlays[name].target = target
+	Settings.s.overlays[name].width = width_meters
+
+	if not Settings.s.overlays[name].has("offsets"):
+		Settings.s.overlays[name]["offsets"] = {}
+
+	for t_key in offsets:
+		if not Settings.s.overlays[name].offsets.has(t_key):
+			Settings.s.overlays[name].offsets[t_key] = {}
+		Settings.s.overlays[name].offsets[t_key].pos = offsets[t_key].pos
+		Settings.s.overlays[name].offsets[t_key].rot = offsets[t_key].rot
+	Settings.save_settings()
+
 
 
 func update_tracker_id() -> void:

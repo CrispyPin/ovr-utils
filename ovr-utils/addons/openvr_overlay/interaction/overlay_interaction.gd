@@ -88,6 +88,7 @@ func finish_move():
 
 	# reset current_target (parent handles fallback)
 	get_parent().update_current_target()
+	get_parent().save_settings()
 
 	_update_target()
 	is_moving = false
