@@ -14,16 +14,16 @@ func update_text():
 	var l = "??"
 	var r = "??"
 
-	if OverlayInit.left_id:
-		l = OverlayInit.ovr_config.get_device_battery_percentage(OverlayInit.left_id)
+	if OverlayInit.trackers.left != -1:
+		l = OverlayInit.ovr_config.get_device_battery_percentage(OverlayInit.trackers.left)
 		l = str(int(l * 100))
-		if OverlayInit.ovr_config.is_device_charging(OverlayInit.left_id):
+		if OverlayInit.ovr_config.is_device_charging(OverlayInit.trackers.left):
 			l += "+"
 
-	if OverlayInit.right_id:
-		r = OverlayInit.ovr_config.get_device_battery_percentage(OverlayInit.right_id)
+	if OverlayInit.trackers.right != -1:
+		r = OverlayInit.ovr_config.get_device_battery_percentage(OverlayInit.trackers.right)
 		r = str(int(r * 100))
-		if OverlayInit.ovr_config.is_device_charging(OverlayInit.right_id):
+		if OverlayInit.ovr_config.is_device_charging(OverlayInit.trackers.right):
 			r += "+"
 
 	text = "L: " + l + "% R: " + r + "%"

@@ -22,6 +22,7 @@ var offsets:Dictionary = {
 
 # what's actually tracking
 var current_target: String = "world" setget _set_current_target# most of the time the actual target, but will fall back
+var fallback = ["left", "right", "head"]
 
 var _tracker_id: int = 0
 
@@ -49,29 +50,32 @@ func _ready() -> void:
 
 func load_settings():
 	if Settings.s.overlays.has(name):
-		target = Settings.s.overlays[name].target
-		# TODO target fallback
-		update_current_target()
+		if Settings.s.overlays[name].has("fallback"):
+			fallback = Settings.s.overlays[name].fallback
+		set_target(Settings.s.overlays[name].target)
+
 		set_width_in_meters(Settings.s.overlays[name].width)
+
 		for t_key in Settings.s.overlays[name].offsets:
 			var t_offset = Settings.s.overlays[name].offsets[t_key]
 			offsets[t_key].pos = t_offset.pos
 			offsets[t_key].rot = t_offset.rot
 		update_offset()
 	else:
-		#TEMP defaults
+		#TEMP defaults (remove when dragging any overlay is possible)
 		offsets[current_target].pos = translation
 		offsets[current_target].rot = transform.basis.get_rotation_quat()
 		update_offset()
 		####
 
 		Settings.s.overlays[name] = {}
-		save_settings()
+	save_settings()
 
 
 func save_settings():
 	Settings.s.overlays[name].target = target
 	Settings.s.overlays[name].width = width_meters
+	Settings.s.overlays[name].fallback = fallback
 
 	if not Settings.s.overlays[name].has("offsets"):
 		Settings.s.overlays[name]["offsets"] = {}
@@ -87,17 +91,18 @@ func save_settings():
 
 func update_tracker_id() -> void:
 	_tracker_id = -1
-	if current_target in ["left", "right"]: # target is a controller
-		var target_id = TARGETS.find(current_target)
+	match current_target:
+		"left":
+			_tracker_id = OverlayInit.trackers.left
+		"right":
+			_tracker_id = OverlayInit.trackers.right
+		_:
+			return
 
-		for i in ARVRServer.get_tracker_count():
-			var tracker = ARVRServer.get_tracker(i)
-			if tracker.get_hand() == target_id:
-				_tracker_id = int(tracker.get_name().split("_")[-1])
-
-		if _tracker_id == -1:
-			# could not find controller, overlay will revert to fallback
-			_tracker_id = 63 # highest tracker id (unused, at origin)
+	if _tracker_id == -1:
+		# could not find controller, fallback
+		print("Missing controller ", current_target, " ", target, " ", fallback, " - ", name)
+		_tracker_id = 63 # highest tracker id (unused, at origin)
 
 
 func update_offset() -> void:
@@ -114,22 +119,24 @@ func update_offset() -> void:
 
 
 func update_current_target():
-	_set_current_target(target)
-	# TODO fallback if not found
+	if OverlayInit.trackers[target] != -1:
+		_set_current_target(target)
+	else: # fallback if not found
+		for f in fallback:
+			if OverlayInit.trackers[f] != -1:
+				_set_current_target(f)
+				break
+	update_tracker_id()
+
 
 
 func _tracker_changed(tracker_name: String, type: int, id: int):
-	update_tracker_id()
+	update_current_target()
 	update_offset()
-
-
-func get_tracker_id() -> int:
-	return _tracker_id
 
 
 func set_target(new: String):
 	target = new
-	update_tracker_id()
 	call_deferred("update_offset")
 	update_current_target()
 
