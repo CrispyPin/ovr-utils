@@ -59,15 +59,15 @@ func begin_move():
 	# store current states to revert after move
 	_pre_move_target = get_parent().current_target
 	_mover_hand_name = _active_controller
-	_mover_hand_offsets.pos = get_parent().offsets[_mover_hand_name].pos
-	_mover_hand_offsets.rot = get_parent().offsets[_mover_hand_name].rot
+	_mover_hand_offsets = get_parent().get_offset_dict(_mover_hand_name)
 
 	# calculate offsets from active controller to overlay
 	var controller_t = tracker_nodes[_active_controller].transform
 	var overlay_t = _overlay_area.global_transform
 
-	get_parent().offsets[_mover_hand_name].rot = Quat(controller_t.basis).inverse() * Quat(overlay_t.basis)
-	get_parent().offsets[_mover_hand_name].pos = controller_t.xform_inv(overlay_t.origin)
+	var new_pos = controller_t.xform_inv(overlay_t.origin)
+	var new_rot = Quat(controller_t.basis).inverse() * Quat(overlay_t.basis)
+	get_parent().set_offset(_mover_hand_name, new_pos, new_rot)
 
 	get_parent().current_target = _mover_hand_name
 
@@ -79,12 +79,10 @@ func finish_move():
 
 	var new_pos = new_target_t.xform_inv(ovelay_t.origin)
 	var new_rot = Quat(new_target_t.basis).inverse() * Quat(ovelay_t.basis)
-	get_parent().offsets[_pre_move_target].pos = new_pos
-	get_parent().offsets[_pre_move_target].rot = new_rot
+	get_parent().set_offset(_pre_move_target, new_pos, new_rot)
 
 	# revert the grabbing hands offsets in case it's used as a fallback
-	get_parent().offsets[_mover_hand_name].pos = _mover_hand_offsets.pos
-	get_parent().offsets[_mover_hand_name].rot = _mover_hand_offsets.rot
+	get_parent().set_offset_dict(_mover_hand_name, _mover_hand_offsets)
 
 	# reset current_target (parent handles fallback)
 	get_parent().update_current_target()

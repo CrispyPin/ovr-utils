@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://overlays/battery.gd" type="Script" id=1]
 [ext_resource path="res://fonts/OpenSans-Regular.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.705882 )
@@ -23,26 +25,43 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -673.0
-margin_top = -87.5
-margin_right = 673.0
-margin_bottom = 87.5
+margin_left = -199.0
+margin_top = -94.5
+margin_right = 199.0
+margin_bottom = 94.5
+grow_horizontal = 2
+custom_styles/panel = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer"]
+margin_right = 398.0
+margin_bottom = 189.0
+
+[node name="ColorRect" type="PanelContainer" parent="PanelContainer/CenterContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 391.0
+margin_bottom = 182.0
+grow_horizontal = 2
 size_flags_horizontal = 0
 custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="ColorRect"]
-margin_right = 1346.0
+[node name="Label" type="Label" parent="PanelContainer/CenterContainer/ColorRect"]
+margin_right = 384.0
 margin_bottom = 175.0
+size_flags_horizontal = 0
 custom_fonts/font = SubResource( 2 )
-text = "Left: 100% Right: 100%"
+text = "L: 10%"
 align = 1
 script = ExtResource( 1 )
 __meta__ = {

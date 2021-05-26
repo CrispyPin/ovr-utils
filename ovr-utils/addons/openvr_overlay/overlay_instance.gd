@@ -13,7 +13,7 @@ export var width_meters = 0.4 setget set_width_in_meters
 
 # if this is exported, all overlays sync offset when a controller is turned off/on
 # this seems to be a bug with the godot editor-
-var offsets:Dictionary = {
+var _offsets:Dictionary = {
 	"head": {"pos": Vector3(0,0,-0.4), "rot": Quat()},
 	"left": {"pos": Vector3(), "rot": Quat()},
 	"right": {"pos": Vector3(), "rot": Quat()},
@@ -22,7 +22,7 @@ var offsets:Dictionary = {
 
 # what's actually tracking
 var current_target: String = "world" setget _set_current_target# most of the time the actual target, but will fall back
-var fallback = ["left", "right", "head"]
+var fallback = ["left", "right", "head"] # TODO setget that updates tracking (not important)
 
 var _tracker_id: int = 0
 
@@ -41,7 +41,6 @@ func _ready() -> void:
 		container.add_child(overlay_scene.instance())
 
 	update_tracker_id()
-	update_offset()
 	emit_signal("target_changed")
 	set_notify_transform(true)
 
@@ -58,14 +57,12 @@ func load_settings():
 
 		for t_key in Settings.s.overlays[name].offsets:
 			var t_offset = Settings.s.overlays[name].offsets[t_key]
-			offsets[t_key].pos = t_offset.pos
-			offsets[t_key].rot = t_offset.rot
+			_offsets[t_key].pos = t_offset.pos
+			_offsets[t_key].rot = t_offset.rot
 		update_offset()
 	else:
 		#TEMP defaults (remove when dragging any overlay is possible)
-		offsets[current_target].pos = translation
-		offsets[current_target].rot = transform.basis.get_rotation_quat()
-		update_offset()
+		set_offset(current_target, translation, transform.basis.get_rotation_quat())
 		####
 
 		Settings.s.overlays[name] = {}
@@ -80,11 +77,8 @@ func save_settings():
 	if not Settings.s.overlays[name].has("offsets"):
 		Settings.s.overlays[name]["offsets"] = {}
 
-	for t_key in offsets:
-		if not Settings.s.overlays[name].offsets.has(t_key):
-			Settings.s.overlays[name].offsets[t_key] = {}
-		Settings.s.overlays[name].offsets[t_key].pos = offsets[t_key].pos
-		Settings.s.overlays[name].offsets[t_key].rot = offsets[t_key].rot
+	for t_key in TARGETS:
+		Settings.s.overlays[name].offsets[t_key] = _offsets[t_key]
 	Settings.save_settings()
 
 
@@ -106,8 +100,8 @@ func update_tracker_id() -> void:
 
 
 func update_offset() -> void:
-	translation = offsets[current_target].pos
-	transform.basis = Basis(offsets[current_target].rot)
+	translation = _offsets[current_target].pos
+	transform.basis = Basis(_offsets[current_target].rot)
 
 	match current_target:
 		"head":
@@ -146,6 +140,22 @@ func _set_current_target(new: String): # overrides target
 	update_tracker_id()
 	update_offset()
 	emit_signal("target_changed")
+
+
+func get_offset_dict(offset_target: String) -> Dictionary:
+	return _offsets[offset_target].duplicate()
+
+
+func set_offset_dict(offset_target: String, new: Dictionary) -> void:
+	_offsets[offset_target].pos = new.pos
+	_offsets[offset_target].rot = new.rot
+	update_offset()
+
+
+func set_offset(offset_target: String, pos: Vector3, rot: Quat) -> void:
+	_offsets[offset_target].pos = pos
+	_offsets[offset_target].rot = rot
+	update_offset()
 
 
 func set_width_in_meters(width: float):

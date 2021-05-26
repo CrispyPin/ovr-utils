@@ -4,7 +4,7 @@ signal settings_saved
 signal settings_loaded # emitted when settings are loaded from file, needs to be connected in _init()
 
 var DEBUG_SETTINGS = false
-var SETTINGS_PATH = "user://settings.json"
+var SETTINGS_PATH = "user://overlay_data.json"
 const SETTINGS_DEF = preload("res://addons/settings-manager/settings_definition.gd").DEF
 
 var s: Dictionary = {}
