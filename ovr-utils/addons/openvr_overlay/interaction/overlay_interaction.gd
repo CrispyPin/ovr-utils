@@ -12,17 +12,11 @@ var _trigger_state = false
 var _active_controller: String = ""
 # reference to the area node thats used for touch
 var _overlay_area = preload("res://addons/openvr_overlay/interaction/OverlayArea.tscn").instance()
-var _cursor_node  = preload("res://addons/openvr_overlay/interaction/Cursor.tscn").instance()
-var _right_is_activator = false
-var _left_is_activator  = false
+var _right_is_activator := false
+var _left_is_activator  := false
 
-var is_moving := false
-var _pre_move_target = ""# what offset is being changed
-var _mover_hand_name = ""# left or right, which hand is grabbing (/active controller)
-var _mover_hand_offsets = {"pos": Vector3(), "rot": Quat()} # original offsets for grabbing hand
+var pause_triggers := false
 
-
-onready var viewport: Viewport = get_node("../OverlayViewport")
 onready var tracker_nodes = {
 	"head":  $VR/head,
 	"left":  $VR/left,
@@ -32,7 +26,6 @@ onready var tracker_nodes = {
 
 
 func _ready() -> void:
-	viewport.add_child(_cursor_node)
 
 	add_child(_overlay_area)
 	_overlay_area.connect("body_entered", self, "_on_OverlayArea_entered")
@@ -47,107 +40,28 @@ func _ready() -> void:
 	_update_target()
 
 
-func _process(_delta: float) -> void:
-	_update_cursor()
-
-
-func begin_move():
-	if not _active_controller:
-		print("Could not begin moving overlay, no controller active. ", get_parent().name)
-		return
-	is_moving = true
-	# store current states to revert after move
-	_pre_move_target = get_parent().current_target
-	_mover_hand_name = _active_controller
-	_mover_hand_offsets = get_parent().get_offset_dict(_mover_hand_name)
-
-	# calculate offsets from active controller to overlay
-	var controller_t = tracker_nodes[_active_controller].transform
-	var overlay_t = _overlay_area.global_transform
-
-	var new_pos = controller_t.xform_inv(overlay_t.origin)
-	var new_rot = Quat(controller_t.basis).inverse() * Quat(overlay_t.basis)
-	get_parent().set_offset(_mover_hand_name, new_pos, new_rot)
-
-	get_parent().current_target = _mover_hand_name
-
-
-func finish_move():
-	# calculate and apply the new offsets
-	var new_target_t = tracker_nodes[_pre_move_target].transform
-	var ovelay_t = _overlay_area.global_transform
-
-	var new_pos = new_target_t.xform_inv(ovelay_t.origin)
-	var new_rot = Quat(new_target_t.basis).inverse() * Quat(ovelay_t.basis)
-	get_parent().set_offset(_pre_move_target, new_pos, new_rot)
-
-	# revert the grabbing hands offsets in case it's used as a fallback
-	get_parent().set_offset_dict(_mover_hand_name, _mover_hand_offsets)
-
-	# reset current_target (parent handles fallback)
-	get_parent().update_current_target()
-	get_parent().save_settings()
-
-	_update_target()
-	is_moving = false
-
-
-#get canvas position of active controller
-func get_canvas_pos() -> Vector2:
-	if _active_controller == "":
-		return Vector2(-1000, 1000) # offscreen
-
-	var controller_local_pos = _overlay_area.global_transform.xform_inv(\
-			tracker_nodes[_active_controller].translation)
-	var pos = Vector2(controller_local_pos.x, controller_local_pos.y)
-
-	var overlay_size = OverlayInit.ovr_interface.get_render_targetsize()
-	# scale to pixels
-	pos *= overlay_size.x
-	pos /= get_parent().width_meters
-	# adjust to center
-	pos.y *= -1
-	pos += overlay_size * 0.5
-	return pos
-
-
-func _update_cursor():
-	_cursor_node.rect_position = get_canvas_pos()
-
-
-func _send_click_event(state: bool):
-	var click_event = InputEventMouseButton.new()
-	click_event.position = get_canvas_pos()
-	click_event.pressed = state
-	click_event.button_index = 1
-	viewport.input(click_event)
-
-
 func _trigger_on(controller):
 	if _touch_state:
 		_active_controller = controller
 		_trigger_state = true
-		_send_click_event(true)
 		emit_signal("trigger_on")
 
 
 func _trigger_off():
 	_trigger_state = false
-	_send_click_event(false)
 	emit_signal("trigger_off")
 
 
 func _on_OverlayArea_entered(body: Node) -> void:
-	if body.get_node("../../..") != self or is_moving:
+	if body.get_node("../../..") != self or pause_triggers:
 		return
 	_touch_state = true
-	if not is_moving:
-		_active_controller = body.get_parent().name
+	_active_controller = body.get_parent().name
 	emit_signal("touch_on")
 
 
 func _on_OverlayArea_exited(body: Node) -> void:
-	if body.get_node("../../..") != self or is_moving:
+	if body.get_node("../../..") != self or pause_triggers:
 		return
 	# TEMP
 	_active_controller = "" # TODO revert to other controller if both were touching (edge case)
