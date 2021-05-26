@@ -133,6 +133,7 @@ func set_target(new: String):
 	target = new
 	call_deferred("update_offset")
 	update_current_target()
+	save_settings()
 
 
 func _set_current_target(new: String): # overrides target
@@ -142,14 +143,8 @@ func _set_current_target(new: String): # overrides target
 	emit_signal("target_changed")
 
 
-func get_offset_dict(offset_target: String) -> Dictionary:
+func get_offset(offset_target: String) -> Dictionary:
 	return _offsets[offset_target].duplicate()
-
-
-func set_offset_dict(offset_target: String, new: Dictionary) -> void:
-	_offsets[offset_target].pos = new.pos
-	_offsets[offset_target].rot = new.rot
-	update_offset()
 
 
 func set_offset(offset_target: String, pos: Vector3, rot: Quat) -> void:
