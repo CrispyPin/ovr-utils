@@ -49,6 +49,9 @@ func save_settings():
 	file.close()
 	emit_signal("settings_saved")
 
+	if DEBUG_SETTINGS:
+		print("Settings saved to file")
+
 
 func _save_sub_setting(val, def):
 	if has_flag(def, "no_save"):
@@ -92,7 +95,7 @@ func load_settings() -> void:
 	emit_signal("settings_loaded")
 	if DEBUG_SETTINGS:
 		print("Loaded settings from file")
-		print(s)
+#		print(s)
 
 
 func _load_sub_setting(val, def):

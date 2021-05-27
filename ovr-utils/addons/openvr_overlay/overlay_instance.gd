@@ -10,6 +10,8 @@ export (String,  "head", "left", "right", "world") var target = "left" setget se
 export var overlay_scene =\
 		preload("res://addons/openvr_overlay/MissingOverlay.tscn") setget set_overlay_scene
 export var width_meters = 0.4 setget set_width_in_meters
+export var add_grabbing := true  # add grabbing module
+export var add_cursor   := false # add cursor module
 
 # if this is exported, all overlays sync offset when a controller is turned off/on
 # this seems to be a bug with the godot editor-
@@ -35,16 +37,25 @@ func _ready() -> void:
 	ARVRServer.connect("tracker_added", self, "_tracker_changed")
 	ARVRServer.connect("tracker_removed", self, "_tracker_changed")
 
-	$OverlayViewport.overlay_width_in_meters = width_meters
+#	$OverlayViewport.overlay_width_in_meters = width_meters
 	$OverlayViewport.size = OverlayInit.ovr_interface.get_render_targetsize()
+#	emit_signal("target_changed")
+	set_notify_transform(true)
+
+#	call_deferred("load_settings") # TODO call directly (when overlays are loaded at runtime, after settings have loaded
+	load_settings()
+	if add_cursor or add_grabbing:
+		var interaction_handler = load("res://addons/openvr_overlay/OverlayInteraction.tscn").instance()
+		add_child(interaction_handler)
+		if add_cursor:
+			interaction_handler.add_child(load("res://addons/openvr_overlay/OverlayCursor.tscn").instance())
+		if add_grabbing:
+			interaction_handler.add_child(load("res://addons/openvr_overlay/OverlayGrab.tscn").instance())
+
 	if overlay_scene:
 		container.add_child(overlay_scene.instance())
 
 	update_tracker_id()
-	emit_signal("target_changed")
-	set_notify_transform(true)
-
-	call_deferred("load_settings")
 
 
 func load_settings():
@@ -133,7 +144,7 @@ func set_target(new: String):
 	target = new
 	call_deferred("update_offset")
 	update_current_target()
-	save_settings()
+#	save_settings()
 
 
 func _set_current_target(new: String): # overrides target

@@ -18,8 +18,8 @@ config/icon="res://icon.png"
 
 [autoload]
 
-OverlayInit="*res://addons/openvr_overlay/overlay_init.gd"
 Settings="*res://addons/settings-manager/Settings.tscn"
+OverlayInit="*res://addons/openvr_overlay/overlay_init.gd"
 
 [editor_plugins]
 
