@@ -1,6 +1,8 @@
 extends Node
 
 
+var is_moving := false
+
 var _pre_move_target = ""# what offset is being changed
 var _mover_hand_name = ""# left or right, which hand is grabbing (/active controller)
 var _mover_hand_offsets = {"pos": Vector3(), "rot": Quat()} # original offsets for grabbing hand
@@ -16,13 +18,26 @@ onready var tracker_nodes = {
 
 
 func _ready() -> void:
-	pass
+	get_parent().connect("trigger_on", self, "_trigger_on")
+	get_parent().connect("trigger_off", self, "_trigger_off")
+
+
+func _trigger_on():
+	if Settings.s.grab_mode:
+		begin_move()
+
+
+func _trigger_off():
+	finish_move()
 
 
 func begin_move():
 	if not _interaction.active_controller:
 		print("Could not begin moving overlay, no controller is touching overlay. <", _overlay.name, ">")
 		return
+	if is_moving:
+		return
+	is_moving = true
 	_interaction.pause_triggers = true
 	# store current states to revert after move
 	_pre_move_target = _overlay.current_target
@@ -41,6 +56,9 @@ func begin_move():
 
 
 func finish_move():
+	if not is_moving:
+		return
+	is_moving = false
 	# calculate and apply the new offsets
 	var new_target_t = tracker_nodes[_pre_move_target].transform
 	var ovelay_t = _interaction._overlay_area.global_transform
