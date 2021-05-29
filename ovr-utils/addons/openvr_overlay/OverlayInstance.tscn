@@ -1,7 +1,15 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/openvr_overlay/overlay_instance.gd" type="Script" id=1]
 [ext_resource path="res://addons/godot-openvr/OpenVROverlay.gdns" type="Script" id=3]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 1, 1, 0.231373 )
+border_width_left = 24
+border_width_top = 24
+border_width_right = 24
+border_width_bottom = 24
+border_color = Color( 0, 0.784314, 1, 0.611765 )
 
 [node name="OverlayInstance" type="Spatial"]
 script = ExtResource( 1 )
@@ -22,3 +30,10 @@ overlay_width_in_meters = 0.4
 [node name="Container" type="Control" parent="OverlayViewport"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="Selected" type="Panel" parent="OverlayViewport"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_styles/panel = SubResource( 1 )

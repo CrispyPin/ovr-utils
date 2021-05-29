@@ -56,6 +56,7 @@ func _on_OverlayArea_entered(body: Node) -> void:
 		return
 	touch_state = true
 	active_controller = body.get_parent().name
+	get_parent().get_node("OverlayViewport/Selected").visible = Settings.s.grab_mode
 	emit_signal("touch_on")
 
 
@@ -65,13 +66,14 @@ func _on_OverlayArea_exited(body: Node) -> void:
 	# TODO revert to other controller if both were touching (edge case)
 	active_controller = ""
 	touch_state = false
+	get_parent().get_node("OverlayViewport/Selected").visible = false
 	emit_signal("touch_off")
 
 
 func _update_width():
 	var ratio = OverlayInit.ovr_interface.get_render_targetsize()
 	var extents = get_parent().width_meters * 0.5
-	_overlay_area.get_child(0).shape.set_extents(Vector3(extents, extents * ratio.y/ratio.x, 0.1))
+	_overlay_area.get_child(0).shape.set_extents(Vector3(extents, extents * ratio.y/ratio.x, 0.05))
 
 
 func _update_offset():
