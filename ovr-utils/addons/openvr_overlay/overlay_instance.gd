@@ -37,12 +37,9 @@ func _ready() -> void:
 	ARVRServer.connect("tracker_added", self, "_tracker_changed")
 	ARVRServer.connect("tracker_removed", self, "_tracker_changed")
 
-#	$OverlayViewport.overlay_width_in_meters = width_meters
 	$OverlayViewport.size = OverlayInit.ovr_interface.get_render_targetsize()
-#	emit_signal("target_changed")
 	set_notify_transform(true)
 
-#	call_deferred("load_settings") # TODO call directly (when overlays are loaded at runtime, after settings have loaded
 	load_settings()
 	if add_cursor or add_grabbing:
 		var interaction_handler = load("res://addons/openvr_overlay/OverlayInteraction.tscn").instance()

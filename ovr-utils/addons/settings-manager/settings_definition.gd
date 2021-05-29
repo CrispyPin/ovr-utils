@@ -15,6 +15,11 @@ const DEF = {
 		"definition": {
 			"type": "dict",
 			"definition": {
+				"type": {
+					"name": "Overlay type",
+					"type": "string",
+					"default": "UI_demo"
+				},
 				"width": {
 					"name": "Width (m)",
 					"type": "number",
@@ -55,6 +60,7 @@ const DEF = {
 		},
 		"default": {
 			"main": {
+				"type": "MainOverlay",
 				"width": 0.4,
 				"target": "left",
 				"fallback": ["left", "right", "head"],

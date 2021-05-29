@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://overlays/move_overlay.gd" type="Script" id=1]
+[ext_resource path="res://overlay_scripts/ui_demo.gd" type="Script" id=1]
 [ext_resource path="res://fonts/OpenSans-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://fonts/OpenSans-Bold.ttf" type="DynamicFontData" id=3]
 
@@ -47,7 +47,6 @@ margin_right = 111.0
 margin_bottom = 41.0
 theme = SubResource( 2 )
 text = "Item 0"
-selected = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }

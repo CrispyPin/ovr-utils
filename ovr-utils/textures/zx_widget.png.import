@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/yz_widget.png-b9fa885c579466828b6d0caddc809e49.stex"
+path="res://.import/zx_widget.png-5f9e84560ac9e1e5c37ee8a06256191f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://overlays/xyz_widget/yz_widget.png"
-dest_files=[ "res://.import/yz_widget.png-b9fa885c579466828b6d0caddc809e49.stex" ]
+source_file="res://textures/zx_widget.png"
+dest_files=[ "res://.import/zx_widget.png-5f9e84560ac9e1e5c37ee8a06256191f.stex" ]
 
 [params]
 
