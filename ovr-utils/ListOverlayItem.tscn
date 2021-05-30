@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://menu.theme" type="Theme" id=1]
+[ext_resource path="res://icons/visible.svg" type="Texture" id=2]
+[ext_resource path="res://overlay_list_item.gd" type="Script" id=3]
+
+[node name="ListOverlayItem" type="PanelContainer"]
+margin_top = 1727.0
+margin_right = 2048.0
+margin_bottom = 1855.0
+rect_min_size = Vector2( 100, 128 )
+theme = ExtResource( 1 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_left = 7.0
+margin_top = 10.0
+margin_right = 2041.0
+margin_bottom = 185.0
+text = "BatteryLevel"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 2041.0
+margin_bottom = 188.0
+alignment = 2
+
+[node name="Visibility" type="Button" parent="HBoxContainer"]
+margin_left = 1862.0
+margin_right = 2034.0
+margin_bottom = 181.0
+toggle_mode = true
+pressed = true
+icon = ExtResource( 2 )
+
+[connection signal="toggled" from="HBoxContainer/Visibility" to="." method="_on_Visibility_toggled"]

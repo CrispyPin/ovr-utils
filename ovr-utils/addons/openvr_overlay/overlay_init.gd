@@ -11,6 +11,7 @@ var trackers = {
 }
 
 func _init() -> void:
+	OS.window_minimized = true
 	ovr_config = preload("res://addons/godot-openvr/OpenVRConfig.gdns").new()
 	ovr_config.set_application_type(2) # Set to OVERLAY MODE = 2, NORMAL MODE = 1
 	ovr_config.set_tracking_universe(1) # Set to SEATED MODE = 0, STANDING MODE = 1, RAW MODE = 2

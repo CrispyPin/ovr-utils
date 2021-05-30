@@ -25,11 +25,11 @@ var _offsets:Dictionary = {
 # what's actually tracking
 var current_target: String = "world" setget _set_current_target# most of the time the actual target, but will fall back
 var fallback = ["left", "right", "head"] # TODO setget that updates tracking (not important)
+var interaction_handler: Node
 
 var _tracker_id: int = 0
 
 onready var container = $OverlayViewport/Container
-
 
 func _ready() -> void:
 	current_target = target
@@ -42,17 +42,25 @@ func _ready() -> void:
 
 	load_settings()
 	if add_cursor or add_grabbing:
-		var interaction_handler = load("res://addons/openvr_overlay/OverlayInteraction.tscn").instance()
+		interaction_handler = load("res://addons/openvr_overlay/OverlayInteraction.tscn").instance()
 		add_child(interaction_handler)
 		if add_cursor:
-			interaction_handler.add_child(load("res://addons/openvr_overlay/OverlayCursor.tscn").instance())
+			add_cursor()
 		if add_grabbing:
-			interaction_handler.add_child(load("res://addons/openvr_overlay/OverlayGrab.tscn").instance())
+			add_grab()
 
 	if overlay_scene:
 		container.add_child(overlay_scene.instance())
 
 	update_tracker_id()
+
+
+func add_cursor():
+	interaction_handler.add_child(load("res://addons/openvr_overlay/OverlayCursor.tscn").instance())
+
+func add_grab():
+	interaction_handler.add_child(load("res://addons/openvr_overlay/OverlayGrab.tscn").instance())
+
 
 
 func load_settings():

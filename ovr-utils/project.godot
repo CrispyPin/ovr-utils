@@ -21,6 +21,11 @@ config/icon="res://textures/icon.png"
 Settings="*res://addons/settings-manager/Settings.tscn"
 OverlayInit="*res://addons/openvr_overlay/overlay_init.gd"
 
+[display]
+
+window/size/width=2048
+window/size/height=2048
+
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/godot-openvr/plugin.cfg", "res://addons/openvr_overlay/plugin.cfg", "res://addons/settings-manager/plugin.cfg" )
