@@ -23,7 +23,7 @@ func _ready() -> void:
 
 
 func _trigger_on():
-	if Settings.s.grab_mode:
+	if Settings.s.grab_mode or _interaction.grab_mode:
 		begin_move()
 
 

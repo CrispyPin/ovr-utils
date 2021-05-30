@@ -59,7 +59,7 @@ const DEF = {
 			}
 		},
 		"default": {
-			"main": {
+			"MainOverlay": {
 				"type": "MainOverlay",
 				"width": 0.4,
 				"target": "left",

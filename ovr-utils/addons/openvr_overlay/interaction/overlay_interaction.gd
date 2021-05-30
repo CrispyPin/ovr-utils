@@ -5,8 +5,9 @@ signal touch_off  # a controller exited
 signal trigger_on # trigger pushed while touching
 signal trigger_off# trigger released
 
-var touch_state   = false
-var trigger_state = false
+var touch_state   := false
+var trigger_state := false
+var grab_mode := false
 
 # controller that currently the  trigger down
 var active_controller := ""
@@ -56,7 +57,7 @@ func _on_OverlayArea_entered(body: Node) -> void:
 		return
 	touch_state = true
 	active_controller = body.get_parent().name
-	get_parent().get_node("OverlayViewport/Selected").visible = Settings.s.grab_mode
+	get_parent().get_node("OverlayViewport/Selected").visible = Settings.s.grab_mode or grab_mode
 	emit_signal("touch_on")
 
 

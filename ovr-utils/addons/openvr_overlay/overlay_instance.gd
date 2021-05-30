@@ -185,6 +185,15 @@ func set_overlay_scene(scene: PackedScene):
 	container.add_child(overlay_scene.instance())
 
 
+func reset_offset():
+	_offsets[current_target].rot = Quat()
+	_offsets[current_target].pos = Vector3()
+	if current_target == "world":
+		_offsets[current_target].pos.z = -0.5
+	update_offset()
+	save_settings()
+
+
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSFORM_CHANGED:
 		update_offset()
