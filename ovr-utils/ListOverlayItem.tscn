@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://styles/menu.theme" type="Theme" id=1]
 [ext_resource path="res://icons/visible.svg" type="Texture" id=2]
@@ -8,6 +8,10 @@
 [ext_resource path="res://icons/reset.svg" type="Texture" id=6]
 [ext_resource path="res://icons/size.svg" type="Texture" id=7]
 [ext_resource path="res://icons/hand_r.svg" type="Texture" id=8]
+[ext_resource path="res://textures/icon.png" type="Texture" id=9]
+
+[sub_resource type="DynamicFont" id=1]
+size = 1
 
 [node name="ListOverlayItem" type="PanelContainer"]
 margin_top = 1727.0
@@ -35,25 +39,27 @@ margin_bottom = 199.0
 alignment = 2
 
 [node name="Remove" type="Button" parent="HBoxContainer"]
-margin_left = 1006.0
-margin_right = 1182.0
+margin_left = 948.0
+margin_right = 1124.0
 margin_bottom = 191.0
 toggle_mode = true
 icon = ExtResource( 5 )
 
 [node name="Reset" type="Button" parent="HBoxContainer"]
-margin_left = 1186.0
-margin_right = 1362.0
+margin_left = 1128.0
+margin_right = 1304.0
 margin_bottom = 191.0
 icon = ExtResource( 6 )
 
 [node name="Target" type="OptionButton" parent="HBoxContainer"]
-margin_left = 1366.0
+margin_left = 1308.0
 margin_right = 1492.0
 margin_bottom = 191.0
-text = "H"
-items = [ "H", null, false, 0, null, "L", ExtResource( 8 ), false, 1, null, "R", ExtResource( 8 ), false, 2, null, "W", null, false, 3, null ]
-selected = 0
+custom_fonts/font = SubResource( 1 )
+text = "Left"
+icon = ExtResource( 8 )
+items = [ "Head", ExtResource( 9 ), false, 0, null, "Left", ExtResource( 8 ), false, 1, null, "Right", ExtResource( 8 ), false, 2, null, "World", ExtResource( 4 ), false, 3, null ]
+selected = 1
 
 [node name="Size" type="Button" parent="HBoxContainer"]
 margin_left = 1496.0

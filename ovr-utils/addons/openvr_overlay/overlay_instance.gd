@@ -26,6 +26,7 @@ var _offsets:Dictionary = {
 var current_target: String = "world" setget _set_current_target# most of the time the actual target, but will fall back
 var fallback = ["left", "right", "head"] # TODO setget that updates tracking (not important)
 var interaction_handler: Node
+var overlay_visible := true setget set_overlay_visible
 
 var _tracker_id: int = 0
 
@@ -138,6 +139,10 @@ func update_current_target():
 				break
 	update_tracker_id()
 
+
+func set_overlay_visible(state: bool):
+	overlay_visible = state
+	$OverlayViewport.overlay_visible = state
 
 
 func _tracker_changed(tracker_name: String, type: int, id: int):

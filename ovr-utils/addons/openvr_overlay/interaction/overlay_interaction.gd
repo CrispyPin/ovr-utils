@@ -53,7 +53,7 @@ func _trigger_off():
 
 
 func _on_OverlayArea_entered(body: Node) -> void:
-	if body.get_node("../../..") != self or pause_triggers:
+	if body.get_node("../../..") != self or pause_triggers or !get_parent().overlay_visible:
 		return
 	touch_state = true
 	active_controller = body.get_parent().name
@@ -62,7 +62,7 @@ func _on_OverlayArea_entered(body: Node) -> void:
 
 
 func _on_OverlayArea_exited(body: Node) -> void:
-	if body.get_node("../../..") != self or pause_triggers:
+	if body.get_node("../../..") != self or pause_triggers or !get_parent().overlay_visible:
 		return
 	# TODO revert to other controller if both were touching (edge case)
 	active_controller = ""
