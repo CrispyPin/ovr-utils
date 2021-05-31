@@ -20,6 +20,11 @@ const DEF = {
 					"type": "string",
 					"default": "UI_demo"
 				},
+				"visible": {
+					"name": "Overlay Visible",
+					"type": "bool",
+					"default": true
+				},
 				"width": {
 					"name": "Width (m)",
 					"type": "number",
@@ -61,6 +66,7 @@ const DEF = {
 		"default": {
 			"MainOverlay": {
 				"type": "MainOverlay",
+				"visible": true,
 				"width": 0.4,
 				"target": "left",
 				"fallback": ["left", "right", "head"],

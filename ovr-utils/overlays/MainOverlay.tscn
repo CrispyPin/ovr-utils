@@ -47,6 +47,7 @@ __meta__ = {
 [node name="GrabMode" type="Button" parent="VSplitContainer/MainBar"]
 margin_right = 176.0
 margin_bottom = 191.0
+focus_mode = 0
 toggle_mode = true
 icon = ExtResource( 5 )
 
@@ -54,6 +55,7 @@ icon = ExtResource( 5 )
 margin_left = 180.0
 margin_right = 356.0
 margin_bottom = 191.0
+focus_mode = 0
 toggle_mode = true
 icon = ExtResource( 6 )
 
@@ -61,6 +63,7 @@ icon = ExtResource( 6 )
 margin_left = 360.0
 margin_right = 536.0
 margin_bottom = 191.0
+focus_mode = 0
 icon = ExtResource( 4 )
 
 [connection signal="toggled" from="VSplitContainer/MainBar/GrabMode" to="." method="_on_GrabMode_toggled"]

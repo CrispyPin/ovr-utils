@@ -3,6 +3,7 @@ extends Spatial
 signal width_changed
 signal offset_changed
 signal target_changed
+signal overlay_visibility_changed
 
 const TARGETS = ["head", "left", "right", "world"]
 export (String,  "head", "left", "right", "world") var target = "left" setget set_target
@@ -66,17 +67,20 @@ func add_grab():
 
 func load_settings():
 	if Settings.s.overlays.has(name):
-		if Settings.s.overlays[name].has("fallback"):
-			fallback = Settings.s.overlays[name].fallback
-		set_target(Settings.s.overlays[name].target)
+		var loaded = Settings.s.overlays[name]
+		if loaded.has("fallback"):
+			fallback = loaded.fallback
+		set_target(loaded.target)
 
-		set_width_in_meters(Settings.s.overlays[name].width)
+		set_width_in_meters(loaded.width)
 
-		for t_key in Settings.s.overlays[name].offsets:
-			var t_offset = Settings.s.overlays[name].offsets[t_key]
+		for t_key in loaded.offsets:
+			var t_offset = loaded.offsets[t_key]
 			_offsets[t_key].pos = t_offset.pos
 			_offsets[t_key].rot = t_offset.rot
 		update_offset()
+		if loaded.has("visible"):
+			set_overlay_visible(loaded.visible)
 	else:
 		#TEMP defaults (remove when dragging any overlay is possible)
 		set_offset(current_target, translation, transform.basis.get_rotation_quat())
@@ -143,6 +147,9 @@ func update_current_target():
 func set_overlay_visible(state: bool):
 	overlay_visible = state
 	$OverlayViewport.overlay_visible = state
+	Settings.s.overlays[name].visible = state
+	emit_signal("overlay_visibility_changed", state)
+	save_settings()
 
 
 func _tracker_changed(tracker_name: String, type: int, id: int):

@@ -39,6 +39,7 @@ alignment = 2
 margin_left = 952.0
 margin_right = 1128.0
 margin_bottom = 191.0
+focus_mode = 0
 toggle_mode = true
 icon = ExtResource( 5 )
 
@@ -46,12 +47,14 @@ icon = ExtResource( 5 )
 margin_left = 1132.0
 margin_right = 1308.0
 margin_bottom = 191.0
+focus_mode = 0
 icon = ExtResource( 6 )
 
 [node name="Target" type="OptionButton" parent="HBoxContainer"]
 margin_left = 1312.0
 margin_right = 1492.0
 margin_bottom = 191.0
+focus_mode = 0
 text = "Left"
 icon = ExtResource( 8 )
 clip_text = true
@@ -62,6 +65,7 @@ selected = 1
 margin_left = 1496.0
 margin_right = 1672.0
 margin_bottom = 191.0
+focus_mode = 0
 toggle_mode = true
 icon = ExtResource( 7 )
 
@@ -69,6 +73,7 @@ icon = ExtResource( 7 )
 margin_left = 1676.0
 margin_right = 1852.0
 margin_bottom = 191.0
+focus_mode = 0
 toggle_mode = true
 icon = ExtResource( 4 )
 
@@ -76,6 +81,7 @@ icon = ExtResource( 4 )
 margin_left = 1856.0
 margin_right = 2032.0
 margin_bottom = 191.0
+focus_mode = 0
 toggle_mode = true
 pressed = true
 icon = ExtResource( 2 )
