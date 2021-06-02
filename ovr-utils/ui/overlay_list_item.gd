@@ -6,6 +6,7 @@ var overlay
 func _ready() -> void:
 	overlay = get_node("/root/Main/OverlayManager").get_node(overlay_name)
 	$Label.text = overlay_name
+	name = overlay_name
 	$HBoxContainer/Target.selected = overlay.TARGETS.find(Settings.s.overlays[overlay_name].target)
 	overlay.connect("overlay_visibility_changed", self, "_overlay_visibility_changed")
 
@@ -32,3 +33,8 @@ func _overlay_visibility_changed(state: bool):
 		$HBoxContainer/Visibility.icon = preload("res://icons/visible.svg")
 	else:
 		$HBoxContainer/Visibility.icon = preload("res://icons/hidden.svg")
+
+
+func _on_Remove_pressed() -> void:
+	get_node("/root/Main/OverlayManager").remove_overlay(overlay_name)
+

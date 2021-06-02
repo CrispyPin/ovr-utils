@@ -3,6 +3,7 @@ extends Control
 
 func _ready() -> void:
 	get_node("/root/Main/OverlayManager").connect("added_overlay", self, "_add_overlay_to_list")
+	get_node("/root/Main/OverlayManager").connect("removed_overlay", self, "_remove_overlay_from_list")
 	for o in Settings.s.overlays:
 		if o != "MainOverlay":
 			_add_overlay_to_list(o)
@@ -13,6 +14,9 @@ func _add_overlay_to_list(name):
 	var new = preload("res://ui/ListOverlayItem.tscn").instance()
 	new.overlay_name = name
 	$VSplitContainer/Control/Overlays.add_child(new)
+
+func _remove_overlay_from_list(name):
+	$VSplitContainer/Control/Overlays.get_node(name).queue_free()
 
 
 func _on_GrabMode_toggled(state: bool) -> void:

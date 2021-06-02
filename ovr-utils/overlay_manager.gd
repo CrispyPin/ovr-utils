@@ -25,12 +25,9 @@ func _load_overlays():
 
 
 func add_overlay(type, name):
-	if type == "":
-		print("no type specified for overlay ", name)
-		return
 	var scene = load("res://overlays/" + type + ".tscn")
-	if scene == null:
-		print("Unknown overlay type: ", type, ". Skipping overlay \"", name, "\"")
+	if not scene:
+		print("Unknown overlay type: '", type, "'. Skipping overlay '", name, "'")
 		return
 	var instance = preload("res://addons/openvr_overlay/OverlayInstance.tscn").instance()
 	instance.name = name
@@ -38,3 +35,14 @@ func add_overlay(type, name):
 	instance.type = type
 	add_child(instance)
 	emit_signal("added_overlay", name)
+
+
+func remove_overlay(name):
+	var to_remove = get_node(name)
+	if not to_remove:
+		print("Could not remove overlay '", name, "'")
+		return
+	to_remove.queue_free()
+	emit_signal("removed_overlay", name)
+	Settings.s.overlays.erase(name)
+	Settings.save_settings()

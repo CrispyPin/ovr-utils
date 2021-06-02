@@ -40,7 +40,6 @@ margin_left = 952.0
 margin_right = 1128.0
 margin_bottom = 191.0
 focus_mode = 0
-toggle_mode = true
 icon = ExtResource( 2 )
 
 [node name="Reset" type="Button" parent="HBoxContainer"]
@@ -86,6 +85,7 @@ toggle_mode = true
 pressed = true
 icon = ExtResource( 8 )
 
+[connection signal="pressed" from="HBoxContainer/Remove" to="." method="_on_Remove_pressed"]
 [connection signal="pressed" from="HBoxContainer/Reset" to="." method="_on_Reset_pressed"]
 [connection signal="item_selected" from="HBoxContainer/Target" to="." method="_on_Target_item_selected"]
 [connection signal="toggled" from="HBoxContainer/Grab" to="." method="_on_Grab_toggled"]

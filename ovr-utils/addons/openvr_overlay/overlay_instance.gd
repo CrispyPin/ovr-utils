@@ -15,7 +15,7 @@ export var add_grabbing := true  # add grabbing module
 export var add_cursor   := false # add cursor module
 
 # if this is exported, all overlays sync offset when a controller is turned off/on
-# this seems to be a bug with the godot editor-
+# this seems to be a bug with the godot editor
 var _offsets:Dictionary = {
 	"head": {"pos": Vector3(0,0,-0.4), "rot": Quat()},
 	"left": {"pos": Vector3(), "rot": Quat()},
@@ -24,7 +24,7 @@ var _offsets:Dictionary = {
 }
 
 # what's actually tracking
-var current_target: String = "world" setget _set_current_target# most of the time the actual target, but will fall back
+var current_target: String = "world" setget _set_current_target
 var fallback = ["left", "right", "head"] # TODO setget that updates tracking (not important)
 var interaction_handler: Node
 var overlay_visible := true setget set_overlay_visible
