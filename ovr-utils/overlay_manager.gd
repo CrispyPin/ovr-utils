@@ -18,7 +18,7 @@ func _load_overlays():
 	for key in Settings.s.overlays:
 		# TODO remove this check, settings should always contain "type"
 		if Settings.s.overlays[key].has("type"):
-			if not Settings.s.overlays[key].type == "MainOverlay":
+			if not key == "MainOverlay":
 				add_overlay(Settings.s.overlays[key].type, key)
 		else:
 			print("No type defined for overlay ", key)

@@ -6,7 +6,7 @@ var overlay
 func _ready() -> void:
 	overlay = get_node("/root/Main/OverlayManager").get_node(overlay_name)
 	$Label.text = overlay_name
-	$HBoxContainer/Target.selected = overlay.TARGETS.find(overlay.target)
+	$HBoxContainer/Target.selected = overlay.TARGETS.find(Settings.s.overlays[overlay_name].target)
 	overlay.connect("overlay_visibility_changed", self, "_overlay_visibility_changed")
 
 

@@ -26,7 +26,7 @@ margin_left = 8.0
 margin_top = 16.0
 margin_right = 2040.0
 margin_bottom = 191.0
-text = "BatteryLevel"
+text = "MainOverlay"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 8.0
