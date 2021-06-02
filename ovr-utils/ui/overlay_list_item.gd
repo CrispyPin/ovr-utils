@@ -4,7 +4,7 @@ export var overlay_name: String
 var overlay
 
 func _ready() -> void:
-	overlay = get_node("/root/Main/OverlayManager").get_node(overlay_name)
+	overlay = OverlayManager.get_node(overlay_name)
 	$Label.text = overlay_name
 	name = overlay_name
 	$HBoxContainer/Target.selected = overlay.TARGETS.find(Settings.s.overlays[overlay_name].target)
@@ -36,5 +36,5 @@ func _overlay_visibility_changed(state: bool):
 
 
 func _on_Remove_pressed() -> void:
-	get_node("/root/Main/OverlayManager").remove_overlay(overlay_name)
+	OverlayManager.remove_overlay(overlay_name)
 

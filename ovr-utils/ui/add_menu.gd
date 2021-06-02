@@ -14,7 +14,7 @@ func _ready() -> void:
 
 
 func add_overlay(type):
-	get_node("/root/Main/OverlayManager").add_overlay(type, type + str(randi()%100))
+	OverlayManager.add_overlay(type, type + str(randi()%100))
 	visible = false
 
 

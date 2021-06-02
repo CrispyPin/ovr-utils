@@ -20,6 +20,7 @@ config/icon="res://textures/icon.png"
 
 Settings="*res://addons/settings-manager/Settings.tscn"
 OverlayInit="*res://addons/openvr_overlay/overlay_init.gd"
+OverlayManager="*res://OverlayManager.tscn"
 
 [display]
 

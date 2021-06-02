@@ -2,8 +2,8 @@ extends Control
 
 
 func _ready() -> void:
-	get_node("/root/Main/OverlayManager").connect("added_overlay", self, "_add_overlay_to_list")
-	get_node("/root/Main/OverlayManager").connect("removed_overlay", self, "_remove_overlay_from_list")
+	OverlayManager.connect("added_overlay", self, "_add_overlay_to_list")
+	OverlayManager.connect("removed_overlay", self, "_remove_overlay_from_list")
 	for o in Settings.s.overlays:
 		if o != "MainOverlay":
 			_add_overlay_to_list(o)

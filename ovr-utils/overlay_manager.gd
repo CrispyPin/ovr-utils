@@ -10,6 +10,10 @@ func _init() -> void:
 	Settings.connect("settings_loaded", self, "_load_overlays")
 
 
+func _ready() -> void:
+	randomize()
+
+
 func _load_overlays():
 	if loaded:
 		return
