@@ -1,5 +1,7 @@
 extends Node
 
+signal added_overlay
+signal removed_overlay
 
 var loaded := false
 
@@ -23,6 +25,9 @@ func _load_overlays():
 
 
 func add_overlay(type, name):
+	if type == "":
+		print("no type specified for overlay ", name)
+		return
 	var scene = load("res://overlays/" + type + ".tscn")
 	if scene == null:
 		print("Unknown overlay type: ", type, ". Skipping overlay \"", name, "\"")
@@ -30,5 +35,6 @@ func add_overlay(type, name):
 	var instance = preload("res://addons/openvr_overlay/OverlayInstance.tscn").instance()
 	instance.name = name
 	instance.overlay_scene = scene
+	instance.type = type
 	add_child(instance)
-
+	emit_signal("added_overlay", name)

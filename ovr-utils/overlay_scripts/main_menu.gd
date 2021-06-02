@@ -2,11 +2,17 @@ extends Control
 
 
 func _ready() -> void:
+	get_node("/root/Main/OverlayManager").connect("added_overlay", self, "_add_overlay_to_list")
 	for o in Settings.s.overlays:
-		var new = preload("res://ListOverlayItem.tscn").instance()
-		new.overlay_name = o
-		$VSplitContainer/Control/Overlays.add_child(new)
+		_add_overlay_to_list(o)
 	$VSplitContainer/Control/Overlays.visible = false
+
+
+func _add_overlay_to_list(name):
+	var new = preload("res://ui/ListOverlayItem.tscn").instance()
+	new.overlay_name = name
+	$VSplitContainer/Control/Overlays.add_child(new)
+
 
 
 func _on_GrabMode_toggled(state: bool) -> void:
@@ -19,4 +25,5 @@ func _on_ShowOverlays_toggled(state: bool) -> void:
 
 
 func _on_AddOverlay_pressed() -> void:
-	pass # Replace with function body.
+	$VSplitContainer/Control/AddMenu.visible = true
+

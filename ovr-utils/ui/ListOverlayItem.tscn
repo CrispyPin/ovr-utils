@@ -1,22 +1,22 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://styles/menu.theme" type="Theme" id=1]
-[ext_resource path="res://icons/visible.svg" type="Texture" id=2]
-[ext_resource path="res://overlay_list_item.gd" type="Script" id=3]
-[ext_resource path="res://icons/move.svg" type="Texture" id=4]
-[ext_resource path="res://icons/remove.svg" type="Texture" id=5]
-[ext_resource path="res://icons/reset.svg" type="Texture" id=6]
-[ext_resource path="res://icons/size.svg" type="Texture" id=7]
-[ext_resource path="res://icons/hand_r.svg" type="Texture" id=8]
-[ext_resource path="res://icons/person.svg" type="Texture" id=9]
+[ext_resource path="res://ui/overlay_list_item.gd" type="Script" id=1]
+[ext_resource path="res://icons/remove.svg" type="Texture" id=2]
+[ext_resource path="res://icons/move.svg" type="Texture" id=3]
+[ext_resource path="res://icons/size.svg" type="Texture" id=4]
+[ext_resource path="res://icons/reset.svg" type="Texture" id=5]
+[ext_resource path="res://icons/hand_r.svg" type="Texture" id=6]
+[ext_resource path="res://icons/person.svg" type="Texture" id=7]
+[ext_resource path="res://icons/visible.svg" type="Texture" id=8]
+[ext_resource path="res://styles/menu.theme" type="Theme" id=9]
 
 [node name="ListOverlayItem" type="PanelContainer"]
 margin_top = 1727.0
 margin_right = 2048.0
 margin_bottom = 1920.0
 rect_min_size = Vector2( 100, 128 )
-theme = ExtResource( 1 )
-script = ExtResource( 3 )
+theme = ExtResource( 9 )
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -41,14 +41,14 @@ margin_right = 1128.0
 margin_bottom = 191.0
 focus_mode = 0
 toggle_mode = true
-icon = ExtResource( 5 )
+icon = ExtResource( 2 )
 
 [node name="Reset" type="Button" parent="HBoxContainer"]
 margin_left = 1132.0
 margin_right = 1308.0
 margin_bottom = 191.0
 focus_mode = 0
-icon = ExtResource( 6 )
+icon = ExtResource( 5 )
 
 [node name="Target" type="OptionButton" parent="HBoxContainer"]
 margin_left = 1312.0
@@ -56,9 +56,9 @@ margin_right = 1492.0
 margin_bottom = 191.0
 focus_mode = 0
 text = "Left"
-icon = ExtResource( 8 )
+icon = ExtResource( 6 )
 clip_text = true
-items = [ "Head", ExtResource( 9 ), false, 0, null, "Left", ExtResource( 8 ), false, 1, null, "Right", ExtResource( 8 ), false, 2, null, "World", ExtResource( 4 ), false, 3, null ]
+items = [ "Head", ExtResource( 7 ), false, 0, null, "Left", ExtResource( 6 ), false, 1, null, "Right", ExtResource( 6 ), false, 2, null, "World", ExtResource( 3 ), false, 3, null ]
 selected = 1
 
 [node name="Size" type="Button" parent="HBoxContainer"]
@@ -67,7 +67,7 @@ margin_right = 1672.0
 margin_bottom = 191.0
 focus_mode = 0
 toggle_mode = true
-icon = ExtResource( 7 )
+icon = ExtResource( 4 )
 
 [node name="Grab" type="Button" parent="HBoxContainer"]
 margin_left = 1676.0
@@ -75,7 +75,7 @@ margin_right = 1852.0
 margin_bottom = 191.0
 focus_mode = 0
 toggle_mode = true
-icon = ExtResource( 4 )
+icon = ExtResource( 3 )
 
 [node name="Visibility" type="Button" parent="HBoxContainer"]
 margin_left = 1856.0
@@ -84,7 +84,7 @@ margin_bottom = 191.0
 focus_mode = 0
 toggle_mode = true
 pressed = true
-icon = ExtResource( 2 )
+icon = ExtResource( 8 )
 
 [connection signal="pressed" from="HBoxContainer/Reset" to="." method="_on_Reset_pressed"]
 [connection signal="item_selected" from="HBoxContainer/Target" to="." method="_on_Target_item_selected"]

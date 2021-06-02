@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://overlay_scripts/main_menu.gd" type="Script" id=1]
 [ext_resource path="res://styles/menu.theme" type="Theme" id=2]
+[ext_resource path="res://ui/AddMenu.tscn" type="PackedScene" id=3]
 [ext_resource path="res://icons/add.svg" type="Texture" id=4]
 [ext_resource path="res://icons/move.svg" type="Texture" id=5]
 [ext_resource path="res://icons/list.svg" type="Texture" id=6]
@@ -36,6 +37,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="AddMenu" parent="VSplitContainer/Control" instance=ExtResource( 3 )]
+
 [node name="MainBar" type="HBoxContainer" parent="VSplitContainer"]
 margin_top = 1857.0
 margin_right = 2048.0
@@ -44,20 +47,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GrabMode" type="Button" parent="VSplitContainer/MainBar"]
+[node name="ShowOverlays" type="Button" parent="VSplitContainer/MainBar"]
 margin_right = 176.0
 margin_bottom = 191.0
 focus_mode = 0
 toggle_mode = true
-icon = ExtResource( 5 )
+icon = ExtResource( 6 )
 
-[node name="ShowOverlays" type="Button" parent="VSplitContainer/MainBar"]
+[node name="GrabMode" type="Button" parent="VSplitContainer/MainBar"]
 margin_left = 180.0
 margin_right = 356.0
 margin_bottom = 191.0
 focus_mode = 0
 toggle_mode = true
-icon = ExtResource( 6 )
+icon = ExtResource( 5 )
 
 [node name="AddOverlay" type="Button" parent="VSplitContainer/MainBar"]
 margin_left = 360.0
@@ -66,6 +69,6 @@ margin_bottom = 191.0
 focus_mode = 0
 icon = ExtResource( 4 )
 
-[connection signal="toggled" from="VSplitContainer/MainBar/GrabMode" to="." method="_on_GrabMode_toggled"]
 [connection signal="toggled" from="VSplitContainer/MainBar/ShowOverlays" to="." method="_on_ShowOverlays_toggled"]
+[connection signal="toggled" from="VSplitContainer/MainBar/GrabMode" to="." method="_on_GrabMode_toggled"]
 [connection signal="pressed" from="VSplitContainer/MainBar/AddOverlay" to="." method="_on_AddOverlay_pressed"]

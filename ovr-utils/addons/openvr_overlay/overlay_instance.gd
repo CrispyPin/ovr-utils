@@ -28,6 +28,7 @@ var current_target: String = "world" setget _set_current_target# most of the tim
 var fallback = ["left", "right", "head"] # TODO setget that updates tracking (not important)
 var interaction_handler: Node
 var overlay_visible := true setget set_overlay_visible
+var type: String
 
 var _tracker_id: int = 0
 
@@ -60,9 +61,9 @@ func _ready() -> void:
 func add_cursor():
 	interaction_handler.add_child(load("res://addons/openvr_overlay/OverlayCursor.tscn").instance())
 
+
 func add_grab():
 	interaction_handler.add_child(load("res://addons/openvr_overlay/OverlayGrab.tscn").instance())
-
 
 
 func load_settings():
@@ -94,6 +95,7 @@ func save_settings():
 	Settings.s.overlays[name].target = target
 	Settings.s.overlays[name].width = width_meters
 	Settings.s.overlays[name].fallback = fallback
+	Settings.s.overlays[name].type = type
 
 	if not Settings.s.overlays[name].has("offsets"):
 		Settings.s.overlays[name]["offsets"] = {}
@@ -200,7 +202,7 @@ func set_overlay_scene(scene: PackedScene):
 func reset_offset():
 	_offsets[current_target].rot = Quat()
 	_offsets[current_target].pos = Vector3()
-	if current_target == "world":
+	if current_target == "head":
 		_offsets[current_target].pos.z = -0.5
 	update_offset()
 	save_settings()
