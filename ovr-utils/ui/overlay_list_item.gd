@@ -37,5 +37,6 @@ func _overlay_visibility_changed(state: bool):
 
 
 func _on_Remove_pressed() -> void:
-	OverlayManager.remove_overlay(overlay_name)
+	if overlay.type and overlay.type != "main":
+		OverlayManager.remove_overlay(overlay_name)
 
