@@ -20,12 +20,8 @@ func _load_overlays():
 	loaded = true
 	print("Loading in overlays")
 	for key in Settings.s.overlays:
-		# TODO remove this check, settings should always contain "type"
-		if Settings.s.overlays[key].has("type"):
-			if not key == "MainOverlay":
-				add_overlay(Settings.s.overlays[key].type, key)
-		else:
-			print("No type defined for overlay ", key)
+		if not key == "MainOverlay":
+			add_overlay(Settings.s.overlays[key].type, key)
 
 
 func add_overlay(type, name):
@@ -33,6 +29,7 @@ func add_overlay(type, name):
 	if not scene:
 		print("Unknown overlay type: '", type, "'. Skipping overlay '", name, "'")
 		return
+	print("Adding overlay '", name, "' of type '", type, "'")
 	var instance = preload("res://addons/openvr_overlay/OverlayInstance.tscn").instance()
 	instance.name = name
 	instance.overlay_scene = scene

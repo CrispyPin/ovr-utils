@@ -12,7 +12,8 @@ func _ready() -> void:
 
 
 func _on_Visibility_toggled(state: bool) -> void:
-	overlay.overlay_visible = state
+	if overlay.type and overlay.type != "main":
+		overlay.overlay_visible = state
 
 
 func _on_Target_item_selected(index: int) -> void:

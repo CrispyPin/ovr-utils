@@ -8,19 +8,18 @@ signal overlay_visibility_changed
 const TARGETS = ["head", "left", "right", "world"]
 export (String,  "head", "left", "right", "world") var target = "left" setget set_target
 
-export var overlay_scene =\
+export var overlay_scene: PackedScene = \
 		preload("res://addons/openvr_overlay/MissingOverlay.tscn") setget set_overlay_scene
-export var width_meters = 0.4 setget set_width_in_meters
+export var width_meters := 0.4 setget set_width_in_meters
 export var add_grabbing := true  # add grabbing module
 export var add_cursor   := false # add cursor module
 
-# if this is exported, all overlays sync offset when a controller is turned off/on
-# this seems to be a bug with the godot editor
+var _tracker_id := 0
 var _offsets:Dictionary = {
-	"head": {"pos": Vector3(0,0,-0.4), "rot": Quat()},
-	"left": {"pos": Vector3(), "rot": Quat()},
+	"head":  {"pos": Vector3(0, 0, -0.5), "rot": Quat()},
+	"left":  {"pos": Vector3(), "rot": Quat()},
 	"right": {"pos": Vector3(), "rot": Quat()},
-	"world": {"pos": Vector3(0,1,0), "rot": Quat()}
+	"world": {"pos": Vector3(0,1,0), "rot": Quat()},
 }
 
 # what's actually tracking
@@ -28,11 +27,10 @@ var current_target: String = "world" setget _set_current_target
 var fallback = ["left", "right", "head"] # TODO setget that updates tracking (not important)
 var interaction_handler: Node
 var overlay_visible := true setget set_overlay_visible
-var type: String
-
-var _tracker_id: int = 0
+var type := "main"
 
 onready var container = $OverlayViewport/Container
+
 
 func _ready() -> void:
 	current_target = target
@@ -82,16 +80,12 @@ func load_settings():
 		update_offset()
 		if loaded.has("visible"):
 			set_overlay_visible(loaded.visible)
-	else:
-		#TEMP defaults (remove when dragging any overlay is possible)
-		set_offset(current_target, translation, transform.basis.get_rotation_quat())
-		####
-
-		Settings.s.overlays[name] = {}
 	save_settings()
 
 
 func save_settings():
+	if not Settings.s.overlays.has(name):
+		Settings.s.overlays[name] = {}
 	Settings.s.overlays[name].target = target
 	Settings.s.overlays[name].width = width_meters
 	Settings.s.overlays[name].fallback = fallback
@@ -99,14 +93,13 @@ func save_settings():
 
 	if not Settings.s.overlays[name].has("offsets"):
 		Settings.s.overlays[name]["offsets"] = {}
-
 	for t_key in TARGETS:
 		Settings.s.overlays[name].offsets[t_key] = _offsets[t_key]
+
 	Settings.save_settings()
 
 
-
-func update_tracker_id() -> void:
+func update_tracker_id():
 	_tracker_id = -1
 	match current_target:
 		"left":
@@ -122,7 +115,7 @@ func update_tracker_id() -> void:
 		_tracker_id = 63 # highest tracker id (unused, at origin)
 
 
-func update_offset() -> void:
+func update_offset():
 	translation = _offsets[current_target].pos
 	transform.basis = Basis(_offsets[current_target].rot)
 
@@ -163,7 +156,6 @@ func set_target(new: String):
 	target = new
 	call_deferred("update_offset")
 	update_current_target()
-#	save_settings()
 
 
 func _set_current_target(new: String): # overrides target
@@ -183,23 +175,22 @@ func set_offset(offset_target: String, pos: Vector3, rot: Quat) -> void:
 	update_offset()
 
 
-func set_width_in_meters(width: float):
+func set_width_in_meters(width: float) -> void:
 	width_meters = width
 	$OverlayViewport.overlay_width_in_meters = width_meters
 	emit_signal("width_changed")
 
 
-func set_overlay_scene(scene: PackedScene):
+func set_overlay_scene(scene: PackedScene) -> void:
 	overlay_scene = scene
 	if not container:
-#		print("container does not exist yet [overlay_instance.set_overlay_scene]")
 		return
 	if container.get_child_count() > 0:
 		container.get_child(0).queue_free()
 	container.add_child(overlay_scene.instance())
 
 
-func reset_offset():
+func reset_offset() -> void:
 	_offsets[current_target].rot = Quat()
 	_offsets[current_target].pos = Vector3()
 	if current_target == "head":
@@ -212,4 +203,3 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSFORM_CHANGED:
 		update_offset()
 		emit_signal("offset_changed")
-
