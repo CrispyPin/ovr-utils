@@ -4,6 +4,7 @@ A cross-platform SteamVR overlay application that aims to have many useful tools
 ## Installation
 * Grab the latest release for your OS from the [releases section](https://github.com/CrispyPin/ovr-utils/releases)
 * Extract the executable to somewhere (make sure to mark it as executable on linux)
+* Make sure to put the `libgodot_openvr` and `openvr_api` library files in the same folder as `ovr-utils`
 * In steam, go to `Games`>`Add a non-steam game to my library`
 * Click browse and find the `ovr-utils` executable
 * Click `add`, and then `add selected programs`
