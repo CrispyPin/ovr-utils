@@ -104,12 +104,35 @@ margin_right = 176.0
 margin_bottom = 191.0
 icon = ExtResource( 2 )
 
-[node name="Size" type="Button" parent="MoreOptions/Container/List"]
+[node name="SetSize" type="Button" parent="MoreOptions/Container/List"]
 margin_left = 180.0
 margin_right = 356.0
 margin_bottom = 191.0
 toggle_mode = true
 icon = ExtResource( 4 )
+
+[node name="PanelContainer" type="PanelContainer" parent="MoreOptions/Container/List/SetSize"]
+anchor_top = -0.016
+anchor_right = 1.0
+anchor_bottom = -0.016
+margin_top = -464.944
+margin_bottom = 0.0560002
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SizeSlider" type="VSlider" parent="MoreOptions/Container/List/SetSize/PanelContainer"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 108.0
+margin_bottom = 457.0
+min_value = 0.1
+max_value = 1.0
+step = 0.05
+value = 0.1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Target" type="OptionButton" parent="MoreOptions/Container/List"]
 margin_left = 360.0
@@ -137,6 +160,8 @@ icon = ExtResource( 11 )
 [connection signal="toggled" from="BasicOptions/List/Visibility" to="." method="_on_Visibility_toggled"]
 [connection signal="pressed" from="BasicOptions/List/Options" to="." method="_on_Options_pressed"]
 [connection signal="pressed" from="MoreOptions/Container/List/Remove" to="." method="_on_Remove_pressed"]
+[connection signal="toggled" from="MoreOptions/Container/List/SetSize" to="." method="_on_SetSize_toggled"]
+[connection signal="value_changed" from="MoreOptions/Container/List/SetSize/PanelContainer/SizeSlider" to="." method="_on_SizeSlider_value_changed"]
 [connection signal="item_selected" from="MoreOptions/Container/List/Target" to="." method="_on_Target_item_selected"]
 [connection signal="pressed" from="MoreOptions/Container/List/Reset" to="." method="_on_Reset_pressed"]
 [connection signal="pressed" from="MoreOptions/Container/List/CloseOptions" to="." method="_on_CloseOptions_pressed"]
