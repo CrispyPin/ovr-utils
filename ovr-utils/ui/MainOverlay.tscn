@@ -39,7 +39,7 @@ __meta__ = {
 }
 
 [node name="ListOverlayItem" parent="VSplitContainer/Control/Overlays" instance=ExtResource( 7 )]
-margin_top = 1638.0
+margin_top = 1717.0
 margin_bottom = 1845.0
 overlay_name = "MainOverlay"
 
