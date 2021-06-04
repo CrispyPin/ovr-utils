@@ -80,7 +80,8 @@ func load_settings():
 		update_offset()
 		if loaded.has("visible"):
 			set_overlay_visible(loaded.visible)
-	save_settings()
+	else:
+		save_settings()
 
 
 func save_settings():
