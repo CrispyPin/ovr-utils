@@ -6,6 +6,7 @@ var overlay
 func _ready() -> void:
 	overlay = OverlayManager.get_node(overlay_name)
 	$MoreOptions/Container/List/SetSize/PanelContainer.visible = false
+	$MoreOptions/Container/List/SetSize/PanelContainer/SizeSlider.value = Settings.s.overlays[overlay_name].width
 	$MoreOptions.visible = false
 	$BasicOptions/Label.text = overlay_name
 	name = overlay_name
