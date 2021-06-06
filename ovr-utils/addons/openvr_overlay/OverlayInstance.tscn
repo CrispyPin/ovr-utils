@@ -57,16 +57,9 @@ shadow_atlas_quad_3 = 0
 script = ExtResource( 3 )
 overlay_width_in_meters = 0.4
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VROverlayViewport"]
+[node name="TextureRect" type="TextureRect" parent="VROverlayViewport"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect" type="TextureRect" parent="VROverlayViewport/AspectRatioContainer"]
-margin_right = 100.0
-margin_bottom = 100.0
 texture = SubResource( 2 )
 expand = true
 stretch_mode = 5

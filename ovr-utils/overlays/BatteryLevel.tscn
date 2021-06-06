@@ -3,17 +3,18 @@
 [ext_resource path="res://overlay_scripts/battery.gd" type="Script" id=1]
 [ext_resource path="res://fonts/OpenSans-Regular.ttf" type="DynamicFontData" id=2]
 
-[sub_resource type="StyleBoxEmpty" id=3]
+[sub_resource type="StyleBoxEmpty" id=4]
 
-[sub_resource type="StyleBoxFlat" id=1]
+[sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0, 0, 0, 0.705882 )
 expand_margin_left = 8.0
 expand_margin_right = 8.0
 expand_margin_top = 8.0
 expand_margin_bottom = 8.0
 
-[sub_resource type="DynamicFont" id=2]
-size = 128
+[sub_resource type="DynamicFont" id=3]
+size = 256
+use_filter = true
 font_data = ExtResource( 2 )
 
 [node name="Overlay" type="Control"]
@@ -26,43 +27,38 @@ __meta__ = {
 }
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -199.0
-margin_top = -94.5
-margin_right = 199.0
-margin_bottom = 94.5
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
-custom_styles/panel = SubResource( 3 )
+custom_styles/panel = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="CenterContainer" type="CenterContainer" parent="PanelContainer"]
-margin_right = 398.0
-margin_bottom = 189.0
+margin_right = 2048.0
+margin_bottom = 2048.0
 
 [node name="ColorRect" type="PanelContainer" parent="PanelContainer/CenterContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 391.0
-margin_bottom = 182.0
+margin_left = 134.0
+margin_top = 849.0
+margin_right = 1914.0
+margin_bottom = 1198.0
 grow_horizontal = 2
 size_flags_horizontal = 0
-custom_styles/panel = SubResource( 1 )
+custom_styles/panel = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="PanelContainer/CenterContainer/ColorRect"]
-margin_right = 384.0
-margin_bottom = 175.0
+margin_right = 1780.0
+margin_bottom = 349.0
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 2 )
-text = "L: 10%"
+custom_fonts/font = SubResource( 3 )
+text = "L: 10% R: 100%"
 align = 1
+valign = 1
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
