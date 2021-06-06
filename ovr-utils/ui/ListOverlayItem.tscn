@@ -103,12 +103,14 @@ alignment = 2
 [node name="Remove" type="Button" parent="MoreOptions/Container/List"]
 margin_right = 176.0
 margin_bottom = 191.0
+focus_mode = 0
 icon = ExtResource( 2 )
 
 [node name="SetSize" type="Button" parent="MoreOptions/Container/List"]
 margin_left = 180.0
 margin_right = 356.0
 margin_bottom = 191.0
+focus_mode = 0
 toggle_mode = true
 icon = ExtResource( 4 )
 
@@ -139,6 +141,7 @@ __meta__ = {
 margin_left = 360.0
 margin_right = 536.0
 margin_bottom = 191.0
+focus_mode = 0
 toggle_mode = true
 icon = ExtResource( 12 )
 
@@ -157,7 +160,8 @@ margin_left = 8.0
 margin_top = 8.0
 margin_right = 168.0
 margin_bottom = 441.0
-min_value = 0.2
+focus_mode = 0
+min_value = 0.3
 max_value = 1.0
 step = 0.05
 value = 1.0
@@ -169,6 +173,7 @@ __meta__ = {
 margin_left = 540.0
 margin_right = 720.0
 margin_bottom = 191.0
+focus_mode = 0
 text = "Left"
 icon = ExtResource( 6 )
 clip_text = true
@@ -179,12 +184,14 @@ selected = 1
 margin_left = 724.0
 margin_right = 900.0
 margin_bottom = 191.0
+focus_mode = 0
 icon = ExtResource( 5 )
 
 [node name="CloseOptions" type="Button" parent="MoreOptions/Container/List"]
 margin_left = 904.0
 margin_right = 1080.0
 margin_bottom = 191.0
+focus_mode = 0
 icon = ExtResource( 11 )
 
 [connection signal="toggled" from="BasicOptions/List/Grab" to="." method="_on_Grab_toggled"]
