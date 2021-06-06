@@ -1,6 +1,7 @@
 extends Spatial
 
 signal width_changed
+signal alpha_changed
 signal offset_changed
 signal target_changed
 signal overlay_visibility_changed
@@ -11,6 +12,7 @@ export (String,  "head", "left", "right", "world") var target = "left" setget se
 export var overlay_scene: PackedScene = \
 		preload("res://addons/openvr_overlay/MissingOverlay.tscn") setget set_overlay_scene
 export var width_meters := 0.4 setget set_width_in_meters
+export var alpha := 1.0 setget set_alpha
 export var add_grabbing := true  # add grabbing module
 export var add_cursor   := false # add cursor module
 
@@ -80,6 +82,8 @@ func load_settings():
 		update_offset()
 		if loaded.has("visible"):
 			set_overlay_visible(loaded.visible)
+		if loaded.has("alpha"):
+			set_alpha(loaded.alpha)
 	else:
 		save_settings()
 
@@ -89,6 +93,7 @@ func save_settings():
 		Settings.s.overlays[name] = {}
 	Settings.s.overlays[name].target = target
 	Settings.s.overlays[name].width = width_meters
+	Settings.s.overlays[name].alpha = alpha
 	Settings.s.overlays[name].fallback = fallback
 	Settings.s.overlays[name].type = type
 
@@ -189,6 +194,12 @@ func set_overlay_scene(scene: PackedScene) -> void:
 	if container.get_child_count() > 0:
 		container.get_child(0).queue_free()
 	container.add_child(overlay_scene.instance())
+
+
+func set_alpha(val: float):
+	alpha = val
+	$VROverlayViewport/TextureRect.modulate.a = val
+	emit_signal("alpha_changed")
 
 
 func reset_offset() -> void:

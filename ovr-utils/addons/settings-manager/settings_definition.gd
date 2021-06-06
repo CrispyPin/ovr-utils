@@ -30,6 +30,11 @@ const DEF = {
 					"type": "number",
 					"default": 0.4
 				},
+				"alpha": {
+					"name": "Alpha",
+					"type": "number",
+					"default": 1.0
+				},
 				"target": {
 					"name": "Tracking target",
 					"type": "string",
@@ -68,6 +73,7 @@ const DEF = {
 				"type": "MainOverlay",
 				"visible": true,
 				"width": 0.4,
+				"alpha": 1.0,
 				"target": "left",
 				"fallback": ["left", "right", "head"],
 				"offsets": {

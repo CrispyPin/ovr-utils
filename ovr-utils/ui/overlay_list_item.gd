@@ -6,6 +6,7 @@ var overlay
 func _ready() -> void:
 	overlay = OverlayManager.get_node(overlay_name)
 	$MoreOptions/Container/List/SetSize/PanelContainer.visible = false
+	$MoreOptions/Container/List/SetAlpha/PanelContainer.visible = false
 	$MoreOptions/Container/List/SetSize/PanelContainer/SizeSlider.value = Settings.s.overlays[overlay_name].width
 	$MoreOptions.visible = false
 	$BasicOptions/Label.text = overlay_name
@@ -56,5 +57,13 @@ func _on_SetSize_toggled(state: bool) -> void:
 	$MoreOptions/Container/List/SetSize/PanelContainer.visible = state
 
 
+func _on_SetAlpha_toggled(state: bool) -> void:
+	$MoreOptions/Container/List/SetAlpha/PanelContainer.visible = state
+
+
 func _on_SizeSlider_value_changed(value: float) -> void:
 	overlay.width_meters = value
+
+
+func _on_AlphaSlider_value_changed(value: float) -> void:
+	overlay.alpha = value

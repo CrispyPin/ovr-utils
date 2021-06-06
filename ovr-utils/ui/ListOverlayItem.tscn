@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://ui/overlay_list_item.gd" type="Script" id=1]
 [ext_resource path="res://icons/remove.svg" type="Texture" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://styles/menu.theme" type="Theme" id=9]
 [ext_resource path="res://icons/list.svg" type="Texture" id=10]
 [ext_resource path="res://icons/close.svg" type="Texture" id=11]
+[ext_resource path="res://icons/alpha.svg" type="Texture" id=12]
 
 [node name="ListOverlayItem" type="MarginContainer"]
 margin_top = 1727.0
@@ -83,19 +84,19 @@ margin_right = 2040.0
 margin_bottom = 215.0
 
 [node name="Spacer" type="Control" parent="MoreOptions"]
-margin_right = 1104.0
+margin_right = 924.0
 margin_bottom = 207.0
 size_flags_horizontal = 3
 
 [node name="Container" type="PanelContainer" parent="MoreOptions"]
-margin_left = 1116.0
+margin_left = 936.0
 margin_right = 2032.0
 margin_bottom = 207.0
 
 [node name="List" type="HBoxContainer" parent="MoreOptions/Container"]
 margin_left = 8.0
 margin_top = 8.0
-margin_right = 908.0
+margin_right = 1088.0
 margin_bottom = 199.0
 alignment = 2
 
@@ -134,9 +135,39 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Target" type="OptionButton" parent="MoreOptions/Container/List"]
+[node name="SetAlpha" type="Button" parent="MoreOptions/Container/List"]
 margin_left = 360.0
-margin_right = 540.0
+margin_right = 536.0
+margin_bottom = 191.0
+toggle_mode = true
+icon = ExtResource( 12 )
+
+[node name="PanelContainer" type="PanelContainer" parent="MoreOptions/Container/List/SetAlpha"]
+anchor_top = -0.016
+anchor_right = 1.0
+anchor_bottom = -0.016
+margin_top = -448.944
+margin_bottom = 0.0560002
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AlphaSlider" type="VSlider" parent="MoreOptions/Container/List/SetAlpha/PanelContainer"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 168.0
+margin_bottom = 441.0
+min_value = 0.2
+max_value = 1.0
+step = 0.05
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Target" type="OptionButton" parent="MoreOptions/Container/List"]
+margin_left = 540.0
+margin_right = 720.0
 margin_bottom = 191.0
 text = "Left"
 icon = ExtResource( 6 )
@@ -145,14 +176,14 @@ items = [ "Head", ExtResource( 7 ), false, 0, null, "Left", ExtResource( 6 ), fa
 selected = 1
 
 [node name="Reset" type="Button" parent="MoreOptions/Container/List"]
-margin_left = 544.0
-margin_right = 720.0
+margin_left = 724.0
+margin_right = 900.0
 margin_bottom = 191.0
 icon = ExtResource( 5 )
 
 [node name="CloseOptions" type="Button" parent="MoreOptions/Container/List"]
-margin_left = 724.0
-margin_right = 900.0
+margin_left = 904.0
+margin_right = 1080.0
 margin_bottom = 191.0
 icon = ExtResource( 11 )
 
@@ -162,6 +193,8 @@ icon = ExtResource( 11 )
 [connection signal="pressed" from="MoreOptions/Container/List/Remove" to="." method="_on_Remove_pressed"]
 [connection signal="toggled" from="MoreOptions/Container/List/SetSize" to="." method="_on_SetSize_toggled"]
 [connection signal="value_changed" from="MoreOptions/Container/List/SetSize/PanelContainer/SizeSlider" to="." method="_on_SizeSlider_value_changed"]
+[connection signal="toggled" from="MoreOptions/Container/List/SetAlpha" to="." method="_on_SetAlpha_toggled"]
+[connection signal="value_changed" from="MoreOptions/Container/List/SetAlpha/PanelContainer/AlphaSlider" to="." method="_on_AlphaSlider_value_changed"]
 [connection signal="item_selected" from="MoreOptions/Container/List/Target" to="." method="_on_Target_item_selected"]
 [connection signal="pressed" from="MoreOptions/Container/List/Reset" to="." method="_on_Reset_pressed"]
 [connection signal="pressed" from="MoreOptions/Container/List/CloseOptions" to="." method="_on_CloseOptions_pressed"]
