@@ -78,12 +78,12 @@ const DEF = {
 				"fallback": ["left", "right", "head"],
 				"offsets": {
 					"left": {
-						"pos": Vector3(),
-						"rot": Quat(),
+						"pos": Vector3(0.15, 0.05, 0),
+						"rot": Quat(-0.653928, -0.023545, 0.008617, 0.756141),
 					},
 					"right": {
-						"pos": Vector3(),
-						"rot": Quat(),
+						"pos": Vector3(-0.15, 0.05, 0),
+						"rot": Quat(-0.653928, -0.023545, 0.008617, 0.756141),
 					},
 					"head": {
 						"pos": Vector3(0,0,-0.5),
