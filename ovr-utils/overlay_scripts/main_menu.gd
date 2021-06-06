@@ -22,6 +22,7 @@ func _remove_overlay_from_list(name):
 
 func _on_GrabMode_toggled(state: bool) -> void:
 	Settings.s.grab_mode = state
+	OverlayManager.emit_signal("grab_mode_changed")
 
 
 func _on_ShowOverlays_toggled(state: bool) -> void:

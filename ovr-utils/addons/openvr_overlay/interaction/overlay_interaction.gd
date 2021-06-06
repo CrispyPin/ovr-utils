@@ -7,9 +7,9 @@ signal trigger_off# trigger released
 
 var touch_state   := false
 var trigger_state := false
-var grab_mode := false
+var grab_mode := false setget set_grab_mode
 
-# controller that currently the  trigger down
+# controller that currently has the trigger down
 var active_controller := ""
 # reference to the area node thats used for touch
 var _overlay_area = preload("res://addons/openvr_overlay/interaction/OverlayArea.tscn").instance()
@@ -35,6 +35,8 @@ func _ready() -> void:
 	get_parent().connect("offset_changed", self, "_update_offset")
 	get_parent().connect("target_changed", self, "_update_target")
 
+	OverlayManager.connect("grab_mode_changed", self, "update_selection")
+
 	_update_width()
 	_update_offset()
 	_update_target()
@@ -57,7 +59,7 @@ func _on_OverlayArea_entered(body: Node) -> void:
 		return
 	touch_state = true
 	active_controller = body.get_parent().name
-	get_parent().get_node("OverlayViewport/Selected").visible = Settings.s.grab_mode or grab_mode
+	update_selection()
 	emit_signal("touch_on")
 
 
@@ -67,8 +69,18 @@ func _on_OverlayArea_exited(body: Node) -> void:
 	# TODO revert to other controller if both were touching (edge case)
 	active_controller = ""
 	touch_state = false
-	get_parent().get_node("OverlayViewport/Selected").visible = false
+	update_selection()
 	emit_signal("touch_off")
+
+
+func update_selection():
+	var sel = touch_state and (Settings.s.grab_mode or grab_mode)
+	get_parent().get_node("OverlayViewport/Selected").visible = sel
+
+
+func set_grab_mode(state: bool) -> void:
+	grab_mode = state
+	update_selection()
 
 
 func _update_width():

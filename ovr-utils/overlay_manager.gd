@@ -2,6 +2,7 @@ extends Node
 
 signal added_overlay
 signal removed_overlay
+signal grab_mode_changed
 
 var loaded := false
 
