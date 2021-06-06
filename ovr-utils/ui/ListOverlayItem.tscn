@@ -1,17 +1,19 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://ui/overlay_list_item.gd" type="Script" id=1]
 [ext_resource path="res://icons/remove.svg" type="Texture" id=2]
 [ext_resource path="res://icons/move.svg" type="Texture" id=3]
 [ext_resource path="res://icons/size.svg" type="Texture" id=4]
 [ext_resource path="res://icons/reset.svg" type="Texture" id=5]
-[ext_resource path="res://icons/hand_r.svg" type="Texture" id=6]
-[ext_resource path="res://icons/person.svg" type="Texture" id=7]
+[ext_resource path="res://icons/tracking/hand_r.svg" type="Texture" id=6]
+[ext_resource path="res://icons/tracking/person.svg" type="Texture" id=7]
 [ext_resource path="res://icons/visible.svg" type="Texture" id=8]
 [ext_resource path="res://styles/menu.theme" type="Theme" id=9]
 [ext_resource path="res://icons/list.svg" type="Texture" id=10]
 [ext_resource path="res://icons/close.svg" type="Texture" id=11]
 [ext_resource path="res://icons/alpha.svg" type="Texture" id=12]
+[ext_resource path="res://icons/tracking/hand_l.svg" type="Texture" id=13]
+[ext_resource path="res://icons/tracking/world.svg" type="Texture" id=14]
 
 [node name="ListOverlayItem" type="MarginContainer"]
 margin_top = 1727.0
@@ -114,8 +116,8 @@ icon = ExtResource( 4 )
 anchor_top = -0.016
 anchor_right = 1.0
 anchor_bottom = -0.016
-margin_top = -448.944
-margin_bottom = 0.0560002
+margin_top = -455.944
+margin_bottom = -6.944
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -145,8 +147,8 @@ icon = ExtResource( 12 )
 anchor_top = -0.016
 anchor_right = 1.0
 anchor_bottom = -0.016
-margin_top = -448.944
-margin_bottom = 0.0560002
+margin_top = -455.944
+margin_bottom = -6.944
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -171,9 +173,9 @@ margin_right = 720.0
 margin_bottom = 191.0
 focus_mode = 0
 text = "Left"
-icon = ExtResource( 6 )
+icon = ExtResource( 13 )
 clip_text = true
-items = [ "Head", ExtResource( 7 ), false, 0, null, "Left", ExtResource( 6 ), false, 1, null, "Right", ExtResource( 6 ), false, 2, null, "World", ExtResource( 3 ), false, 3, null ]
+items = [ "Head", ExtResource( 7 ), false, 0, null, "Left", ExtResource( 13 ), false, 1, null, "Right", ExtResource( 6 ), false, 2, null, "World", ExtResource( 14 ), false, 3, null ]
 selected = 1
 
 [node name="Reset" type="Button" parent="MoreOptions/Container/List"]
