@@ -38,7 +38,7 @@ func _ready() -> void:
 	ARVRServer.connect("tracker_added", self, "_tracker_changed")
 	ARVRServer.connect("tracker_removed", self, "_tracker_changed")
 
-	$OverlayViewport.size = OverlayInit.ovr_interface.get_render_targetsize()
+	$VROverlayViewport.size = OverlayInit.ovr_interface.get_render_targetsize()
 	set_notify_transform(true)
 
 	load_settings()
@@ -122,11 +122,11 @@ func update_offset():
 
 	match current_target:
 		"head":
-			$OverlayViewport.track_relative_to_device(0, global_transform)
+			$VROverlayViewport.track_relative_to_device(0, global_transform)
 		"world":
-			$OverlayViewport.overlay_position_absolute(global_transform)
+			$VROverlayViewport.overlay_position_absolute(global_transform)
 		_:
-			$OverlayViewport.track_relative_to_device(_tracker_id, global_transform)
+			$VROverlayViewport.track_relative_to_device(_tracker_id, global_transform)
 
 
 func update_current_target():
@@ -142,7 +142,7 @@ func update_current_target():
 
 func set_overlay_visible(state: bool):
 	overlay_visible = state
-	$OverlayViewport.overlay_visible = state
+	$VROverlayViewport.overlay_visible = state
 	Settings.s.overlays[name].visible = state
 	emit_signal("overlay_visibility_changed", state)
 	save_settings()
@@ -178,7 +178,7 @@ func set_offset(offset_target: String, pos: Vector3, rot: Quat) -> void:
 
 func set_width_in_meters(width: float) -> void:
 	width_meters = width
-	$OverlayViewport.overlay_width_in_meters = width_meters
+	$VROverlayViewport.overlay_width_in_meters = width_meters
 	emit_signal("width_changed")
 
 

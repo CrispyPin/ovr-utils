@@ -24,7 +24,8 @@ func get_canvas_pos() -> Vector2:
 			_i.tracker_nodes[_i.active_controller].translation)
 	var pos = Vector2(controller_local_pos.x, controller_local_pos.y)
 
-	var overlay_size = OverlayInit.ovr_interface.get_render_targetsize()
+#	var overlay_size = OverlayInit.ovr_interface.get_render_targetsize()
+	var overlay_size = Vector2(2048, 2048)
 	# scale to pixels
 	pos *= overlay_size.x
 	pos /= _i.get_parent().width_meters
