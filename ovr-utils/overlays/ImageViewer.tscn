@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://styles/menu.theme" type="Theme" id=1]
+[ext_resource path="res://styles/file_menu.theme" type="Theme" id=2]
+[ext_resource path="res://overlay_scripts/image_viewer.gd" type="Script" id=3]
+
+[node name="ImageViewer" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Image" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FileDialog" type="FileDialog" parent="."]
+visible = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -1024.0
+margin_top = -768.0
+margin_right = -341.0
+margin_bottom = -256.0
+rect_scale = Vector2( 3, 3 )
+rect_clip_content = true
+theme = ExtResource( 2 )
+window_title = "Open a File or Directory"
+mode = 3
+access = 1
+current_dir = "user://"
+current_path = "user://"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Open" type="Button" parent="."]
+modulate = Color( 1, 1, 1, 0.498039 )
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -191.0
+margin_right = 359.0
+theme = ExtResource( 1 )
+text = "Open"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="dir_selected" from="FileDialog" to="." method="_on_FileDialog_dir_selected"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
+[connection signal="pressed" from="Open" to="." method="_on_Open_pressed"]
