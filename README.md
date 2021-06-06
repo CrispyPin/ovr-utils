@@ -11,3 +11,7 @@ A cross-platform SteamVR overlay application that aims to have many useful tools
 * Click `add` and then `add selected programs`
 * You should now be able to start it from steam (favourite it for easier access)
 
+## Usage
+At the moment all interacions are done with the trigger buttons, this will use steamvr actions and be configurable in the future.
+
+To load in images with the `ImageViewer` overlay, they have to be in the user folder; that is `%Appdata%\Roaming\ovr-utils\` on windows or `~/.local/share/ovr-utils/` on linux.
