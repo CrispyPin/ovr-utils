@@ -17,19 +17,33 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VSplitContainer" type="VSplitContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+custom_constants/margin_right = 8
+custom_constants/margin_top = 8
+custom_constants/margin_left = 8
+custom_constants/margin_bottom = 8
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Control" type="Control" parent="VSplitContainer"]
-margin_right = 2048.0
-margin_bottom = 1845.0
+[node name="VSplitContainer" type="VSplitContainer" parent="MarginContainer"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 2040.0
+margin_bottom = 2040.0
+dragger_visibility = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="MarginContainer/VSplitContainer"]
+margin_right = 2032.0
+margin_bottom = 1841.0
 size_flags_vertical = 3
 
-[node name="Overlays" type="VBoxContainer" parent="VSplitContainer/Control"]
+[node name="Overlays" type="VBoxContainer" parent="MarginContainer/VSplitContainer/Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_vertical = 3
@@ -38,30 +52,31 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ListOverlayItem" parent="VSplitContainer/Control/Overlays" instance=ExtResource( 7 )]
-margin_top = 1622.0
-margin_bottom = 1845.0
+[node name="ListOverlayItem" parent="MarginContainer/VSplitContainer/Control/Overlays" instance=ExtResource( 7 )]
+margin_top = 1618.0
+margin_right = 2032.0
+margin_bottom = 1841.0
 overlay_name = "MainOverlay"
 
-[node name="AddMenu" parent="VSplitContainer/Control" instance=ExtResource( 3 )]
+[node name="AddMenu" parent="MarginContainer/VSplitContainer/Control" instance=ExtResource( 3 )]
 visible = false
 
-[node name="MainBar" type="HBoxContainer" parent="VSplitContainer"]
-margin_top = 1857.0
-margin_right = 2048.0
-margin_bottom = 2048.0
+[node name="MainBar" type="HBoxContainer" parent="MarginContainer/VSplitContainer"]
+margin_top = 1841.0
+margin_right = 2032.0
+margin_bottom = 2032.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ShowOverlays" type="Button" parent="VSplitContainer/MainBar"]
+[node name="ShowOverlays" type="Button" parent="MarginContainer/VSplitContainer/MainBar"]
 margin_right = 176.0
 margin_bottom = 191.0
 focus_mode = 0
 toggle_mode = true
 icon = ExtResource( 6 )
 
-[node name="GrabMode" type="Button" parent="VSplitContainer/MainBar"]
+[node name="GrabMode" type="Button" parent="MarginContainer/VSplitContainer/MainBar"]
 margin_left = 180.0
 margin_right = 356.0
 margin_bottom = 191.0
@@ -69,13 +84,14 @@ focus_mode = 0
 toggle_mode = true
 icon = ExtResource( 5 )
 
-[node name="AddOverlay" type="Button" parent="VSplitContainer/MainBar"]
+[node name="AddOverlay" type="Button" parent="MarginContainer/VSplitContainer/MainBar"]
 margin_left = 360.0
 margin_right = 536.0
 margin_bottom = 191.0
 focus_mode = 0
+toggle_mode = true
 icon = ExtResource( 4 )
 
-[connection signal="toggled" from="VSplitContainer/MainBar/ShowOverlays" to="." method="_on_ShowOverlays_toggled"]
-[connection signal="toggled" from="VSplitContainer/MainBar/GrabMode" to="." method="_on_GrabMode_toggled"]
-[connection signal="pressed" from="VSplitContainer/MainBar/AddOverlay" to="." method="_on_AddOverlay_pressed"]
+[connection signal="toggled" from="MarginContainer/VSplitContainer/MainBar/ShowOverlays" to="." method="_on_ShowOverlays_toggled"]
+[connection signal="toggled" from="MarginContainer/VSplitContainer/MainBar/GrabMode" to="." method="_on_GrabMode_toggled"]
+[connection signal="toggled" from="MarginContainer/VSplitContainer/MainBar/AddOverlay" to="." method="_on_AddOverlay_toggled"]

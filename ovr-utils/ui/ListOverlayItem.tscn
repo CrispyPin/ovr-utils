@@ -19,9 +19,7 @@ margin_right = 2048.0
 margin_bottom = 1920.0
 rect_min_size = Vector2( 100, 128 )
 theme = ExtResource( 9 )
-custom_constants/margin_right = 8
 custom_constants/margin_top = 8
-custom_constants/margin_left = 8
 custom_constants/margin_bottom = 8
 script = ExtResource( 1 )
 __meta__ = {
@@ -29,15 +27,14 @@ __meta__ = {
 }
 
 [node name="BasicOptions" type="PanelContainer" parent="."]
-margin_left = 8.0
 margin_top = 8.0
-margin_right = 2040.0
+margin_right = 2048.0
 margin_bottom = 215.0
 
 [node name="Label" type="Label" parent="BasicOptions"]
 margin_left = 8.0
 margin_top = 16.0
-margin_right = 2024.0
+margin_right = 2040.0
 margin_bottom = 191.0
 text = "Main Menu"
 __meta__ = {
@@ -47,7 +44,7 @@ __meta__ = {
 [node name="List" type="HBoxContainer" parent="BasicOptions"]
 margin_left = 8.0
 margin_top = 8.0
-margin_right = 2024.0
+margin_right = 2040.0
 margin_bottom = 199.0
 alignment = 2
 __meta__ = {
@@ -55,16 +52,16 @@ __meta__ = {
 }
 
 [node name="Grab" type="Button" parent="BasicOptions/List"]
-margin_left = 1480.0
-margin_right = 1656.0
+margin_left = 1496.0
+margin_right = 1672.0
 margin_bottom = 191.0
 focus_mode = 0
 toggle_mode = true
 icon = ExtResource( 3 )
 
 [node name="Visibility" type="Button" parent="BasicOptions/List"]
-margin_left = 1660.0
-margin_right = 1836.0
+margin_left = 1676.0
+margin_right = 1852.0
 margin_bottom = 191.0
 focus_mode = 0
 toggle_mode = true
@@ -72,25 +69,24 @@ pressed = true
 icon = ExtResource( 8 )
 
 [node name="Options" type="Button" parent="BasicOptions/List"]
-margin_left = 1840.0
-margin_right = 2016.0
+margin_left = 1856.0
+margin_right = 2032.0
 margin_bottom = 191.0
 icon = ExtResource( 10 )
 
 [node name="MoreOptions" type="HSplitContainer" parent="."]
-margin_left = 8.0
 margin_top = 8.0
-margin_right = 2040.0
+margin_right = 2048.0
 margin_bottom = 215.0
 
 [node name="Spacer" type="Control" parent="MoreOptions"]
-margin_right = 924.0
+margin_right = 940.0
 margin_bottom = 207.0
 size_flags_horizontal = 3
 
 [node name="Container" type="PanelContainer" parent="MoreOptions"]
-margin_left = 936.0
-margin_right = 2032.0
+margin_left = 952.0
+margin_right = 2048.0
 margin_bottom = 207.0
 
 [node name="List" type="HBoxContainer" parent="MoreOptions/Container"]
