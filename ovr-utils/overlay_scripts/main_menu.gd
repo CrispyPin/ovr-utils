@@ -31,3 +31,11 @@ func _on_ShowOverlays_toggled(state: bool) -> void:
 func _on_AddOverlay_toggled(state: bool) -> void:
 	$MarginContainer/VSplitContainer/Control/AddMenu.visible = state
 
+
+func _on_QuitToggle_toggled(state: bool) -> void:
+	$MarginContainer/VSplitContainer/MainBar/QuitToggle/Quit.visible = state
+
+
+func _on_Quit_pressed() -> void:
+	Settings.save_settings()
+	get_tree().quit()
