@@ -102,8 +102,6 @@ func save_settings():
 	for t_key in TARGETS:
 		Settings.s.overlays[name].offsets[t_key] = _offsets[t_key]
 
-	Settings.save_settings()
-
 
 func update_tracker_id():
 	_tracker_id = -1

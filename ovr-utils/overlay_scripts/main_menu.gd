@@ -38,5 +38,5 @@ func _on_QuitToggle_toggled(state: bool) -> void:
 
 
 func _on_Quit_pressed() -> void:
-	Settings.save_settings()
+	Settings.force_save()
 	get_tree().quit()

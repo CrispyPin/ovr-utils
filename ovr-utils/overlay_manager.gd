@@ -48,4 +48,3 @@ func remove_overlay(name):
 	to_remove.queue_free()
 	emit_signal("removed_overlay", name)
 	Settings.s.overlays.erase(name)
-	Settings.save_settings()

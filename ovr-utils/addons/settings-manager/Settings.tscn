@@ -1,12 +1,11 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://addons/settings-manager/settings.gd" type="Script" id=1]
+[ext_resource path="res://addons/settings-manager/settings_manager.gd" type="Script" id=1]
 
 [node name="Settings" type="Node"]
 script = ExtResource( 1 )
 
-[node name="AutosaveTimer" type="Timer" parent="."]
-wait_time = 300.0
+[node name="SaveTimer" type="Timer" parent="."]
 autostart = true
 
-[connection signal="timeout" from="AutosaveTimer" to="." method="_on_AutosaveTimer_timeout"]
+[connection signal="timeout" from="SaveTimer" to="." method="_on_SaveTimer_timeout"]
