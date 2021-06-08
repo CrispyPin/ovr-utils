@@ -7,11 +7,11 @@ func _ready() -> void:
 	overlay = OverlayManager.get_node(overlay_name)
 	$MoreOptions/Container/List/SetSize/PanelContainer.visible = false
 	$MoreOptions/Container/List/SetAlpha/PanelContainer.visible = false
-	$MoreOptions/Container/List/SetSize/PanelContainer/SizeSlider.value = Settings.s.overlays[overlay_name].width
+	$MoreOptions/Container/List/SetSize/PanelContainer/SizeSlider.value = overlay.width_meters
 	$MoreOptions.visible = false
 	$BasicOptions/Label.text = overlay_name
 	name = overlay_name
-	$MoreOptions/Container/List/Target.selected = overlay.TARGETS.find(Settings.s.overlays[overlay_name].target)
+	$MoreOptions/Container/List/Target.selected = overlay.TARGETS.find(overlay.target)
 	overlay.connect("overlay_visibility_changed", self, "_overlay_visibility_changed")
 
 

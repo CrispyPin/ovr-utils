@@ -69,17 +69,21 @@ func add_grab():
 func load_settings():
 	if Settings.s.overlays.has(name):
 		var loaded = Settings.s.overlays[name]
+
 		if loaded.has("fallback"):
 			fallback = loaded.fallback
-		set_target(loaded.target)
+		if loaded.has("target"):
+			set_target(loaded.target)
 
-		set_width_in_meters(loaded.width)
-
-		for t_key in loaded.offsets:
-			var t_offset = loaded.offsets[t_key]
-			_offsets[t_key].pos = t_offset.pos
-			_offsets[t_key].rot = t_offset.rot
+		if loaded.has("offsets"):
+			for t_key in loaded.offsets:
+				var t_offset = loaded.offsets[t_key]
+				_offsets[t_key].pos = t_offset.pos
+				_offsets[t_key].rot = t_offset.rot
 		update_offset()
+
+		if loaded.has("width"):
+			set_width_in_meters(loaded.width)
 		if loaded.has("visible"):
 			set_overlay_visible(loaded.visible)
 		if loaded.has("alpha"):
