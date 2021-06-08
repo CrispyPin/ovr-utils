@@ -118,8 +118,10 @@ func _load_sub_setting(val, def):
 			var _s = {}
 			var resize = has_flag(def, "resize")
 			for key in val:
-				var subdef = def.definition if resize else def.definition[key]
-				_s[key] = _load_sub_setting(val[key], subdef)
+				if resize:
+					_s[key] = _load_sub_setting(val[key], def.definition)
+				elif def.definition.has(key):
+					_s[key] = _load_sub_setting(val[key], def.definition[key])
 			return _s
 		_:
 			return val
