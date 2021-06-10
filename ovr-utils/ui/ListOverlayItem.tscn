@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://ui/overlay_list_item.gd" type="Script" id=1]
 [ext_resource path="res://icons/remove.svg" type="Texture" id=2]
@@ -14,6 +14,12 @@
 [ext_resource path="res://icons/alpha.svg" type="Texture" id=12]
 [ext_resource path="res://icons/tracking/hand_l.svg" type="Texture" id=13]
 [ext_resource path="res://icons/tracking/world.svg" type="Texture" id=14]
+[ext_resource path="res://icons/warning.svg" type="Texture" id=15]
+[ext_resource path="res://fonts/OpenSans-Italic.ttf" type="DynamicFontData" id=16]
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+font_data = ExtResource( 16 )
 
 [node name="ListOverlayItem" type="MarginContainer"]
 margin_top = 1727.0
@@ -53,6 +59,35 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Warning" type="Button" parent="BasicOptions/List"]
+visible = false
+margin_left = 1316.0
+margin_right = 1492.0
+margin_bottom = 191.0
+toggle_mode = true
+icon = ExtResource( 15 )
+
+[node name="WarningInfo" type="PanelContainer" parent="BasicOptions/List/Warning"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -191.0
+margin_top = -165.0
+margin_right = 122.0
+margin_bottom = -203.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="BasicOptions/List/Warning/WarningInfo"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 481.0
+margin_bottom = 145.0
+custom_fonts/font = SubResource( 1 )
+text = "res://overlays/not_real
+not found"
+
 [node name="Grab" type="Button" parent="BasicOptions/List"]
 margin_left = 1496.0
 margin_right = 1672.0
@@ -77,6 +112,7 @@ margin_bottom = 191.0
 icon = ExtResource( 10 )
 
 [node name="MoreOptions" type="HSplitContainer" parent="."]
+visible = false
 margin_top = 8.0
 margin_right = 2048.0
 margin_bottom = 215.0
@@ -192,6 +228,7 @@ margin_bottom = 191.0
 focus_mode = 0
 icon = ExtResource( 11 )
 
+[connection signal="toggled" from="BasicOptions/List/Warning" to="." method="_on_Warning_toggled"]
 [connection signal="toggled" from="BasicOptions/List/Grab" to="." method="_on_Grab_toggled"]
 [connection signal="toggled" from="BasicOptions/List/Visibility" to="." method="_on_Visibility_toggled"]
 [connection signal="pressed" from="BasicOptions/List/Options" to="." method="_on_Options_pressed"]

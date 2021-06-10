@@ -26,12 +26,15 @@ func _load_overlays():
 
 
 func add_overlay(type, name):
-	var scene = load("res://overlays/" + type + ".tscn")
-	if not scene:
-		print("Unknown overlay type: '", type, "'. Skipping overlay '", name, "'")
-		return
 	print("Adding overlay '", name, "' of type '", type, "'")
+	var scene = load("res://overlays/" + type + ".tscn")
+
+	if not scene:
+		print("Unknown overlay type: '", type, "'")
+		scene = load("res://special_overlays/UnknownType.tscn")
+
 	var instance = preload("res://addons/openvr_overlay/OverlayInstance.tscn").instance()
+
 	instance.name = name
 	instance.overlay_scene = scene
 	instance.type = type

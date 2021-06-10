@@ -5,14 +5,19 @@ var overlay
 
 func _ready() -> void:
 	overlay = OverlayManager.get_node(overlay_name)
+
 	$MoreOptions/Container/List/SetSize/PanelContainer.visible = false
 	$MoreOptions/Container/List/SetAlpha/PanelContainer.visible = false
 	$MoreOptions/Container/List/SetSize/PanelContainer/SizeSlider.value = overlay.width_meters
 	$MoreOptions.visible = false
+
 	$BasicOptions/Label.text = overlay_name
 	name = overlay_name
 	$MoreOptions/Container/List/Target.selected = overlay.TARGETS.find(overlay.target)
 	overlay.connect("overlay_visibility_changed", self, "_overlay_visibility_changed")
+
+	$BasicOptions/List/Warning.visible = overlay.overlay_scene == preload("res://special_overlays/UnknownType.tscn")
+	$BasicOptions/List/Warning/WarningInfo/Label.text = overlay.type + "\nnot found"
 
 
 func _on_Visibility_toggled(state: bool) -> void:
@@ -67,3 +72,8 @@ func _on_SizeSlider_value_changed(value: float) -> void:
 
 func _on_AlphaSlider_value_changed(value: float) -> void:
 	overlay.alpha = value
+
+
+func _on_Warning_toggled(state: bool) -> void:
+	$BasicOptions/List/Warning/WarningInfo.visible = state
+

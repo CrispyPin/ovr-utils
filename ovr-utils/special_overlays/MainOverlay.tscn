@@ -1,18 +1,18 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://overlay_scripts/main_menu.gd" type="Script" id=1]
-[ext_resource path="res://styles/menu.theme" type="Theme" id=2]
-[ext_resource path="res://ui/AddMenu.tscn" type="PackedScene" id=3]
-[ext_resource path="res://icons/add.svg" type="Texture" id=4]
-[ext_resource path="res://icons/move.svg" type="Texture" id=5]
-[ext_resource path="res://icons/list.svg" type="Texture" id=6]
-[ext_resource path="res://ui/ListOverlayItem.tscn" type="PackedScene" id=7]
-[ext_resource path="res://icons/close.svg" type="Texture" id=8]
+[ext_resource path="res://icons/move.svg" type="Texture" id=2]
+[ext_resource path="res://icons/list.svg" type="Texture" id=3]
+[ext_resource path="res://icons/close.svg" type="Texture" id=4]
+[ext_resource path="res://icons/add.svg" type="Texture" id=5]
+[ext_resource path="res://ui/ListOverlayItem.tscn" type="PackedScene" id=6]
+[ext_resource path="res://styles/menu.theme" type="Theme" id=7]
+[ext_resource path="res://ui/AddMenu.tscn" type="PackedScene" id=8]
 
 [node name="MainOverlay" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 2 )
+theme = ExtResource( 7 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -53,13 +53,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ListOverlayItem" parent="MarginContainer/VSplitContainer/Control/Overlays" instance=ExtResource( 7 )]
+[node name="ListOverlayItem" parent="MarginContainer/VSplitContainer/Control/Overlays" instance=ExtResource( 6 )]
 margin_top = 1618.0
 margin_right = 2032.0
 margin_bottom = 1841.0
 overlay_name = "MainOverlay"
 
-[node name="AddMenu" parent="MarginContainer/VSplitContainer/Control" instance=ExtResource( 3 )]
+[node name="AddMenu" parent="MarginContainer/VSplitContainer/Control" instance=ExtResource( 8 )]
 visible = false
 
 [node name="MainBar" type="HBoxContainer" parent="MarginContainer/VSplitContainer"]
@@ -75,7 +75,7 @@ margin_right = 176.0
 margin_bottom = 191.0
 focus_mode = 0
 toggle_mode = true
-icon = ExtResource( 6 )
+icon = ExtResource( 3 )
 
 [node name="AddOverlay" type="Button" parent="MarginContainer/VSplitContainer/MainBar"]
 margin_left = 180.0
@@ -83,7 +83,7 @@ margin_right = 356.0
 margin_bottom = 191.0
 focus_mode = 0
 toggle_mode = true
-icon = ExtResource( 4 )
+icon = ExtResource( 5 )
 
 [node name="GrabMode" type="Button" parent="MarginContainer/VSplitContainer/MainBar"]
 margin_left = 360.0
@@ -91,14 +91,14 @@ margin_right = 536.0
 margin_bottom = 191.0
 focus_mode = 0
 toggle_mode = true
-icon = ExtResource( 5 )
+icon = ExtResource( 2 )
 
 [node name="QuitToggle" type="Button" parent="MarginContainer/VSplitContainer/MainBar"]
 margin_left = 540.0
 margin_right = 716.0
 margin_bottom = 191.0
 toggle_mode = true
-icon = ExtResource( 8 )
+icon = ExtResource( 4 )
 
 [node name="Quit" type="Button" parent="MarginContainer/VSplitContainer/MainBar/QuitToggle"]
 visible = false
@@ -107,7 +107,7 @@ margin_top = -199.0
 margin_right = 915.0
 margin_bottom = -8.0
 text = "Really quit?"
-icon = ExtResource( 8 )
+icon = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
