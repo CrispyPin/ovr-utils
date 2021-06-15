@@ -10,7 +10,7 @@ const SETTINGS_DEF = preload("res://addons/settings-manager/settings_definition.
 
 var has_loaded := false
 var s := {}
-var _saved_str: String
+var _saved_hash: int
 
 
 func _ready() -> void:
@@ -20,9 +20,9 @@ func _ready() -> void:
 
 
 func _on_SaveTimer_timeout() -> void:
-	var new_s = str(s)
-	if new_s != _saved_str:
-		_saved_str = new_s
+	var new_h: int = s.hash()
+	if new_h != _saved_hash:
+		_saved_hash = new_h
 		print("Saving to ", SETTINGS_PATH)
 		force_save()
 
