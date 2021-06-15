@@ -38,8 +38,8 @@ func add_overlay(type, name):
 	instance.name = name
 	instance.overlay_scene = scene
 	instance.type = type
+	instance.add_child(preload("res://OverlaySettingsSync.tscn").instance())
 	add_child(instance)
-#	instance.update_offset()
 	emit_signal("added_overlay", name)
 
 
