@@ -39,7 +39,7 @@ func add_overlay(type, name):
 	instance.overlay_scene = scene
 	instance.type = type
 	add_child(instance)
-	instance.update_offset()
+#	instance.update_offset()
 	emit_signal("added_overlay", name)
 
 

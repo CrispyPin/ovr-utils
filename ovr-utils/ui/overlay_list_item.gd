@@ -14,7 +14,7 @@ func _ready() -> void:
 	$BasicOptions/Label.text = overlay_name
 	name = overlay_name
 	$MoreOptions/Container/List/Target.selected = overlay.TARGETS.find(overlay.target)
-	overlay.connect("overlay_visibility_changed", self, "_overlay_visibility_changed")
+	overlay.connect("overlay_visible_changed", self, "_overlay_visible_changed")
 
 	$BasicOptions/List/Warning.visible = overlay.overlay_scene == preload("res://special_overlays/UnknownType.tscn")
 	$BasicOptions/List/Warning/WarningInfo/Label.text = overlay.type + "\nnot found"
@@ -29,7 +29,7 @@ func _on_Grab_toggled(state: bool) -> void:
 	overlay.get_node("OverlayInteraction").grab_mode = state
 
 
-func _overlay_visibility_changed(state: bool):
+func _overlay_visible_changed(state: bool):
 	$BasicOptions/List/Visibility.pressed = state
 	if state:
 		$BasicOptions/List/Visibility.icon = preload("res://icons/visible.svg")

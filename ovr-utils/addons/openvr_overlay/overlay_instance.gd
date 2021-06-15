@@ -1,10 +1,12 @@
 extends Spatial
 
+signal type_changed
+signal overlay_visible_changed
 signal width_changed
 signal alpha_changed
-signal offset_changed
 signal target_changed
-signal overlay_visibility_changed
+signal fallback_changed
+signal offset_changed
 
 const TARGETS = ["head", "left", "right", "world"]
 export (String,  "head", "left", "right", "world") var target = "left" setget set_target
@@ -18,7 +20,7 @@ export var add_cursor   := false # add cursor module
 
 var _tracker_id := 0
 var _offsets:Dictionary = {
-	"head":  {"pos": Vector3(0, 0, -0.5), "rot": Quat()},
+	"head":  {"pos": Vector3(0, 0, -0.35), "rot": Quat()},
 	"left":  {"pos": Vector3(), "rot": Quat()},
 	"right": {"pos": Vector3(), "rot": Quat()},
 	"world": {"pos": Vector3(0,1,0), "rot": Quat()},
@@ -43,7 +45,6 @@ func _ready() -> void:
 	$VROverlayViewport.size = OverlayInit.ovr_interface.get_render_targetsize()
 	set_notify_transform(true)
 
-	load_settings()
 	if add_cursor or add_grabbing:
 		interaction_handler = load("res://addons/openvr_overlay/OverlayInteraction.tscn").instance()
 		add_child(interaction_handler)
@@ -64,47 +65,6 @@ func add_cursor():
 
 func add_grab():
 	interaction_handler.add_child(load("res://addons/openvr_overlay/OverlayGrab.tscn").instance())
-
-
-func load_settings():
-	if Settings.s.overlays.has(name):
-		var loaded = Settings.s.overlays[name]
-
-		if loaded.has("fallback"):
-			fallback = loaded.fallback
-		if loaded.has("target"):
-			set_target(loaded.target)
-
-		if loaded.has("offsets"):
-			for t_key in loaded.offsets:
-				var t_offset = loaded.offsets[t_key]
-				_offsets[t_key].pos = t_offset.pos
-				_offsets[t_key].rot = t_offset.rot
-		update_offset()
-
-		if loaded.has("width"):
-			set_width_in_meters(loaded.width)
-		if loaded.has("visible"):
-			set_overlay_visible(loaded.visible)
-		if loaded.has("alpha"):
-			set_alpha(loaded.alpha)
-	else:
-		save_settings()
-
-
-func save_settings():
-	if not Settings.s.overlays.has(name):
-		Settings.s.overlays[name] = {}
-	Settings.s.overlays[name].target = target
-	Settings.s.overlays[name].width = width_meters
-	Settings.s.overlays[name].alpha = alpha
-	Settings.s.overlays[name].fallback = fallback
-	Settings.s.overlays[name].type = type
-
-	if not Settings.s.overlays[name].has("offsets"):
-		Settings.s.overlays[name]["offsets"] = {}
-	for t_key in TARGETS:
-		Settings.s.overlays[name].offsets[t_key] = _offsets[t_key]
 
 
 func update_tracker_id():
@@ -150,9 +110,7 @@ func update_current_target():
 func set_overlay_visible(state: bool):
 	overlay_visible = state
 	$VROverlayViewport.overlay_visible = state
-	Settings.s.overlays[name].visible = state
-	emit_signal("overlay_visibility_changed", state)
-	save_settings()
+	emit_signal("overlay_visible_changed", state)
 
 
 func _tracker_changed(tracker_name: String, type: int, id: int):
@@ -210,7 +168,6 @@ func reset_offset() -> void:
 	if current_target == "head":
 		_offsets[current_target].pos.z = -0.5
 	update_offset()
-	save_settings()
 
 
 func _notification(what: int) -> void:

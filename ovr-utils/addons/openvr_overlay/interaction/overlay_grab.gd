@@ -73,7 +73,6 @@ func finish_move():
 
 	# revert target
 	_overlay.update_current_target()
-	_overlay.save_settings()
 
 	_interaction._update_target()
 	_interaction.pause_triggers = false

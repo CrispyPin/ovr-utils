@@ -8,8 +8,10 @@ var DEBUG_SETTINGS = false
 var SETTINGS_PATH = "user://overlay_data.json"
 const SETTINGS_DEF = preload("res://addons/settings-manager/settings_definition.gd").DEF
 
-var s: Dictionary = {}
-var _saved_hash: int
+var has_loaded := false
+var s := {}
+var _saved_str: String
+
 
 func _ready() -> void:
 	_init_settings()
@@ -18,7 +20,10 @@ func _ready() -> void:
 
 
 func _on_SaveTimer_timeout() -> void:
-	if s.hash() != _saved_hash:
+	var new_s = str(s)
+	if new_s != _saved_str:
+		_saved_str = new_s
+		print("Saving to ", SETTINGS_PATH)
 		force_save()
 
 
@@ -54,8 +59,6 @@ func force_save():
 	file.store_line(to_json(to_save))
 	file.close()
 	emit_signal("settings_saved")
-
-	_saved_hash = s.hash()
 
 	if DEBUG_SETTINGS:
 		print("Settings saved to file")
@@ -100,10 +103,10 @@ func load_settings() -> void:
 	for key in new_settings:
 		s[key] = _load_sub_setting(new_settings[key], SETTINGS_DEF[key])
 
-	emit_signal("settings_loaded")
 	if DEBUG_SETTINGS:
 		print("Loaded settings from file")
-#		print(s)
+	emit_signal("settings_loaded")
+	has_loaded = true
 
 
 func _load_sub_setting(val, def):
