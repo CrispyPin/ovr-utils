@@ -57,7 +57,8 @@ func _ready() -> void:
 		container.add_child(overlay_scene.instance())
 
 	update_tracker_id()
-	update_offset()
+	call_deferred("update_offset")
+
 
 
 func add_cursor():
@@ -173,5 +174,4 @@ func reset_offset() -> void:
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSFORM_CHANGED:
-		update_offset()
 		emit_signal("offset_changed")

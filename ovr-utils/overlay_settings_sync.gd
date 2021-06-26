@@ -35,23 +35,23 @@ func _save_prop(prop_name: String, prop_value) -> void:
 
 func load_all() -> void:
 	if Settings.s.overlays.has(p.name):
-		var loaded = Settings.s.overlays[p.name]
+		var new = Settings.s.overlays[p.name]
 		# type is assigned at creation
 
-		if loaded.has("visible"):
-			p.overlay_visible = loaded.visible
-		if loaded.has("width"):
-			p.width_meters = loaded.width
-		if loaded.has("alpha"):
-			p.alpha = loaded.alpha
-		if loaded.has("target"):
-			p.target = loaded.target
-		if loaded.has("fallback"):
-			p.fallback = loaded.fallback
+		if new.has("visible"):
+			p.overlay_visible = new.visible
+		if new.has("width"):
+			p.width_meters = new.width
+		if new.has("alpha"):
+			p.alpha = new.alpha
+		if new.has("target"):
+			p.target = new.target
+		if new.has("fallback"):
+			p.fallback = new.fallback
 
-		if loaded.has("offsets"):# thorough in case some values are missing in file
-			for t_key in loaded.offsets:
-				var offset = loaded.offsets[t_key]
+		if new.has("offsets"):# thorough in case some values are missing in file
+			for t_key in new.offsets:
+				var offset = new.offsets[t_key]
 				p.set_offset(t_key, offset.pos, offset.rot)
 
 	else:

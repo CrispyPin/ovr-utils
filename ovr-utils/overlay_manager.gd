@@ -44,10 +44,12 @@ func add_overlay(type, name):
 
 
 func remove_overlay(name):
+	print("Removing overlay '", name, "'")
 	var to_remove = get_node(name)
 	if not to_remove:
 		print("Could not remove overlay '", name, "'")
 		return
 	to_remove.queue_free()
-	emit_signal("removed_overlay", name)
 	Settings.s.overlays.erase(name)
+	emit_signal("removed_overlay", name)
+
