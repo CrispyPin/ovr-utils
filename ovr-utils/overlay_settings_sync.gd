@@ -3,20 +3,25 @@ extends Node
 
 onready var p = get_parent()
 var loaded := false
+var _needs_sync := true
 
 func _ready() -> void:
 	p = get_parent()
 	call_deferred("load_all")
-	p.connect("type_changed",            self, "save_all")
-	p.connect("overlay_visible_changed", self, "save_all")
-	p.connect("width_changed",           self, "save_all")
-	p.connect("alpha_changed",           self, "save_all")
-	p.connect("target_changed",          self, "save_all")
-	p.connect("fallback_changed",        self, "save_all")
-	p.connect("offset_changed",          self, "save_all")
+	p.connect("type_changed",            self, "_prop_changed")
+	p.connect("overlay_visible_changed", self, "_prop_changed")
+	p.connect("width_changed",           self, "_prop_changed")
+	p.connect("alpha_changed",           self, "_prop_changed")
+	p.connect("target_changed",          self, "_prop_changed")
+	p.connect("fallback_changed",        self, "_prop_changed")
+	p.connect("offset_changed",          self, "_prop_changed")
 
 
-func save_all(_args=null) -> void:
+func _prop_changed(_val=null):
+	_needs_sync = true
+
+
+func save_all() -> void:
 	if not loaded:
 		return
 	if not Settings.s.overlays.has(p.name):
@@ -28,6 +33,7 @@ func save_all(_args=null) -> void:
 	_save_prop("target",   p.target)
 	_save_prop("fallback", p.fallback)
 	_save_prop("offsets",  p._offsets.duplicate(true))
+	_needs_sync = false
 
 
 func _save_prop(prop_name: String, prop_value) -> void:
@@ -58,3 +64,9 @@ func load_all() -> void:
 		print("FAILED")
 		save_all()
 	loaded = true
+
+
+func _on_SyncTimer_timeout() -> void:
+	if _needs_sync:
+		save_all()
+

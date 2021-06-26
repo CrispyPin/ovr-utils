@@ -14,7 +14,7 @@ export (String,  "head", "left", "right", "world") var target = "left" setget se
 export var overlay_scene: PackedScene = \
 		preload("res://addons/openvr_overlay/MissingOverlay.tscn") setget set_overlay_scene
 export var width_meters := 0.4 setget set_width_in_meters
-export var alpha := 1.0 setget set_alpha
+export var alpha 		:= 1.0 setget set_alpha
 export var add_grabbing := true  # add grabbing module
 export var add_cursor   := false # add cursor module
 
