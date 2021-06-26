@@ -112,6 +112,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[connection signal="add_menu_closed" from="MarginContainer/VSplitContainer/Control/AddMenu" to="." method="_on_add_menu_closed"]
 [connection signal="toggled" from="MarginContainer/VSplitContainer/MainBar/ShowOverlays" to="." method="_on_ShowOverlays_toggled"]
 [connection signal="toggled" from="MarginContainer/VSplitContainer/MainBar/AddOverlay" to="." method="_on_AddOverlay_toggled"]
 [connection signal="toggled" from="MarginContainer/VSplitContainer/MainBar/GrabMode" to="." method="_on_GrabMode_toggled"]

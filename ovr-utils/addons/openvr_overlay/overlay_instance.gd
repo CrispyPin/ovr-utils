@@ -57,6 +57,7 @@ func _ready() -> void:
 		container.add_child(overlay_scene.instance())
 
 	update_tracker_id()
+	update_offset()
 
 
 func add_cursor():

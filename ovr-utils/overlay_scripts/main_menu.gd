@@ -40,3 +40,7 @@ func _on_QuitToggle_toggled(state: bool) -> void:
 func _on_Quit_pressed() -> void:
 	Settings.force_save()
 	get_tree().quit()
+
+
+func _on_add_menu_closed() -> void:
+	$MarginContainer/VSplitContainer/MainBar/AddOverlay.pressed = false

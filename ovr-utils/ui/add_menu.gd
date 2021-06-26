@@ -1,5 +1,6 @@
 extends Control
 
+signal add_menu_closed
 
 var types: Array
 
@@ -16,6 +17,7 @@ func _ready() -> void:
 func add_overlay(type):
 	OverlayManager.add_overlay(type, type + " " + str(randi()%1000))
 	visible = false
+	emit_signal("add_menu_closed")
 
 
 func get_overlay_types(path := "res://overlays/"):
