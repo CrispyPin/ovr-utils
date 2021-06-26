@@ -3,6 +3,9 @@ extends Control
 
 func _ready() -> void:
 	get_viewport().get_parent().add_cursor()
+	var homefolder = OS.get_user_data_dir()
+	homefolder = homefolder.get_base_dir().get_base_dir().get_base_dir()
+	$FileDialog.current_dir = homefolder
 
 
 func _on_Open_pressed() -> void:

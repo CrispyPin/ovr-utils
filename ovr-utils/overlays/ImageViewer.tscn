@@ -35,15 +35,15 @@ rect_clip_content = true
 theme = ExtResource( 2 )
 window_title = "Open a File or Directory"
 mode = 3
-access = 1
-current_dir = "user://"
-current_path = "user://"
+access = 2
+current_dir = "/home/crispypin/proj/godot/ovr-utils/ovr-utils"
+current_path = "/home/crispypin/proj/godot/ovr-utils/ovr-utils/"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Open" type="Button" parent="."]
-modulate = Color( 1, 1, 1, 0.498039 )
+modulate = Color( 1, 1, 1, 0.8 )
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_top = -191.0
