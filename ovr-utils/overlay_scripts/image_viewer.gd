@@ -13,7 +13,6 @@ func _on_Open_pressed() -> void:
 
 
 func _on_FileDialog_file_selected(path: String) -> void:
-#	var img = load(path)
 	var tex = ImageTexture.new()
 	tex.load(path)
 	$Image.texture = tex

@@ -8,7 +8,7 @@ var _needs_sync := true
 func _ready() -> void:
 	p = get_parent()
 	call_deferred("load_all")
-	p.connect("type_changed",            self, "_prop_changed")
+	p.connect("path_changed",            self, "_prop_changed")
 	p.connect("overlay_visible_changed", self, "_prop_changed")
 	p.connect("width_changed",           self, "_prop_changed")
 	p.connect("alpha_changed",           self, "_prop_changed")

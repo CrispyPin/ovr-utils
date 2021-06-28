@@ -15,9 +15,11 @@ func _ready() -> void:
 	name = overlay_name
 	$MoreOptions/Container/List/Target.selected = overlay.TARGETS.find(overlay.target)
 	overlay.connect("overlay_visible_changed", self, "_overlay_visible_changed")
+	overlay.connect("path_changed", self, "_update_warning")
 
-	#TODO use signal to activate warning
-#	$BasicOptions/List/Warning.visible = overlay.overlay_scene == preload("res://special_overlays/UnknownType.tscn")
+
+func _update_warning():
+	$BasicOptions/List/Warning.visible = overlay.path_invalid
 	$BasicOptions/List/Warning/WarningInfo/Label.text = overlay.path + "\nnot found"
 
 

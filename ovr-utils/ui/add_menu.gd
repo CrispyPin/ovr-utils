@@ -28,7 +28,7 @@ func get_overlay_paths(root := "res://overlays/"):
 		var file_name = dir.get_next()
 		while file_name != "":
 			if dir.current_is_dir():
-				# TODO make recursive, must include folder as prefix for type
+				# TODO make recursive
 				pass
 			else:
 				found.append(root + file_name)

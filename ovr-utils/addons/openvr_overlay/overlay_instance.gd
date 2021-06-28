@@ -1,6 +1,6 @@
 extends Spatial
 
-signal type_changed
+signal path_changed
 signal overlay_visible_changed
 signal width_changed
 signal alpha_changed
@@ -11,8 +11,7 @@ signal offset_changed
 const TARGETS = ["head", "left", "right", "world"]
 export (String,  "head", "left", "right", "world") var target = "left" setget set_target
 
-export var overlay_scene: PackedScene# = \
-#		preload("res://addons/openvr_overlay/MissingOverlay.tscn") setget set_overlay_scene
+export var overlay_scene: PackedScene
 export var width_meters := 0.4 setget set_width_in_meters
 export var alpha 		:= 1.0 setget set_alpha
 export var add_grabbing := true  # add grabbing module
@@ -31,8 +30,8 @@ var current_target: String = "world" setget _set_current_target
 var fallback = ["left", "right", "head"] # TODO setget that updates tracking (not important)
 var interaction_handler: Node
 var overlay_visible := true setget set_overlay_visible
-#var type := "main"
 var path := "res://special_overlays/MainOverlay.tscn" setget set_path
+var path_invalid := false
 
 onready var container = $OverlayViewport/Container
 
@@ -151,12 +150,17 @@ func set_width_in_meters(width: float) -> void:
 
 func set_path(new: String) -> void:
 	path = new
+	path_invalid = false
+
 	overlay_scene = load(path)
-	if not container:
-		return
+	if not overlay_scene:
+		path_invalid = true
+		overlay_scene = load("res://special_overlays/UnknownType.tscn")
+
 	if container.get_child_count() > 0:
 		container.get_child(0).queue_free()
 	container.add_child(overlay_scene.instance())
+	emit_signal("path_changed")
 
 
 func set_alpha(val: float):
