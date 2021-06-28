@@ -39,10 +39,10 @@ func save_all() -> void:
 func _save_prop(prop_name: String, prop_value) -> void:
 	Settings.s.overlays[p.name][prop_name] = prop_value
 
+
 func load_all() -> void:
 	if Settings.s.overlays.has(p.name):
 		var new = Settings.s.overlays[p.name]
-		# type is assigned at creation
 
 		if new.has("visible"):
 			p.overlay_visible = new.visible
@@ -61,7 +61,7 @@ func load_all() -> void:
 				p.set_offset(t_key, offset.pos, offset.rot)
 
 	else:
-		print("FAILED")
+		print("FAILED to load settings")
 		save_all()
 	loaded = true
 

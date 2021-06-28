@@ -5,8 +5,8 @@ signal settings_loaded # emitted when settings are loaded from file, needs to be
 signal settings_changed # has to be manually called by the modifying script
 
 var DEBUG_SETTINGS = false
-var SETTINGS_PATH = "user://overlay_data.json"
-const SETTINGS_DEF = preload("res://addons/settings-manager/settings_definition.gd").DEF
+var SETTINGS_PATH = preload("res://settings_definition.gd").PATH
+const SETTINGS_DEF = preload("res://settings_definition.gd").DEF
 
 var has_loaded := false
 var s := {}
