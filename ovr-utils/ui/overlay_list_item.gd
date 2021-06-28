@@ -16,13 +16,15 @@ func _ready() -> void:
 	$MoreOptions/Container/List/Target.selected = overlay.TARGETS.find(overlay.target)
 	overlay.connect("overlay_visible_changed", self, "_overlay_visible_changed")
 
-	$BasicOptions/List/Warning.visible = overlay.overlay_scene == preload("res://special_overlays/UnknownType.tscn")
-	$BasicOptions/List/Warning/WarningInfo/Label.text = overlay.type + "\nnot found"
+	#TODO use signal to activate warning
+#	$BasicOptions/List/Warning.visible = overlay.overlay_scene == preload("res://special_overlays/UnknownType.tscn")
+	$BasicOptions/List/Warning/WarningInfo/Label.text = overlay.path + "\nnot found"
 
 
 func _on_Visibility_toggled(state: bool) -> void:
-	if overlay.type and overlay.type != "main":
-		overlay.overlay_visible = state
+	# TODO check always visible flag
+#	if overlay.type and overlay.type != "main":
+	overlay.overlay_visible = state
 
 
 func _on_Grab_toggled(state: bool) -> void:
@@ -38,8 +40,9 @@ func _overlay_visible_changed(state: bool):
 
 
 func _on_Remove_pressed() -> void:
-	if overlay.type and overlay.type != "main":
-		OverlayManager.remove_overlay(overlay_name)
+	# TODO check stay flag
+#	if overlay.type and overlay.type != "main":
+	OverlayManager.remove_overlay(overlay_name)
 
 
 func _on_Reset_pressed() -> void:

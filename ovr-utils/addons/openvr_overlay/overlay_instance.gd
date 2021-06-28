@@ -11,8 +11,8 @@ signal offset_changed
 const TARGETS = ["head", "left", "right", "world"]
 export (String,  "head", "left", "right", "world") var target = "left" setget set_target
 
-export var overlay_scene: PackedScene = \
-		preload("res://addons/openvr_overlay/MissingOverlay.tscn") setget set_overlay_scene
+export var overlay_scene: PackedScene# = \
+#		preload("res://addons/openvr_overlay/MissingOverlay.tscn") setget set_overlay_scene
 export var width_meters := 0.4 setget set_width_in_meters
 export var alpha 		:= 1.0 setget set_alpha
 export var add_grabbing := true  # add grabbing module
@@ -31,7 +31,8 @@ var current_target: String = "world" setget _set_current_target
 var fallback = ["left", "right", "head"] # TODO setget that updates tracking (not important)
 var interaction_handler: Node
 var overlay_visible := true setget set_overlay_visible
-var type := "main"
+#var type := "main"
+var path := "res://special_overlays/MainOverlay.tscn" setget set_path
 
 onready var container = $OverlayViewport/Container
 
@@ -58,7 +59,6 @@ func _ready() -> void:
 
 	update_tracker_id()
 	call_deferred("update_offset")
-
 
 
 func add_cursor():
@@ -149,8 +149,9 @@ func set_width_in_meters(width: float) -> void:
 	emit_signal("width_changed")
 
 
-func set_overlay_scene(scene: PackedScene) -> void:
-	overlay_scene = scene
+func set_path(new: String) -> void:
+	path = new
+	overlay_scene = load(path)
 	if not container:
 		return
 	if container.get_child_count() > 0:

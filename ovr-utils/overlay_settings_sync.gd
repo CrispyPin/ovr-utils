@@ -26,7 +26,7 @@ func save_all() -> void:
 		return
 	if not Settings.s.overlays.has(p.name):
 		Settings.s.overlays[p.name] = {}
-	_save_prop("type",     p.type)
+	_save_prop("path",     p.path)
 	_save_prop("visible",  p.overlay_visible)
 	_save_prop("width",    p.width_meters)
 	_save_prop("alpha",    p.alpha)
@@ -44,6 +44,8 @@ func load_all() -> void:
 	if Settings.s.overlays.has(p.name):
 		var new = Settings.s.overlays[p.name]
 
+		if new.has("path"):
+			p.path = new.path
 		if new.has("visible"):
 			p.overlay_visible = new.visible
 		if new.has("width"):

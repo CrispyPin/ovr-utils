@@ -1,6 +1,6 @@
 extends Node
 
-const PATH = "user://overlay_data.json"
+const PATH = "user://overlay_data_DEV.json"
 const DEF = {
 	"grab_mode": {
 		"name": "Grab mode",
@@ -16,10 +16,10 @@ const DEF = {
 		"definition": {
 			"type": "dict",
 			"definition": {
-				"type": {
-					"name": "Overlay type",
+				"path": {
+					"name": "Overlay scene path",
 					"type": "string",
-					"default": "UI_demo"
+					"default": "res://special_overlays/UnknownType.tscn"
 				},
 				"visible": {
 					"name": "Overlay Visible",
@@ -71,7 +71,7 @@ const DEF = {
 		},
 		"default": {
 			"MainOverlay": {
-				"type": "MainOverlay",
+				"path": "res://special_overlays/MainOverlay.tscn",
 				"visible": true,
 				"width": 0.4,
 				"alpha": 1.0,

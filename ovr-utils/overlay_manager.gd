@@ -20,27 +20,32 @@ func _load_overlays():
 		return
 	loaded = true
 	print("Loading in overlays")
-	for key in Settings.s.overlays:
-		if not key == "MainOverlay":
-			add_overlay(Settings.s.overlays[key].type, key)
+	for name in Settings.s.overlays:
+		if not name == "MainOverlay":
+			add_overlay(name)
 
 
-func add_overlay(type, name):
-	print("Adding overlay '", name, "' of type '", type, "'")
-	var scene = load("res://overlays/" + type + ".tscn")
-
-	if not scene:
-		print("Unknown overlay type: '", type, "'")
-		scene = load("res://special_overlays/UnknownType.tscn")
+func add_overlay(name):
+	print("Adding overlay '", name, "'")
+#	var scene = load("res://overlays/" + type + ".tscn")
+#	if not scene:
+#		print("Unknown overlay type: '", type, "'")
+#		scene = load("res://special_overlays/UnknownType.tscn")
 
 	var instance = preload("res://addons/openvr_overlay/OverlayInstance.tscn").instance()
 
 	instance.name = name
-	instance.overlay_scene = scene
-	instance.type = type
+#	instance.overlay_scene = scene
+#	instance.type = type
 	instance.add_child(preload("res://OverlaySettingsSync.tscn").instance())
 	add_child(instance)
 	emit_signal("added_overlay", name)
+
+
+func create_overlay(path, name):
+	Settings.s.overlays[name] = {}
+	Settings.s.overlays[name].path = path
+	add_overlay(name)
 
 
 func remove_overlay(name):
