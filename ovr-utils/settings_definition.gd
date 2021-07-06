@@ -1,6 +1,6 @@
 extends Node
 
-const PATH = "user://overlay_data_DEV.json"
+const PATH = "user://overlay_data.json"
 const DEF = {
 	"grab_mode": {
 		"name": "Grab mode",

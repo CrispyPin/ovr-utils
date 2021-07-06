@@ -1,6 +1,5 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://special_overlays/MainOverlay.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/openvr_overlay/OverlayInstance.tscn" type="PackedScene" id=2]
 [ext_resource path="res://OverlaySettingsSync.tscn" type="PackedScene" id=3]
 [ext_resource path="res://overlay_manager.gd" type="Script" id=4]
@@ -9,7 +8,6 @@
 script = ExtResource( 4 )
 
 [node name="MainOverlay" parent="." instance=ExtResource( 2 )]
-overlay_scene = ExtResource( 1 )
 add_cursor = true
 
 [node name="OverlaySettingsSync" parent="MainOverlay" instance=ExtResource( 3 )]
