@@ -1,9 +1,9 @@
 extends Node
 
-
 onready var p = get_parent()
 var loaded := false
 var _needs_sync := true
+
 
 func _ready() -> void:
 	p = get_parent()
