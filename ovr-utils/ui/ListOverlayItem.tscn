@@ -112,25 +112,24 @@ margin_bottom = 191.0
 icon = ExtResource( 10 )
 
 [node name="MoreOptions" type="HSplitContainer" parent="."]
-visible = false
 margin_top = 8.0
 margin_right = 2048.0
 margin_bottom = 215.0
 
 [node name="Spacer" type="Control" parent="MoreOptions"]
-margin_right = 940.0
+margin_right = 760.0
 margin_bottom = 207.0
 size_flags_horizontal = 3
 
 [node name="Container" type="PanelContainer" parent="MoreOptions"]
-margin_left = 952.0
+margin_left = 772.0
 margin_right = 2048.0
 margin_bottom = 207.0
 
 [node name="List" type="HBoxContainer" parent="MoreOptions/Container"]
 margin_left = 8.0
 margin_top = 8.0
-margin_right = 1088.0
+margin_right = 1268.0
 margin_bottom = 199.0
 alignment = 2
 
@@ -140,9 +139,16 @@ margin_bottom = 191.0
 focus_mode = 0
 icon = ExtResource( 2 )
 
-[node name="SetSize" type="Button" parent="MoreOptions/Container/List"]
+[node name="Grab" type="Button" parent="MoreOptions/Container/List"]
 margin_left = 180.0
 margin_right = 356.0
+margin_bottom = 191.0
+toggle_mode = true
+icon = ExtResource( 3 )
+
+[node name="SetSize" type="Button" parent="MoreOptions/Container/List"]
+margin_left = 360.0
+margin_right = 536.0
 margin_bottom = 191.0
 focus_mode = 0
 toggle_mode = true
@@ -172,8 +178,8 @@ __meta__ = {
 }
 
 [node name="SetAlpha" type="Button" parent="MoreOptions/Container/List"]
-margin_left = 360.0
-margin_right = 536.0
+margin_left = 540.0
+margin_right = 716.0
 margin_bottom = 191.0
 focus_mode = 0
 toggle_mode = true
@@ -204,8 +210,8 @@ __meta__ = {
 }
 
 [node name="Target" type="OptionButton" parent="MoreOptions/Container/List"]
-margin_left = 540.0
-margin_right = 720.0
+margin_left = 720.0
+margin_right = 900.0
 margin_bottom = 191.0
 focus_mode = 0
 text = "Left"
@@ -215,15 +221,15 @@ items = [ "Head", ExtResource( 7 ), false, 0, null, "Left", ExtResource( 13 ), f
 selected = 1
 
 [node name="Reset" type="Button" parent="MoreOptions/Container/List"]
-margin_left = 724.0
-margin_right = 900.0
+margin_left = 904.0
+margin_right = 1080.0
 margin_bottom = 191.0
 focus_mode = 0
 icon = ExtResource( 5 )
 
 [node name="CloseOptions" type="Button" parent="MoreOptions/Container/List"]
-margin_left = 904.0
-margin_right = 1080.0
+margin_left = 1084.0
+margin_right = 1260.0
 margin_bottom = 191.0
 focus_mode = 0
 icon = ExtResource( 11 )
@@ -233,6 +239,7 @@ icon = ExtResource( 11 )
 [connection signal="toggled" from="BasicOptions/List/Visibility" to="." method="_on_Visibility_toggled"]
 [connection signal="pressed" from="BasicOptions/List/Options" to="." method="_on_Options_pressed"]
 [connection signal="pressed" from="MoreOptions/Container/List/Remove" to="." method="_on_Remove_pressed"]
+[connection signal="toggled" from="MoreOptions/Container/List/Grab" to="." method="_on_Grab_toggled"]
 [connection signal="toggled" from="MoreOptions/Container/List/SetSize" to="." method="_on_SetSize_toggled"]
 [connection signal="value_changed" from="MoreOptions/Container/List/SetSize/PanelContainer/SizeSlider" to="." method="_on_SizeSlider_value_changed"]
 [connection signal="toggled" from="MoreOptions/Container/List/SetAlpha" to="." method="_on_SetAlpha_toggled"]

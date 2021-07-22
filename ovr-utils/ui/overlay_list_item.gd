@@ -31,6 +31,8 @@ func _on_Visibility_toggled(state: bool) -> void:
 
 func _on_Grab_toggled(state: bool) -> void:
 	overlay.get_node("OverlayInteraction").grab_mode = state
+	$BasicOptions/List/Grab.pressed = state
+	$MoreOptions/Container/List/Grab.pressed = state
 
 
 func _overlay_visible_changed(state: bool):
@@ -49,6 +51,7 @@ func _on_Remove_pressed() -> void:
 
 func _on_Reset_pressed() -> void:
 	overlay.reset_offset()
+	_on_Grab_toggled(true)
 
 
 func _on_Target_item_selected(index: int) -> void:
