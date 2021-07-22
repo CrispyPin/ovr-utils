@@ -1,5 +1,7 @@
 extends Node
 
+signal loaded_settings
+
 onready var p = get_parent()
 var loaded := false
 var _needs_sync := true
@@ -66,6 +68,7 @@ func load_all() -> void:
 		print("FAILED to load settings")
 		save_all()
 	loaded = true
+	emit_signal("loaded_settings")
 
 
 func _on_SyncTimer_timeout() -> void:

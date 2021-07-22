@@ -5,17 +5,24 @@ var overlay
 
 func _ready() -> void:
 	overlay = OverlayManager.get_node(overlay_name)
+	overlay.get_node("OverlaySettingsSync").connect("loaded_settings", self, "_apply_loaded")
 
 	$MoreOptions/Container/List/SetSize/PanelContainer.visible = false
 	$MoreOptions/Container/List/SetAlpha/PanelContainer.visible = false
-	$MoreOptions/Container/List/SetSize/PanelContainer/SizeSlider.value = overlay.width_meters
 	$MoreOptions.visible = false
 
 	$BasicOptions/Label.text = overlay_name
 	name = overlay_name
+#	overlay.connect("overlay_visible_changed", self, "_overlay_visible_changed")
+#	overlay.connect("path_changed", self, "_update_warning")
+
+
+func _apply_loaded():
+	$MoreOptions/Container/List/SetSize/PanelContainer/SizeSlider.value = overlay.width_meters
 	$MoreOptions/Container/List/Target.selected = overlay.TARGETS.find(overlay.target)
-	overlay.connect("overlay_visible_changed", self, "_overlay_visible_changed")
-	overlay.connect("path_changed", self, "_update_warning")
+	$MoreOptions/Container/List/SetAlpha/PanelContainer/AlphaSlider.value = overlay.alpha
+	_overlay_visible_changed(overlay.overlay_visible)
+	_update_warning()
 
 
 func _update_warning():
