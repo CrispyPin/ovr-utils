@@ -90,6 +90,7 @@ func _save_sub_setting(val, def):
 
 func load_settings() -> void:
 	var file = File.new()
+	var validator: Script = preload("res://settings_validator.gd")
 
 	if not file.file_exists(SETTINGS_PATH):
 		if DEBUG_SETTINGS:
@@ -100,8 +101,11 @@ func load_settings() -> void:
 	var new_settings = parse_json(file.get_as_text())
 	file.close()
 
-	for key in new_settings:
-		s[key] = _load_sub_setting(new_settings[key], SETTINGS_DEF[key])
+	if validator.is_valid(new_settings):
+		for key in new_settings:
+			s[key] = _load_sub_setting(new_settings[key], SETTINGS_DEF[key])
+	else:
+		print("Invalid or outdated config file, using defaults")
 
 	if DEBUG_SETTINGS:
 		print("Loaded settings from file")

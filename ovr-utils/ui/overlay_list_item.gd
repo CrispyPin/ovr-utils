@@ -13,8 +13,8 @@ func _ready() -> void:
 
 	$BasicOptions/Label.text = overlay_name
 	name = overlay_name
-#	overlay.connect("overlay_visible_changed", self, "_overlay_visible_changed")
-#	overlay.connect("path_changed", self, "_update_warning")
+	overlay.connect("overlay_visible_changed", self, "_overlay_visible_changed")
+	overlay.connect("path_changed", self, "_update_warning")
 
 
 func _apply_loaded():

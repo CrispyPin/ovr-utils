@@ -1,7 +1,14 @@
 extends Node
 
-const PATH = "user://overlay_data_DEV.json"
+const VERSION = 1
+
+const PATH = "user://overlay_data.json"
 const DEF = {
+	"version": {
+		"name": "Version of save file",
+		"type": "int",
+		"default": VERSION
+	},
 	"grab_mode": {
 		"name": "Grab mode",
 		"description": "Grab and drag around any overlay",
@@ -28,12 +35,12 @@ const DEF = {
 				},
 				"width": {
 					"name": "Width (m)",
-					"type": "number",
+					"type": "float",
 					"default": 0.4
 				},
 				"alpha": {
 					"name": "Alpha",
-					"type": "number",
+					"type": "float",
 					"default": 1.0
 				},
 				"target": {
