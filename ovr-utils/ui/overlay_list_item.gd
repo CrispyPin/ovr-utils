@@ -31,9 +31,10 @@ func _update_warning():
 
 
 func _on_Visibility_toggled(state: bool) -> void:
-	# TODO check always visible flag
-#	if overlay.type and overlay.type != "main":
-	overlay.overlay_visible = state
+	if overlay.OVERLAY_PROPERTIES.has("no_hide") and overlay.OVERLAY_PROPERTIES.no_hide:
+		overlay.overlay_visible = true
+	else:
+		overlay.overlay_visible = state
 
 
 func _on_Grab_toggled(state: bool) -> void:
@@ -51,8 +52,8 @@ func _overlay_visible_changed(state: bool):
 
 
 func _on_Remove_pressed() -> void:
-	# TODO check stay flag
-#	if overlay.type and overlay.type != "main":
+	if overlay.OVERLAY_PROPERTIES.has("no_delete") and overlay.OVERLAY_PROPERTIES.no_delete:
+		return
 	OverlayManager.remove_overlay(overlay_name)
 
 

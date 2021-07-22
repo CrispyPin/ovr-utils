@@ -31,6 +31,7 @@ var interaction_handler: Node
 var overlay_visible := true setget set_overlay_visible
 var path := "res://special_overlays/MainOverlay.tscn" setget set_path
 var path_invalid := false
+var OVERLAY_PROPERTIES: Dictionary
 
 onready var container = $OverlayViewport/Container
 var overlay_scene: Node
@@ -159,6 +160,10 @@ func set_path(new: String) -> void:
 	if container.get_child_count() > 0:
 		container.get_child(0).queue_free()
 	container.add_child(overlay_scene)
+
+	if overlay_scene.get("OVERLAY_PROPERTIES") != null:
+		OVERLAY_PROPERTIES = overlay_scene.OVERLAY_PROPERTIES
+
 	emit_signal("path_changed")
 
 

@@ -1,5 +1,10 @@
 extends Control
 
+const OVERLAY_PROPERTIES = {
+	"no_hide": true,
+	"no_delete": true,
+}
+
 
 func _ready() -> void:
 	OverlayManager.connect("added_overlay", self, "_add_overlay_to_list")
