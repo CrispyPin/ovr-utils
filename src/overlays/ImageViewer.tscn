@@ -36,8 +36,8 @@ theme = ExtResource( 2 )
 window_title = "Open a File or Directory"
 mode = 3
 access = 2
-current_dir = "/home/crispypin/proj/godot/ovr-utils/ovr-utils"
-current_path = "/home/crispypin/proj/godot/ovr-utils/ovr-utils/"
+current_dir = "/home/crispypin/proj/godot/ovr-utils/src"
+current_path = "/home/crispypin/proj/godot/ovr-utils/src/"
 __meta__ = {
 "_edit_use_anchors_": false
 }

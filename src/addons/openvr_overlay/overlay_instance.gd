@@ -12,9 +12,9 @@ const TARGETS = ["head", "left", "right", "world"]
 export (String,  "head", "left", "right", "world") var target = "left" setget set_target
 
 export var width_meters := 0.4 setget set_width_in_meters
-export var alpha 		:= 1.0 setget set_alpha
-export var add_grabbing := true  # add grabbing module
-export var add_cursor   := false # add cursor module
+export var alpha        := 1.0 setget set_alpha
+#export var add_grabbing := true  # add grabbing module
+#export var add_cursor   := false # add cursor module
 
 var _tracker_id := 0
 var _offsets:Dictionary = {
@@ -31,7 +31,7 @@ var interaction_handler: Node
 var overlay_visible := true setget set_overlay_visible
 var path := "res://special_overlays/MainOverlay.tscn" setget set_path
 var path_invalid := false
-var OVERLAY_PROPERTIES: Dictionary
+var OVERLAY_PROPERTIES: Dictionary # defined in overlay root script (optional)
 
 onready var container = $OverlayViewport/Container
 var overlay_scene: Node
@@ -46,24 +46,21 @@ func _ready() -> void:
 	$VROverlayViewport.size = OverlayInit.ovr_interface.get_render_targetsize()
 	set_notify_transform(true)
 
-	if add_cursor or add_grabbing:
-		interaction_handler = load("res://addons/openvr_overlay/OverlayInteraction.tscn").instance()
-		add_child(interaction_handler)
-		if add_cursor:
-			add_cursor()
-		if add_grabbing:
-			add_grab()
+#	if add_cursor:
+#		add_cursor()
+#	if add_grabbing:
+#		add_grab()
 
 	update_tracker_id()
 	call_deferred("update_offset")
 
 
-func add_cursor():
-	interaction_handler.add_child(load("res://addons/openvr_overlay/OverlayCursor.tscn").instance())
+#func add_cursor():
+#	interaction_handler.add_child(load("res://addons/openvr_overlay/OverlayCursor.tscn").instance())
 
 
-func add_grab():
-	interaction_handler.add_child(load("res://addons/openvr_overlay/OverlayGrab.tscn").instance())
+#func add_grab():
+#	interaction_handler.add_child(load("res://addons/openvr_overlay/OverlayGrab.tscn").instance())
 
 
 func update_tracker_id():
@@ -156,15 +153,15 @@ func set_path(new: String) -> void:
 		overlay_scene = load("res://special_overlays/UnknownType.tscn").instance()
 	else:
 		overlay_scene = packed_overlay.instance()
+	if overlay_scene.get("OVERLAY_PROPERTIES") != null:
+		OVERLAY_PROPERTIES = overlay_scene.OVERLAY_PROPERTIES
+
+	emit_signal("path_changed")
 
 	if container.get_child_count() > 0:
 		container.get_child(0).queue_free()
 	container.add_child(overlay_scene)
 
-	if overlay_scene.get("OVERLAY_PROPERTIES") != null:
-		OVERLAY_PROPERTIES = overlay_scene.OVERLAY_PROPERTIES
-
-	emit_signal("path_changed")
 
 
 func set_alpha(val: float):
@@ -184,3 +181,10 @@ func reset_offset() -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSFORM_CHANGED:
 		emit_signal("offset_changed")
+
+
+func get_property(name: String):
+	if OVERLAY_PROPERTIES.has(name):
+		return OVERLAY_PROPERTIES[name]
+
+	return OverlayInit.OVERLAY_PROPERTIES_DEFAULT[name]

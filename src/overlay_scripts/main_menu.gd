@@ -1,8 +1,10 @@
 extends Control
 
 const OVERLAY_PROPERTIES = {
-	"no_hide": true,
-	"no_delete": true,
+	"allow_hide": false,
+	"allow_delete": false,
+	"has_cursor": true,
+	"has_grab": true,
 }
 
 

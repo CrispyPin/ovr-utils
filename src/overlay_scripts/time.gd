@@ -1,11 +1,15 @@
 extends Label
 
+const OVERLAY_PROPERTIES = {
+
+}
+
 var _delay = 0
 
 
 func _process(delta: float) -> void:
 	_delay += delta
-	if _delay > 0.5:
+	if _delay > 0.2:
 		update_time()
 		_delay = 0
 

@@ -34,6 +34,8 @@ func _ready() -> void:
 	get_parent().connect("width_changed", self, "_update_width")
 	get_parent().connect("offset_changed", self, "_update_offset")
 	get_parent().connect("target_changed", self, "_update_target")
+	get_parent().connect("path_changed", self, "_update_modules")
+	get_parent().connect("path_changed", self, "_update_target")
 
 	OverlayManager.connect("grab_mode_changed", self, "update_selection")
 
@@ -55,7 +57,11 @@ func _trigger_off():
 
 
 func _on_OverlayArea_entered(body: Node) -> void:
+	if OverlayInit.DEBUG_TRIGGERS:
+		print(body.name + " entered trigger")
 	if body.get_node("../../..") != self or pause_triggers or !get_parent().overlay_visible:
+		if OverlayInit.DEBUG_TRIGGERS:
+			print("ignored")
 		return
 	touch_state = true
 	active_controller = body.get_parent().name
@@ -64,6 +70,8 @@ func _on_OverlayArea_entered(body: Node) -> void:
 
 
 func _on_OverlayArea_exited(body: Node) -> void:
+	if OverlayInit.DEBUG_TRIGGERS:
+		print(body.name + " left trigger")
 	if body.get_node("../../..") != self or pause_triggers or !get_parent().overlay_visible:
 		return
 	# TODO revert to other controller if both were touching (edge case)
@@ -104,6 +112,30 @@ func _update_target():
 	# toggle appropriate colliders
 	$VR/left/OverlayActivator/Collision.disabled = !_left_is_activator
 	$VR/right/OverlayActivator/Collision.disabled = !_right_is_activator
+
+
+func _update_modules():
+	# this should be handled better, DRY
+	# grab module
+	var grab_module_exists: bool = get_node_or_null("OverlayGrab") != null
+
+	if get_parent().get_property("has_grab"):
+		if !grab_module_exists:
+			var module = preload("res://addons/openvr_overlay/OverlayGrab.tscn")
+			add_child(module.instance())
+	elif grab_module_exists:
+		get_node("OverlayGrab").queue_free()
+
+	# cursor module
+	var cursor_module_exists: bool = get_node_or_null("OverlayCursor") != null
+
+	if get_parent().get_property("has_cursor"):
+		if !cursor_module_exists:
+			var module = preload("res://addons/openvr_overlay/OverlayCursor.tscn")
+			add_child(module.instance())
+	elif cursor_module_exists:
+		get_node("OverlayCursor").queue_free()
+
 
 
 func _on_RightHand_button_pressed(button: int) -> void:

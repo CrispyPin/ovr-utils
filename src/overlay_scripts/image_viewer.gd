@@ -1,8 +1,12 @@
 extends Control
 
+const OVERLAY_PROPERTIES = {
+	"has_cursor": true,
+}
+
 
 func _ready() -> void:
-	get_viewport().get_parent().add_cursor()
+	#get_viewport().get_parent().add_cursor()
 	var homefolder = OS.get_user_data_dir()
 	homefolder = homefolder.get_base_dir().get_base_dir().get_base_dir()
 	$FileDialog.current_dir = homefolder

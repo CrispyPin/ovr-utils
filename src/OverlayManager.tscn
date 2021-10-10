@@ -8,6 +8,5 @@
 script = ExtResource( 4 )
 
 [node name="MainOverlay" parent="." instance=ExtResource( 2 )]
-add_cursor = true
 
 [node name="OverlaySettingsSync" parent="MainOverlay" instance=ExtResource( 3 )]

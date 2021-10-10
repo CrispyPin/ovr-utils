@@ -1,5 +1,16 @@
 extends Node
 
+
+const DEBUG_TRIGGERS = true
+
+const OVERLAY_PROPERTIES_DEFAULT = {
+	"allow_delete": true,
+	"allow_hide": true,
+#	"interaction": true,
+	"has_cursor": false,
+	"has_grab": true,
+}
+
 var ovr_interface: ARVRInterface
 var ovr_config := preload("res://addons/godot-openvr/OpenVRConfig.gdns").new()
 
