@@ -28,8 +28,8 @@ gdscript/warnings/return_value_discarded=false
 
 [display]
 
-window/size/width=16
-window/size/height=16
+window/size/width=2048
+window/size/height=2048
 
 [editor_plugins]
 

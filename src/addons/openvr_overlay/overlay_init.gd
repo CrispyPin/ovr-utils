@@ -1,8 +1,6 @@
 extends Node
 
 
-const DEBUG_TRIGGERS = true
-
 const OVERLAY_PROPERTIES_DEFAULT = {
 	"allow_delete": true,
 	"allow_hide": true,
