@@ -57,7 +57,7 @@ func _trigger_off():
 
 
 func _on_OverlayArea_entered(body: Node) -> void:
-	if body.get_node("../../..") != self or pause_triggers or !get_parent().overlay_visible:
+	if pause_triggers or !get_parent().overlay_visible:
 		return
 	touch_state = true
 	active_controller = body.get_parent().name
@@ -66,7 +66,7 @@ func _on_OverlayArea_entered(body: Node) -> void:
 
 
 func _on_OverlayArea_exited(body: Node) -> void:
-	if body.get_node("../../..") != self or pause_triggers or !get_parent().overlay_visible:
+	if pause_triggers or !get_parent().overlay_visible:
 		return
 	active_controller = ""
 	touch_state = false
@@ -96,15 +96,18 @@ func _update_offset():
 
 
 func _update_target():
+	var t = get_parent().current_target
 	# reparent _overlay_area
 	_overlay_area.get_parent().remove_child(_overlay_area)
-	tracker_nodes[get_parent().current_target].add_child(_overlay_area)
+	tracker_nodes[t].add_child(_overlay_area)
 
-	_left_is_activator = get_parent().current_target != "left"
-	_right_is_activator = get_parent().current_target != "right"
+	_left_is_activator = t != "left"
+	_right_is_activator = t != "right"
 	# toggle appropriate colliders
-	$VR/left/OverlayActivator/Collision.disabled = !_left_is_activator
-	$VR/right/OverlayActivator/Collision.disabled = !_right_is_activator
+	#$VR/left/OverlayActivator/Collision.disabled = !_left_is_activator
+	#$VR/right/OverlayActivator/Collision.disabled = !_right_is_activator
+	_overlay_area.collision_mask = int(t!="right")*2
+	_overlay_area.collision_mask += int(t!="left")*4
 
 
 func _update_modules():

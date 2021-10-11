@@ -4,7 +4,9 @@
 margin = 0.001
 radius = 0.01
 
-[node name="OverlayActivator" type="StaticBody"]
+[node name="OverlayActivator" type="StaticBody" groups=[
+"OverlayActivator",
+]]
 
 [node name="Collision" type="CollisionShape" parent="."]
 shape = SubResource( 1 )

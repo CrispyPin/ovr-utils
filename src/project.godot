@@ -20,6 +20,7 @@ config/icon="res://textures/icon.png"
 
 Settings="*res://addons/settings-manager/Settings.tscn"
 OverlayInit="*res://addons/openvr_overlay/overlay_init.gd"
+OverlayInteractionRoot="*res://addons/openvr_overlay/OverlayInteractionRoot.tscn"
 OverlayManager="*res://OverlayManager.tscn"
 
 [debug]
@@ -38,6 +39,11 @@ enabled=PoolStringArray( "res://addons/godot-openvr/plugin.cfg", "res://addons/o
 [gdnative]
 
 singletons=[ "res://addons/godot-openvr/godot_openvr.gdnlib" ]
+
+[layer_names]
+
+3d_physics/layer_2="right_hand"
+3d_physics/layer_3="left_hand"
 
 [physics]
 
