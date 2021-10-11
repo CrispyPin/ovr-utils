@@ -103,11 +103,9 @@ func _update_target():
 
 	_left_is_activator = t != "left"
 	_right_is_activator = t != "right"
-	# toggle appropriate colliders
-	#$VR/left/OverlayActivator/Collision.disabled = !_left_is_activator
-	#$VR/right/OverlayActivator/Collision.disabled = !_right_is_activator
-	_overlay_area.collision_mask = int(t!="right")*2
-	_overlay_area.collision_mask += int(t!="left")*4
+	# make area only detect colliders of a different hand
+	_overlay_area.collision_mask = int(t!="right")*2 # detect right hand
+	_overlay_area.collision_mask += int(t!="left")*4 # detect left hand
 
 
 func _update_modules():
