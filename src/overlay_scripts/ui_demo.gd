@@ -2,6 +2,7 @@ extends Control
 
 const OVERLAY_PROPERTIES = {
 	"has_cursor": true,
+	"has_touch": true,
 }
 
 var ihandler
@@ -11,8 +12,6 @@ var oinst
 func _ready() -> void:
 	oinst = get_viewport().get_parent()
 	ihandler = get_viewport().get_node("../OverlayInteraction/OverlayGrab")
-	#if not oinst.add_cursor:
-	#	oinst.add_cursor()
 	for t in oinst.TARGETS:
 		$OptionButton.add_item(t)
 	$OptionButton.selected = oinst.TARGETS.find(oinst.target)

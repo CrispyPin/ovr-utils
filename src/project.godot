@@ -44,6 +44,8 @@ singletons=[ "res://addons/godot-openvr/godot_openvr.gdnlib" ]
 
 3d_physics/layer_2="right_hand"
 3d_physics/layer_3="left_hand"
+3d_physics/layer_4="right_touch"
+3d_physics/layer_5="left_touch"
 
 [physics]
 

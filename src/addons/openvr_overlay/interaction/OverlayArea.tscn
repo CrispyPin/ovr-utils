@@ -4,9 +4,18 @@
 resource_local_to_scene = true
 extents = Vector3( 0.2, 0.2, 0.01 )
 
-[node name="OverlayArea" type="Area"]
+[node name="OverlayArea" type="Spatial"]
+
+[node name="AreaNear" type="Area" parent="."]
 collision_layer = 0
 collision_mask = 6
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
+[node name="CollisionShape" type="CollisionShape" parent="AreaNear"]
+shape = SubResource( 1 )
+
+[node name="AreaTouch" type="Area" parent="."]
+collision_layer = 0
+collision_mask = 24
+
+[node name="CollisionShape" type="CollisionShape" parent="AreaTouch"]
 shape = SubResource( 1 )

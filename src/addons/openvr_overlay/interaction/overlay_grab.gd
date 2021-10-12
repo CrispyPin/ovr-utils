@@ -22,18 +22,18 @@ func _ready() -> void:
 	get_parent().connect("trigger_off", self, "_trigger_off")
 
 
-func _trigger_on():
+func _trigger_on(controller):
 	if Settings.s.grab_mode or _interaction.grab_mode:
-		begin_move()
+		begin_move(controller)
 
 
-func _trigger_off():
+func _trigger_off(_controller):
 	finish_move()
 
 
-func begin_move():
-	if not _interaction.active_controller:
-		print("Could not begin moving overlay, no controller is touching overlay. <", _overlay.name, ">")
+func begin_move(controller="right"):
+	if not _interaction.state[controller].near:
+		print("Could not begin moving overlay, " + controller + " controller is not touching overlay. <", _overlay.name, ">")
 		return
 	if is_moving:
 		return
@@ -41,7 +41,7 @@ func begin_move():
 	_interaction.pause_triggers = true
 	# store current states to revert after move
 	_pre_move_target = _overlay.current_target
-	_mover_hand_name = _interaction.active_controller
+	_mover_hand_name = controller
 	_mover_hand_offsets = _overlay.get_offset(_mover_hand_name)
 
 	# calculate offsets from active controller to overlay

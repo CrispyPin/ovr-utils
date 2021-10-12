@@ -23,11 +23,17 @@ func _process(_delta: float) -> void:
 
 #get canvas position of active controller
 func get_canvas_pos() -> Vector2:
-	if not _i.active_controller:
+	var active
+	if _i.state.right.near:
+		active = "right"
+	elif _i.state.left.near:
+		active = "left"
+	else:
 		return Vector2(-1000, 1000) # offscreen
+	#if not (_i.state.right.near or _i.state.left.near):
 
 	var controller_local_pos = _i._overlay_area.global_transform.xform_inv(\
-			_i.tracker_nodes[_i.active_controller].translation)
+			_i.tracker_nodes[active].translation)
 	var pos = Vector2(controller_local_pos.x, controller_local_pos.y)
 
 	var overlay_size = Vector2(2048, 2048)
@@ -61,10 +67,10 @@ func _send_click_event(state: bool):
 	viewport.input(click_event)
 
 
-func _trigger_on():
+func _trigger_on(controller):
 	_send_click_event(true)
 
 
-func _trigger_off():
+func _trigger_off(controller):
 	_send_click_event(false)
 

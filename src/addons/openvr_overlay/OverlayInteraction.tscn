@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://addons/openvr_overlay/interaction/overlay_interaction.gd" type="Script" id=1]
+[ext_resource path="res://addons/openvr_overlay/interaction/OverlayArea.tscn" type="PackedScene" id=2]
 
 [node name="OverlayInteraction" type="Node"]
 script = ExtResource( 1 )
@@ -14,6 +15,8 @@ controller_id = 2
 
 [node name="head" type="ARVRCamera" parent="VR"]
 visible = false
+
+[node name="OverlayArea" parent="." instance=ExtResource( 2 )]
 
 [connection signal="button_pressed" from="VR/left" to="." method="_on_LeftHand_button_pressed"]
 [connection signal="button_release" from="VR/left" to="." method="_on_LeftHand_button_release"]

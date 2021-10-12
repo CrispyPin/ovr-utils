@@ -2,11 +2,9 @@
 
 [sub_resource type="SphereShape" id=1]
 margin = 0.001
-radius = 0.01
+radius = 0.0
 
-[node name="OverlayActivator" type="StaticBody" groups=[
-"OverlayActivator",
-]]
+[node name="TouchCollider" type="StaticBody"]
 
 [node name="Collision" type="CollisionShape" parent="."]
 shape = SubResource( 1 )
