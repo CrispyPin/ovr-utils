@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://addons/openvr_overlay/interaction/HandCollider.tscn" type="PackedScene" id=1]
-[ext_resource path="res://addons/openvr_overlay/interaction/TouchCollider.tscn" type="PackedScene" id=2]
 
 [node name="OverlayInteractionRoot" type="Node"]
 
@@ -12,14 +11,7 @@
 [node name="HandCollider" parent="VR/left" groups=[
 "left",
 ] instance=ExtResource( 1 )]
-collision_layer = 4
-collision_mask = 4
-
-[node name="TouchCollider" parent="VR/left" groups=[
-"left",
-] instance=ExtResource( 2 )]
-collision_layer = 16
-collision_mask = 16
+collision_layer = 20
 
 [node name="right" type="ARVRController" parent="VR"]
 controller_id = 2
@@ -27,14 +19,7 @@ controller_id = 2
 [node name="HandCollider" parent="VR/right" groups=[
 "right",
 ] instance=ExtResource( 1 )]
-collision_layer = 2
-collision_mask = 2
-
-[node name="TouchCollider" parent="VR/right" groups=[
-"right",
-] instance=ExtResource( 2 )]
-collision_layer = 8
-collision_mask = 8
+collision_layer = 10
 
 [node name="head" type="ARVRCamera" parent="VR"]
 visible = false

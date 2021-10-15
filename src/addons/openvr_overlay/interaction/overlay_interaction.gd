@@ -44,10 +44,10 @@ onready var tracker_nodes = {
 func _ready() -> void:
 	#add_child(_overlay_area)
 	_overlay_area = $OverlayArea
-	_overlay_area.get_node("AreaNear").connect("body_entered", self, "_on_Near_entered")
-	_overlay_area.get_node("AreaNear").connect("body_exited", self, "_on_Near_exited")
-	_overlay_area.get_node("AreaTouch").connect("body_entered", self, "_on_Touch_entered")
-	_overlay_area.get_node("AreaTouch").connect("body_exited", self, "_on_Touch_exited")
+	_overlay_area.get_node("AreaNear"). connect("area_entered", self, "_on_Near_entered")
+	_overlay_area.get_node("AreaNear"). connect("area_exited",  self, "_on_Near_exited")
+	_overlay_area.get_node("AreaTouch").connect("area_entered", self, "_on_Touch_entered")
+	_overlay_area.get_node("AreaTouch").connect("area_exited",  self, "_on_Touch_exited")
 
 	get_parent().connect("width_changed", self, "_update_width")
 	get_parent().connect("offset_changed", self, "_update_offset")
@@ -125,7 +125,10 @@ func set_grab_mode(state: bool) -> void:
 func _update_width():
 	var ratio = OverlayInit.ovr_interface.get_render_targetsize()
 	var extents = get_parent().width_meters * 0.5
-	_overlay_area.get_node("AreaNear/CollisionShape").shape.set_extents(Vector3(extents, extents * ratio.y/ratio.x, 0.05))
+	_overlay_area.get_node("AreaNear/CollisionShape").shape.set_extents(
+		Vector3(extents, extents * ratio.y/ratio.x, 0.1))
+	_overlay_area.get_node("AreaTouch/CollisionShape").shape.set_extents(
+		Vector3(extents, extents * ratio.y/ratio.x, 0.01))
 
 
 func _update_offset():

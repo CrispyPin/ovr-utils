@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://overlay_scripts/ui_demo.gd" type="Script" id=1]
 [ext_resource path="res://fonts/OpenSans-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://fonts/OpenSans-Bold.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://styles/menu.theme" type="Theme" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 100
@@ -29,6 +30,7 @@ font_data = ExtResource( 3 )
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 4 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -63,6 +65,34 @@ text = "Drag"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Button" type="Button" parent="."]
+margin_left = 80.8171
+margin_top = 242.452
+margin_right = 481.817
+margin_bottom = 433.452
+text = "aaaaa"
+
+[node name="Button2" type="Button" parent="."]
+margin_left = 80.8171
+margin_top = 433.452
+margin_right = 481.817
+margin_bottom = 624.452
+text = "EEEEE"
+
+[node name="Button3" type="Button" parent="."]
+margin_left = 650.0
+margin_top = 242.452
+margin_right = 1051.0
+margin_bottom = 433.452
+text = "aaaaa"
+
+[node name="Button4" type="Button" parent="."]
+margin_left = 650.0
+margin_top = 433.452
+margin_right = 1051.0
+margin_bottom = 624.452
+text = "EEEEE"
 
 [connection signal="item_selected" from="OptionButton" to="." method="_on_OptionButton_item_selected"]
 [connection signal="button_down" from="DragButton" to="." method="_on_DragButton_button_down"]

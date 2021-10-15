@@ -13,8 +13,7 @@ export (String,  "head", "left", "right", "world") var target = "left" setget se
 
 export var width_meters := 0.4 setget set_width_in_meters
 export var alpha        := 1.0 setget set_alpha
-#export var add_grabbing := true  # add grabbing module
-#export var add_cursor   := false # add cursor module
+
 
 var _tracker_id := 0
 var _offsets:Dictionary = {
@@ -46,21 +45,8 @@ func _ready() -> void:
 	$VROverlayViewport.size = OverlayInit.ovr_interface.get_render_targetsize()
 	set_notify_transform(true)
 
-#	if add_cursor:
-#		add_cursor()
-#	if add_grabbing:
-#		add_grab()
-
 	update_tracker_id()
 	call_deferred("update_offset")
-
-
-#func add_cursor():
-#	interaction_handler.add_child(load("res://addons/openvr_overlay/OverlayCursor.tscn").instance())
-
-
-#func add_grab():
-#	interaction_handler.add_child(load("res://addons/openvr_overlay/OverlayGrab.tscn").instance())
 
 
 func update_tracker_id():
@@ -161,7 +147,6 @@ func set_path(new: String) -> void:
 	if container.get_child_count() > 0:
 		container.get_child(0).queue_free()
 	container.add_child(overlay_scene)
-
 
 
 func set_alpha(val: float):
