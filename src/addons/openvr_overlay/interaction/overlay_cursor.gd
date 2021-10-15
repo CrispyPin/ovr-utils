@@ -1,24 +1,21 @@
 extends Node
 
 
-#var cursor_node = preload("res://addons/openvr_overlay/interaction/Cursor.tscn").instance()
 onready var viewport: Viewport = get_node("../../OverlayViewport")
 onready var _i = get_parent()
 
 var cursor_pos := {
 	"right": Vector2(),
 	"left": Vector2(),
-	"prev": {
-		"right": Vector2(),
-		"left": Vector2(),
-	}
 }
-
+var prev_pos := {
+	"right": Vector2(),
+	"left": Vector2(),
+}
 var click := {
 	"right": false,
 	"left": false,
 }
-
 var cursor_nodes := {
 	"right": preload("res://addons/openvr_overlay/interaction/Cursor.tscn").instance(),
 	"left": preload("res://addons/openvr_overlay/interaction/Cursor.tscn").instance(),
@@ -37,15 +34,11 @@ func _process(_delta: float) -> void:
 	cursor_pos.left= get_canvas_pos("left")
 	_update_cursors()
 	_send_move_event()
-	cursor_pos.prev.right = cursor_pos.right
-	cursor_pos.prev.left = cursor_pos.left
+	prev_pos = cursor_pos.duplicate(true)
 
 
-#get canvas position of active controller
+#get canvas position of controller
 func get_canvas_pos(controller) -> Vector2:
-	#if not _i.state[controller].near:
-	#	return Vector2(-100, 100) # offscreen
-
 	var controller_local_pos = _i._overlay_area.global_transform.xform_inv(\
 			_i.tracker_nodes[controller].translation)
 	var pos = Vector2(controller_local_pos.x, controller_local_pos.y)
@@ -77,8 +70,8 @@ func _send_move_event():
 		return# only send move events while a cursor is held down
 
 	var event = InputEventMouseMotion.new()
-	event.position = cursor_pos.prev[active]
-	event.relative = cursor_pos[active] - cursor_pos.prev[active]
+	event.position = prev_pos[active]
+	event.relative = cursor_pos[active] - prev_pos[active]
 	event.speed = event.relative
 	viewport.input(event)
 
