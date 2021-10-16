@@ -16,6 +16,8 @@ var click := {
 	"right": false,
 	"left": false,
 }
+var active_side := ""
+
 var cursor_nodes := {
 	"right": preload("res://addons/openvr_overlay/interaction/Cursor.tscn").instance(),
 	"left": preload("res://addons/openvr_overlay/interaction/Cursor.tscn").instance(),
@@ -61,17 +63,12 @@ func _update_cursors():
 
 
 func _send_move_event():
-	var active: String
-	if click.right:
-		active = "right"
-	elif click.left:
-		active = "left"
-	else:
+	if not active_side:
 		return# only send move events while a cursor is held down
 
 	var event = InputEventMouseMotion.new()
-	event.position = prev_pos[active]
-	event.relative = cursor_pos[active] - prev_pos[active]
+	event.position = prev_pos[active_side]
+	event.relative = cursor_pos[active_side] - prev_pos[active_side]
 	event.speed = event.relative
 	viewport.input(event)
 
@@ -80,6 +77,7 @@ func _send_click_event(state: bool, controller: String):
 	if click[controller] == state:
 		return # already in that state
 	click[controller] = state
+	_update_active_side()
 	var click_event = InputEventMouseButton.new()
 	click_event.position = cursor_pos[controller]
 	click_event.pressed = state
@@ -96,3 +94,10 @@ func _trigger_on(controller):
 func _trigger_off(controller):
 	_send_click_event(false, controller)
 
+func _update_active_side() -> void:
+	if click.right:
+		active_side = "right"
+	elif click.left:
+		active_side = "left"
+	else:
+		active_side = ""

@@ -5,24 +5,26 @@ const OVERLAY_PROPERTIES = {
 	"has_touch": true,
 }
 
-var ihandler
+var grabber
+var clicker
 var oinst
 
 
 func _ready() -> void:
 	oinst = get_viewport().get_parent()
-	ihandler = get_viewport().get_node("../OverlayInteraction/OverlayGrab")
+	clicker = get_viewport().get_node("../OverlayInteraction/OverlayCursor")
+	grabber = get_viewport().get_node("../OverlayInteraction/OverlayGrab")
 	for t in oinst.TARGETS:
 		$OptionButton.add_item(t)
 	$OptionButton.selected = oinst.TARGETS.find(oinst.target)
 
 
 func _on_DragButton_button_down() -> void:
-	ihandler.begin_move()
+	grabber.begin_move(clicker.active_side)
 
 
 func _on_DragButton_button_up() -> void:
-	ihandler.finish_move()
+	grabber.finish_move()
 
 
 func _on_OptionButton_item_selected(index: int) -> void:

@@ -147,6 +147,8 @@ func _update_target():
 	# make area only detect colliders of a different hand
 	_overlay_area.get_node("AreaNear").collision_mask = int(t!="right")*2 # detect right hand
 	_overlay_area.get_node("AreaNear").collision_mask += int(t!="left")*4 # detect left hand
+	_overlay_area.get_node("AreaNear").collision_mask = int(t!="right")*8 # detect right hand
+	_overlay_area.get_node("AreaNear").collision_mask += int(t!="left")*16 # detect left hand
 
 
 func _update_modules():
