@@ -29,6 +29,7 @@ func add_overlay(name):
 	print("Adding overlay '", name, "'")
 	var instance = preload("res://addons/openvr_overlay/OverlayInstance.tscn").instance()
 	instance.name = name
+	instance.path = Settings.s.overlays[name].path
 	instance.add_child(preload("res://OverlaySettingsSync.tscn").instance())
 	add_child(instance)
 	emit_signal("added_overlay", name)

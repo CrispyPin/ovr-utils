@@ -42,7 +42,6 @@ onready var tracker_nodes = {
 
 
 func _ready() -> void:
-	#add_child(_overlay_area)
 	_overlay_area = $OverlayArea
 	_overlay_area.get_node("AreaNear"). connect("area_entered", self, "_on_Near_entered")
 	_overlay_area.get_node("AreaNear"). connect("area_exited",  self, "_on_Near_exited")
@@ -52,14 +51,12 @@ func _ready() -> void:
 	get_parent().connect("width_changed", self, "_update_width")
 	get_parent().connect("offset_changed", self, "_update_offset")
 	get_parent().connect("target_changed", self, "_update_target")
-	get_parent().connect("path_changed", self, "_update_modules")
-	get_parent().connect("path_changed", self, "_update_target")
 
 	OverlayManager.connect("grab_mode_changed", self, "update_selection")
 
-	_update_width()
-	_update_offset()
-	_update_target()
+	call_deferred("_update_width")
+	call_deferred("_update_offset")
+	call_deferred("_update_target")
 
 
 func _trigger_on(controller):
@@ -151,28 +148,18 @@ func _update_target():
 	_overlay_area.get_node("AreaNear").collision_mask += int(t!="left")*16 # detect left hand
 
 
-func _update_modules():
-	# this should be handled better, DRY
+# called by overlay_instance after properties are loaded and before overlay scene enters the tree
+func spawn_modules():
 	# grab module
-	var grab_module_exists: bool = get_node_or_null("OverlayGrab") != null
-
 	if get_parent().get_property("has_grab"):
-		if !grab_module_exists:
-			var module = preload("res://addons/openvr_overlay/OverlayGrab.tscn")
-			add_child(module.instance())
-	elif grab_module_exists:
-		get_node("OverlayGrab").queue_free()
+		var module = preload("res://addons/openvr_overlay/OverlayGrab.tscn")
+		add_child(module.instance())
 
 	# cursor module
-	var cursor_module_exists: bool = get_node_or_null("OverlayCursor") != null
-
 	if get_parent().get_property("has_cursor"):
-		if !cursor_module_exists:
-			var module = preload("res://addons/openvr_overlay/OverlayCursor.tscn")
-			add_child(module.instance())
-	elif cursor_module_exists:
-		get_node("OverlayCursor").queue_free()
-
+		var module = preload("res://addons/openvr_overlay/OverlayCursor.tscn")
+		add_child(module.instance())
+	
 
 
 func _on_RightHand_button_pressed(button: int) -> void:

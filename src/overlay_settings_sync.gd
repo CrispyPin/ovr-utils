@@ -10,7 +10,6 @@ var _needs_sync := true
 func _ready() -> void:
 	p = get_parent()
 	call_deferred("load_all")
-	p.connect("path_changed",            self, "_prop_changed")
 	p.connect("overlay_visible_changed", self, "_prop_changed")
 	p.connect("width_changed",           self, "_prop_changed")
 	p.connect("alpha_changed",           self, "_prop_changed")
@@ -46,8 +45,8 @@ func load_all() -> void:
 	if Settings.s.overlays.has(p.name):
 		var new = Settings.s.overlays[p.name]
 
-		if new.has("path"):
-			p.path = new.path
+		#if new.has("path"):
+		#	p.path = new.path
 		if new.has("visible"):
 			p.overlay_visible = new.visible
 		if new.has("width"):

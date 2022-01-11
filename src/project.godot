@@ -25,6 +25,7 @@ OverlayManager="*res://OverlayManager.tscn"
 
 [debug]
 
+gdscript/warnings/unused_signal=false
 gdscript/warnings/return_value_discarded=false
 
 [display]

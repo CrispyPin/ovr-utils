@@ -1,6 +1,6 @@
 extends Spatial
 
-signal path_changed
+#signal path_changed
 signal overlay_visible_changed
 signal width_changed
 signal alpha_changed
@@ -28,7 +28,7 @@ var current_target: String = "world" setget _set_current_target
 var fallback = ["left", "right", "head"] # TODO setget that updates tracking (not important)
 var interaction_handler: Node
 var overlay_visible := true setget set_overlay_visible
-var path := "res://special_overlays/MainOverlay.tscn" setget set_path
+var path : String = "res://special_overlays/MainOverlay.tscn"# setget set_path
 var path_invalid := false
 var OVERLAY_PROPERTIES: Dictionary # defined in overlay root script (optional)
 
@@ -37,6 +37,8 @@ var overlay_scene: Node
 
 
 func _ready() -> void:
+	container = $OverlayViewport/Container
+	load_overlay()
 	current_target = target
 
 	ARVRServer.connect("tracker_added", self, "_tracker_changed")
@@ -48,6 +50,24 @@ func _ready() -> void:
 	update_tracker_id()
 	call_deferred("update_offset")
 
+func load_overlay() -> void:
+	path_invalid = false
+
+	var packed_overlay = load(path)
+	if not packed_overlay:
+		path_invalid = true
+		overlay_scene = load("res://special_overlays/UnknownType.tscn").instance()
+	else:
+		overlay_scene = packed_overlay.instance()
+
+	if overlay_scene.get("OVERLAY_PROPERTIES") != null:
+		OVERLAY_PROPERTIES = overlay_scene.OVERLAY_PROPERTIES
+
+	$OverlayInteraction.spawn_modules()
+
+	if container.get_child_count() > 0:
+		container.get_child(0).queue_free()
+	container.add_child(overlay_scene)
 
 func update_tracker_id():
 	_tracker_id = -1
@@ -129,26 +149,6 @@ func set_width_in_meters(width: float) -> void:
 	emit_signal("width_changed")
 
 
-func set_path(new: String) -> void:
-	path = new
-	path_invalid = false
-
-	var packed_overlay = load(path)
-	if not packed_overlay:
-		path_invalid = true
-		overlay_scene = load("res://special_overlays/UnknownType.tscn").instance()
-	else:
-		overlay_scene = packed_overlay.instance()
-	if overlay_scene.get("OVERLAY_PROPERTIES") != null:
-		OVERLAY_PROPERTIES = overlay_scene.OVERLAY_PROPERTIES
-
-	emit_signal("path_changed")
-
-	if container.get_child_count() > 0:
-		container.get_child(0).queue_free()
-	container.add_child(overlay_scene)
-
-
 func set_alpha(val: float):
 	alpha = val
 	$VROverlayViewport/TextureRect.modulate.a = val
@@ -168,8 +168,8 @@ func _notification(what: int) -> void:
 		emit_signal("offset_changed")
 
 
-func get_property(name: String):
-	if OVERLAY_PROPERTIES.has(name):
-		return OVERLAY_PROPERTIES[name]
+func get_property(p_name: String):
+	if OVERLAY_PROPERTIES.has(p_name):
+		return OVERLAY_PROPERTIES[p_name]
 
-	return OverlayInit.OVERLAY_PROPERTIES_DEFAULT[name]
+	return OverlayInit.OVERLAY_PROPERTIES_DEFAULT[p_name]
