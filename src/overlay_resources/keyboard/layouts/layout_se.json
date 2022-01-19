@@ -226,6 +226,7 @@
 				{
 					"keycode": "SHIFT",
 					"display": "^",
+					"toggle": true,
 					"width": 1.25
 				},
 				{
@@ -268,6 +269,7 @@
 				{
 					"keycode": "SHIFT",
 					"display": "Shift",
+					"toggle": true,
 					"width": 2.75
 				}
 			]
@@ -278,16 +280,19 @@
 				{
 					"keycode": "CONTROL",
 					"display": "Ctrl",
+					"toggle": true,
 					"width": 1.5
 				},
 				{
 					"keycode": "SUPER",
 					"display": "Sup",
+					"toggle": true,
 					"width": 1.25
 				},
 				{
 					"keycode": "ALT",
 					"display": "Alt",
+					"toggle": true,
 					"width": 1.25
 				},
 				{
@@ -298,11 +303,13 @@
 				{
 					"keycode": "ALT",
 					"display": "Alt",
+					"toggle": true,
 					"width": 1.25
 				},
 				{
 					"keycode": "SUPER",
 					"display": "Sup",
+					"toggle": true,
 					"width": 1.25
 				},
 				{
@@ -313,6 +320,7 @@
 				{
 					"keycode": "CONTROL",
 					"display": "Ctrl",
+					"toggle": true,
 					"width": 1.5
 				}
 			]

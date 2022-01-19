@@ -4,11 +4,12 @@ const OVERLAY_PROPERTIES = {
 	"has_touch": true,
 }
 
-export var key_size := 128
+export var key_size := 120
 export var key_row : PackedScene
 export var key_button : PackedScene
 
 var keymap := {}
+var toggle_keys := []
 
 func _ready():
 	load_keys("res://overlay_resources/keyboard/layouts/layout_se.json")
@@ -39,9 +40,16 @@ func apply_keys():
 			btn.rect_min_size.y = key_size
 			if key.has("width"):
 				btn.rect_min_size.x *= key.width
+			
+			if key.has("toggle") and key.toggle:
+				btn.toggle_mode = true
+				btn.connect("toggled", self, "key_toggled", [key.keycode])
+				toggle_keys.append(btn)
+			else:
+				btn.connect("button_down", self, "key_down", [key.keycode])
+				btn.connect("button_up", self, "key_up", [key.keycode])
 				
 			row_box.add_child(btn)
-			btn.connect("pressed", self, "key_pressed", [key.keycode])
 			
 			# horizontal gaps
 			if key.has("gap"):
@@ -49,6 +57,7 @@ func apply_keys():
 				gapbox.rect_min_size.x = key.gap * key_size
 				gapbox.name = "Gap"
 				row_box.add_child(gapbox)
+
 		# vertical gaps
 		if row.has("gap"):
 			var gapbox = Control.new()
@@ -57,7 +66,21 @@ func apply_keys():
 			$PanelContainer/CenterContainer/VBoxContainer.add_child(gapbox)
 
 
-func key_pressed(code, toggle=false):
-	GDVK.press(code)
-	
+func key_toggled(state, code):
+	if state:
+		GDVK.key_down(code)
+	else:
+		GDVK.key_up(code)
 
+
+func key_down(code):
+	GDVK.key_down(code)
+
+
+func key_up(code):
+	GDVK.key_up(code)
+	# clear all modifier keys
+	for k in toggle_keys:
+		if k.pressed:
+			k.pressed = false
+	
