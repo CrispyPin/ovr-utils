@@ -62,11 +62,13 @@ func _ready() -> void:
 func _trigger_on(controller):
 	if state[controller].near:
 		state[controller].trigger = true
+#		print("TRIGGER ON ", controller)
 		emit_signal("trigger_on", controller)
 
 
 func _trigger_off(controller):
 	state[controller].trigger = false
+#	print("TRIGGER OFF ", controller)
 	emit_signal("trigger_off", controller)
 
 
@@ -76,6 +78,7 @@ func _on_Near_entered(body: Node) -> void:
 	var hand = body.get_groups()[0]
 	state[hand].near = true
 	update_selection()
+#	print("NEAR ON ", hand)
 	emit_signal("near_on")
 
 
@@ -85,6 +88,7 @@ func _on_Near_exited(body: Node) -> void:
 	var hand = body.get_groups()[0]
 	state[hand].near = false
 
+#	print("NEAR OFF ", hand)
 	update_selection()
 	emit_signal("near_off")
 
@@ -95,7 +99,8 @@ func _on_Touch_entered(body: Node) -> void:
 	var hand = body.get_groups()[0]
 	state[hand].touch = true
 	update_selection()
-	emit_signal("touch_on")
+#	print("TOUCH ON ", hand)
+	emit_signal("touch_on", hand)
 
 
 func _on_Touch_exited(body: Node) -> void:
@@ -103,9 +108,9 @@ func _on_Touch_exited(body: Node) -> void:
 		return
 	var hand = body.get_groups()[0]
 	state[hand].touch = false
-
 	update_selection()
-	emit_signal("touch_off")
+#	print("TOUCH OFF ", hand)
+	emit_signal("touch_off", hand)
 
 
 func update_selection():
@@ -160,6 +165,10 @@ func spawn_modules():
 		var module = preload("res://addons/openvr_overlay/OverlayCursor.tscn")
 		add_child(module.instance())
 	
+	# cursor module
+	if get_parent().get_property("has_touch"):
+		var module = preload("res://addons/openvr_overlay/OverlayTouchCursor.tscn")
+		add_child(module.instance())
 
 
 func _on_RightHand_button_pressed(button: int) -> void:

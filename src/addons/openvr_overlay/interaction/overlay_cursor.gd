@@ -1,5 +1,6 @@
 extends Node
 
+export var is_touch := false
 
 onready var viewport: Viewport = get_node("../../OverlayViewport")
 onready var _i = get_parent()
@@ -22,21 +23,38 @@ var cursor_nodes := {
 	"right": preload("res://addons/openvr_overlay/interaction/Cursor.tscn").instance(),
 	"left": preload("res://addons/openvr_overlay/interaction/Cursor.tscn").instance(),
 }
-
+var temp = 0
+var tstate = true
 
 func _ready() -> void:
 	viewport.add_child(cursor_nodes.right)
 	viewport.add_child(cursor_nodes.left)
-	get_parent().connect("trigger_on", self, "_trigger_on")
-	get_parent().connect("trigger_off", self, "_trigger_off")
+	if is_touch:
+		get_parent().connect("touch_on", self, "_trigger_on")
+		get_parent().connect("touch_off", self, "_trigger_off")
+	else:
+		get_parent().connect("trigger_on", self, "_trigger_on")
+		get_parent().connect("trigger_off", self, "_trigger_off")
+	
 
-
-func _process(_delta: float) -> void:
-	cursor_pos.right= get_canvas_pos("right")
-	cursor_pos.left= get_canvas_pos("left")
+func _process(delta: float) -> void:
+	cursor_pos.right = get_canvas_pos("right")
+	cursor_pos.left = get_canvas_pos("left")
 	_update_cursors()
-	_send_move_event()
+	#_send_move_event()
 	prev_pos = cursor_pos.duplicate(true)
+#	if is_touch:
+#		temp += delta
+#		if temp > 0.5:
+#			temp = 0
+#			var click_event = InputEventMouseButton.new()
+#			click_event.position = Vector2(240, 340)
+#			click_event.pressed = tstate
+#			tstate = !tstate
+#			click_event.button_index = 1
+#			viewport.input(click_event)
+#			print("SENT EVENT ", click_event.position, " -- ", click_event.pressed)
+##			viewport.
 
 
 #get canvas position of controller
@@ -65,7 +83,7 @@ func _update_cursors():
 func _send_move_event():
 	if not active_side:
 		return# only send move events while a cursor is held down
-
+	
 	var event = InputEventMouseMotion.new()
 	event.position = prev_pos[active_side]
 	event.relative = cursor_pos[active_side] - prev_pos[active_side]
@@ -83,6 +101,7 @@ func _send_click_event(state: bool, controller: String):
 	click_event.pressed = state
 	click_event.button_index = 1
 	viewport.input(click_event)
+#	print("SENT EVENT ", click_event.position, " -- ", click_event.pressed)
 
 
 func _trigger_on(controller):

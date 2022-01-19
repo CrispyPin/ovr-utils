@@ -1,3 +1,6 @@
 [gd_scene format=2]
 
 [node name="Main" type="Node"]
+__meta__ = {
+"_editor_description_": "Everything is loaded using autoloads so this scene is just a dummy"
+}

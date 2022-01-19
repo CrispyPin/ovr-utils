@@ -35,7 +35,8 @@ func _ready() -> void:
 	ARVRServer.connect("tracker_added", self, "_tracker_added")
 	ARVRServer.connect("tracker_removed", self, "_tracker_removed")
 	update_hand_ids()
-
+	#Input.set_use_accumulated_input(true)
+	
 
 func _tracker_added(tracker_name: String, type: int, id: int):
 	update_hand_ids()

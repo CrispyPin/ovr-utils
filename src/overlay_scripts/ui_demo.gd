@@ -12,7 +12,7 @@ var oinst
 
 func _ready() -> void:
 	oinst = get_viewport().get_parent()
-	clicker = get_viewport().get_node("../OverlayInteraction/OverlayCursor")
+	clicker = get_viewport().get_node("../OverlayInteraction/OverlayTouchCursor")
 	grabber = get_viewport().get_node("../OverlayInteraction/OverlayGrab")
 	for t in oinst.TARGETS:
 		$OptionButton.add_item(t)
