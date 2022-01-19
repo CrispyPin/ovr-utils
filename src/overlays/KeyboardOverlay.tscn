@@ -1,0 +1,87 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://overlay_resources/keyboard/keyboard.theme" type="Theme" id=1]
+[ext_resource path="res://overlay_resources/keyboard/keyboard_overlay.gd" type="Script" id=2]
+
+[node name="Overlay" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -123.0
+margin_top = -103.5
+margin_right = 123.0
+margin_bottom = 103.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 400.0
+margin_bottom = 268.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 400.0
+margin_bottom = 268.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+margin_right = 392.0
+margin_bottom = 128.0
+
+[node name="KeyH" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+margin_right = 128.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+text = "H"
+
+[node name="KeyE" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+margin_left = 132.0
+margin_right = 260.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+text = "E"
+
+[node name="KeyO" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+margin_left = 264.0
+margin_right = 392.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+text = "O"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+margin_top = 132.0
+margin_right = 392.0
+margin_bottom = 260.0
+
+[node name="KeyCaps" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+margin_right = 224.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 224, 128 )
+text = "CAPS"
+
+[node name="KeyL" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+margin_left = 228.0
+margin_right = 356.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+text = "L"
+
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/KeyH" to="." method="_on_KeyH_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/KeyE" to="." method="_on_KeyE_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/KeyO" to="." method="_on_KeyO_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer2/KeyCaps" to="." method="_on_KeyCaps_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer2/KeyL" to="." method="_on_KeyL_pressed"]
