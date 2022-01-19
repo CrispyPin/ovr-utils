@@ -267,8 +267,8 @@
 				},
 				{
 					"keycode": "SHIFT",
-					"display": "SHIFT",
-					"width": 2.5
+					"display": "Shift",
+					"width": 2.75
 				}
 			]
 		},
@@ -282,28 +282,28 @@
 				},
 				{
 					"keycode": "SUPER",
-					"display": "Super",
-					"width": 1.5
+					"display": "Sup",
+					"width": 1.25
 				},
 				{
 					"keycode": "ALT",
 					"display": "Alt",
-					"width": 1.5
+					"width": 1.25
 				},
 				{
 					"keycode": "SPACE",
 					"display": "",
-					"width": 5.5
+					"width": 5.75
 				},
 				{
 					"keycode": "ALT",
-					"display": "Alt Gr(!)",
-					"width": 1.5
+					"display": "Alt",
+					"width": 1.25
 				},
 				{
 					"keycode": "SUPER",
-					"display": "Super",
-					"width": 1.5
+					"display": "Sup",
+					"width": 1.25
 				},
 				{
 					"keycode": "MENU",

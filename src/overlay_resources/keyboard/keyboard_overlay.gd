@@ -42,35 +42,22 @@ func apply_keys():
 				
 			row_box.add_child(btn)
 			btn.connect("pressed", self, "key_pressed", [key.keycode])
-		#TODO gaps
+			
+			# horizontal gaps
+			if key.has("gap"):
+				var gapbox = Control.new()
+				gapbox.rect_min_size.x = key.gap * key_size
+				gapbox.name = "Gap"
+				row_box.add_child(gapbox)
+		# vertical gaps
+		if row.has("gap"):
+			var gapbox = Control.new()
+			gapbox.rect_min_size.y = row.gap * key_size
+			gapbox.name = "Gap"
+			$PanelContainer/CenterContainer/VBoxContainer.add_child(gapbox)
 
 
 func key_pressed(code, toggle=false):
 	GDVK.press(code)
 	
 
-
-func _on_KeyO_pressed():
-	GDVK.press("O")
-
-
-func _on_KeyE_pressed():
-	GDVK.key_down("SHIFT")
-	GDVK.press("1")
-	GDVK.key_up("SHIFT")
-	
-
-
-func _on_KeyH_pressed():
-	GDVK.press("H")
-	pass # Replace with function body.
-
-
-func _on_KeyL_pressed():
-	GDVK.press("L")
-	pass # Replace with function body.
-
-
-func _on_KeyCaps_pressed():
-	GDVK.press("CAPSLOCK")
-	pass # Replace with function body.
