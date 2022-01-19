@@ -22,6 +22,7 @@ Settings="*res://addons/settings-manager/Settings.tscn"
 OverlayInit="*res://addons/openvr_overlay/overlay_init.gd"
 OverlayInteractionRoot="*res://addons/openvr_overlay/OverlayInteractionRoot.tscn"
 OverlayManager="*res://OverlayManager.tscn"
+GDVK="*res://addons/gdvk/GDVK.tscn"
 
 [debug]
 
@@ -35,7 +36,7 @@ window/size/height=2048
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/godot-openvr/plugin.cfg", "res://addons/openvr_overlay/plugin.cfg", "res://addons/ovr_utils/plugin.cfg", "res://addons/settings-manager/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/gdvk/plugin.cfg", "res://addons/godot-openvr/plugin.cfg", "res://addons/openvr_overlay/plugin.cfg", "res://addons/ovr_utils/plugin.cfg", "res://addons/settings-manager/plugin.cfg" )
 
 [gdnative]
 

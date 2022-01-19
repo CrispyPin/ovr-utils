@@ -1,0 +1,17 @@
+[general]
+
+singleton=false
+load_once=true
+symbol_prefix="gdvk_"
+reloadable=true
+
+[entry]
+
+X11.64="res://addons/gdvk/bin/x11/libgdvk.so"
+Windows.64="res://addons/gdvk/bin/win64/libgdvk.dll"
+
+[dependencies]
+
+X11.64=[  ]
+Windows.64=[  ]
+OSX.64=[  ]
