@@ -1,0 +1,321 @@
+{
+	"rows": [
+		{
+			"gap": 0.5,
+			"keys": [
+				{
+					"keycode": "ESCAPE",
+					"display": "Esc",
+					"gap": 1
+				},
+				{
+					"keycode": "F1",
+					"display": "F1"
+				},
+				{
+					"keycode": "F2",
+					"display": "F2"
+				},
+				{
+					"keycode": "F3",
+					"display": "F3"
+				},
+				{
+					"keycode": "F4",
+					"display": "F4",
+					"gap": 0.5
+				},
+				{
+					"keycode": "F5",
+					"display": "F5"
+				},
+				{
+					"keycode": "F6",
+					"display": "F6"
+				},
+				{
+					"keycode": "F7",
+					"display": "F7"
+				},
+				{
+					"keycode": "F8",
+					"display": "F8",
+					"gap": 0.5
+				},
+				{
+					"keycode": "F9",
+					"display": "F9"
+				},
+				{
+					"keycode": "F10",
+					"display": "F10"
+				},
+				{
+					"keycode": "F11",
+					"display": "F11"
+				},
+				{
+					"keycode": "F12",
+					"display": "F12",
+					"gap": 0.5
+				}
+			]
+		},
+		{
+			"gap": 0,
+			"keys": [
+				{
+					"keycode": "ASCIIGRAVE",
+					"display": "`"
+				},
+				{
+					"keycode": "1"
+				},
+				{
+					"keycode": "2"
+				},
+				{
+					"keycode": "3"
+				},
+				{
+					"keycode": "4"
+				},
+				{
+					"keycode": "5"
+				},
+				{
+					"keycode": "6"
+				},
+				{
+					"keycode": "7"
+				},
+				{
+					"keycode": "8"
+				},
+				{
+					"keycode": "9"
+				},
+				{
+					"keycode": "0"
+				},
+				{
+					"keycode": "PLUS",
+					"display": "+"
+				},
+				{
+					"keycode": "GRAVE",
+					"display": "`"
+				},
+				{
+					"keycode": "BACKSPACE",
+					"display": "<-",
+					"width": 2
+				}
+			]
+		},
+		{
+			"gap": 0,
+			"keys": [
+				{
+					"keycode": "TAB",
+					"display": "->",
+					"width": 1.5
+				},
+				{
+					"keycode": "Q"
+				},
+				{
+					"keycode": "W"
+				},
+				{
+					"keycode": "E"
+				},
+				{
+					"keycode": "R"
+				},
+				{
+					"keycode": "T"
+				},
+				{
+					"keycode": "Y"
+				},
+				{
+					"keycode": "U"
+				},
+				{
+					"keycode": "I"
+				},
+				{
+					"keycode": "O"
+				},
+				{
+					"keycode": "P"
+				},
+				{
+					"keycode": "ARING",
+					"display": "Å"
+				},
+				{
+					"keycode": "DIAERSIS",
+					"display": "^\n¨ ~"
+				},
+				{
+					"keycode": "ENTER",
+					"display": "Enter",
+					"width": 1.5
+				}
+			]
+		},
+		{
+			"gap": 0,
+			"keys": [
+				{
+					"keycode": "CAPSLOCK",
+					"display": "CAPS",
+					"width": 1.75
+				},
+				{
+					"keycode": "A"
+				},
+				{
+					"keycode": "S"
+				},
+				{
+					"keycode": "D"
+				},
+				{
+					"keycode": "F"
+				},
+				{
+					"keycode": "G"
+				},
+				{
+					"keycode": "H"
+				},
+				{
+					"keycode": "J"
+				},
+				{
+					"keycode": "K"
+				},
+				{
+					"keycode": "L"
+				},
+				{
+					"keycode": "ODIAERSIS",
+					"display": "Ö"
+				},
+				{
+					"keycode": "ADIAERSIS",
+					"display": "Ä"
+				},
+				{
+					"keycode": "APOSTROPHE",
+					"display": "*\n'"
+				},
+				{
+					"keycode": "ENTER",
+					"display": "Enter",
+					"width": 1.25
+				}
+			]
+		},
+		{
+			"gap": 0,
+			"keys": [
+				{
+					"keycode": "SHIFT",
+					"display": "^",
+					"width": 1.25
+				},
+				{
+					"keycode": "LESS",
+					"display": "> \n<|"
+				},
+				{
+					"keycode": "Z"
+				},
+				{
+					"keycode": "X"
+				},
+				{
+					"keycode": "C"
+				},
+				{
+					"keycode": "V"
+				},
+				{
+					"keycode": "B"
+				},
+				{
+					"keycode": "N"
+				},
+				{
+					"keycode": "M"
+				},
+				{
+					"keycode": "COMMA",
+					"display": ";\n,"
+				},
+				{
+					"keycode": "PERIOD",
+					"display": ":\n."
+				},
+				{
+					"keycode": "MINUS",
+					"display": "_\n-"
+				},
+				{
+					"keycode": "SHIFT",
+					"display": "SHIFT",
+					"width": 2.5
+				}
+			]
+		},
+		{
+			"gap": 0,
+			"keys": [
+				{
+					"keycode": "CONTROL",
+					"display": "Ctrl",
+					"width": 1.5
+				},
+				{
+					"keycode": "SUPER",
+					"display": "Super",
+					"width": 1.5
+				},
+				{
+					"keycode": "ALT",
+					"display": "Alt",
+					"width": 1.5
+				},
+				{
+					"keycode": "SPACE",
+					"display": "",
+					"width": 5.5
+				},
+				{
+					"keycode": "ALT",
+					"display": "Alt Gr(!)",
+					"width": 1.5
+				},
+				{
+					"keycode": "SUPER",
+					"display": "Super",
+					"width": 1.5
+				},
+				{
+					"keycode": "MENU",
+					"display": "Menu",
+					"width": 1.5
+				},
+				{
+					"keycode": "CONTROL",
+					"display": "Ctrl",
+					"width": 1.5
+				}
+			]
+		}
+	]
+}

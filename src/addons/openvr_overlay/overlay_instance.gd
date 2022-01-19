@@ -81,7 +81,7 @@ func update_tracker_id():
 
 	if _tracker_id == -1:
 		# could not find controller, fallback
-		print("Missing controller ", current_target, " ", target, " ", fallback, " - ", name)
+#		print("Missing controller ", current_target, " ", target, " ", fallback, " - ", name)
 		_tracker_id = 63 # highest tracker id (unused, at origin)
 
 

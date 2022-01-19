@@ -1,0 +1,8 @@
+[gd_scene format=2]
+
+[node name="KeyRow" type="HBoxContainer"]
+margin_right = 230.0
+margin_bottom = 128.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
