@@ -7,11 +7,15 @@ const OVERLAY_PROPERTIES = {
 export var key_size := 120
 export var key_row : PackedScene
 export var key_button : PackedScene
+export var row_container_path : NodePath
+
+var row_container
 
 var keymap := {}
 var toggle_keys := []
 
 func _ready():
+	row_container = get_node(row_container_path)
 	load_keys("res://overlay_resources/keyboard/layouts/layout_se.json")
 
 
@@ -27,7 +31,7 @@ func load_keys(fp: String):
 func apply_keys():
 	for row in keymap.rows:
 		var row_box = key_row.instance()
-		$PanelContainer/CenterContainer/VBoxContainer.add_child(row_box)
+		row_container.add_child(row_box)
 		for key in row.keys:
 			var btn = key_button.instance()
 			
@@ -59,11 +63,11 @@ func apply_keys():
 				row_box.add_child(gapbox)
 
 		# vertical gaps
-		if row.has("gap"):
+		if row.has("gap") and row.gap > 0:
 			var gapbox = Control.new()
 			gapbox.rect_min_size.y = row.gap * key_size
 			gapbox.name = "Gap"
-			$PanelContainer/CenterContainer/VBoxContainer.add_child(gapbox)
+			row_container.add_child(gapbox)
 
 
 func key_toggled(state, code):

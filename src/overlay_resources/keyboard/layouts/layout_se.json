@@ -56,8 +56,7 @@
 				},
 				{
 					"keycode": "F12",
-					"display": "F12",
-					"gap": 0.5
+					"display": "F12"
 				}
 			]
 		},
@@ -231,7 +230,7 @@
 				},
 				{
 					"keycode": "LESS",
-					"display": "> \n<|"
+					"display": "> \n< |"
 				},
 				{
 					"keycode": "Z"
