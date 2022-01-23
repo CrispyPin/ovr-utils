@@ -345,7 +345,7 @@
 				{
 					"keycode": "MENU",
 					"display": "Menu",
-					"width": 1.5
+					"width": 1.25
 				},
 				{
 					"keycode": "CONTROL_R",
