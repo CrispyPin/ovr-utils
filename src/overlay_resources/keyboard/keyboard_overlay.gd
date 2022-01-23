@@ -4,7 +4,7 @@ const OVERLAY_PROPERTIES = {
 	"has_touch": true,
 }
 
-export var key_size := 120
+export var key_size := 100
 export var key_row : PackedScene
 export var key_button : PackedScene
 export var row_container_path : NodePath

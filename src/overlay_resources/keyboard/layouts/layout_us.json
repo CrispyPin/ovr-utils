@@ -56,20 +56,15 @@
 				},
 				{
 					"keycode": "F12",
-					"display": "F12",
-					"gap": 0.5
-				},
-				{
-					"keycode": "PRINT",
-					"display": "Print\nScrn"
+					"display": "F12"
 				}
 			]
 		},
 		{
 			"keys": [
 				{
-					"keycode": "ASCIIGRAVE",
-					"display": "`"
+					"keycode": "ASCIITILDE",
+					"display": "~ `"
 				},
 				{
 					"keycode": "1"
@@ -102,30 +97,17 @@
 					"keycode": "0"
 				},
 				{
-					"keycode": "PLUS",
-					"display": "+"
+					"keycode": "MINUS",
+					"display": "-"
 				},
 				{
-					"keycode": "GRAVE",
-					"display": "`"
+					"keycode": "EQUAL",
+					"display": "="
 				},
 				{
 					"keycode": "BACKSPACE",
-					"display": "Backspace",
-					"width": 2,
-					"gap": 0.5
-				},
-				{
-					"keycode": "INSERT",
-					"display": "Ins"
-				},
-				{
-					"keycode": "HOME",
-					"display": "Home"
-				},
-				{
-					"keycode": "PAGE_UP",
-					"display": "Page\nUp"
+					"display": "<-",
+					"width": 2
 				}
 			]
 		},
@@ -167,30 +149,17 @@
 					"keycode": "P"
 				},
 				{
-					"keycode": "ARING",
-					"display": "Å"
+					"keycode": "BRACKETLEFT",
+					"display": "["
 				},
 				{
-					"keycode": "DIAERSIS",
-					"display": "^\n¨ ~"
+					"keycode": "BRACKETRIGHT",
+					"display": "]"
 				},
 				{
-					"keycode": "ENTER",
-					"display": "Enter",
-					"width": 1.5,
-					"gap": 0.5
-				},
-				{
-					"keycode": "DELETE",
-					"display": "Del"
-				},
-				{
-					"keycode": "END",
-					"display": "End"
-				},
-				{
-					"keycode": "PAGE_DOWN",
-					"display": "Page\nDown"
+					"keycode": "BACKSLASH",
+					"display": "\\",
+					"width": 1.5
 				}
 			]
 		},
@@ -229,35 +198,27 @@
 					"keycode": "L"
 				},
 				{
-					"keycode": "ODIAERSIS",
-					"display": "Ö"
+					"keycode": "SEMICOLON",
+					"display": ";"
 				},
 				{
-					"keycode": "ADIAERSIS",
-					"display": "Ä"
-				},
-				{
-					"keycode": "APOSTROPHE",
-					"display": "*\n'"
+					"keycode": "QUOTELEFT",
+					"display": "`"
 				},
 				{
 					"keycode": "ENTER",
 					"display": "Enter",
-					"width": 1.25
+					"width": 2.25
 				}
 			]
 		},
 		{
 			"keys": [
 				{
-					"keycode": "SHIFT_L",
-					"display": "Shift",
+					"keycode": "SHIFT",
+					"display": "^",
 					"toggle": true,
-					"width": 1.25
-				},
-				{
-					"keycode": "LESS",
-					"display": "> \n< |"
+					"width": 2.25
 				},
 				{
 					"keycode": "Z"
@@ -282,33 +243,28 @@
 				},
 				{
 					"keycode": "COMMA",
-					"display": ";\n,"
+					"display": "<\n  ,"
 				},
 				{
 					"keycode": "PERIOD",
-					"display": ":\n."
+					"display": ">\n  ."
 				},
 				{
-					"keycode": "MINUS",
-					"display": "_\n-"
+					"keycode": "SLASH",
+					"display": "?\n  /"
 				},
 				{
-					"keycode": "SHIFT_R",
+					"keycode": "SHIFT",
 					"display": "Shift",
 					"toggle": true,
-					"width": 2.75,
-					"gap": 1.5
-				},
-				{
-					"keycode": "UP",
-					"display": "^"
+					"width": 2.75
 				}
 			]
 		},
 		{
 			"keys": [
 				{
-					"keycode": "CONTROL_L",
+					"keycode": "CONTROL",
 					"display": "Ctrl",
 					"toggle": true,
 					"width": 1.5
@@ -331,8 +287,8 @@
 					"width": 5.75
 				},
 				{
-					"keycode": "ALT_GR",
-					"display": "Alt Gr",
+					"keycode": "ALT",
+					"display": "Alt",
 					"toggle": true,
 					"width": 1.25
 				},
@@ -348,23 +304,10 @@
 					"width": 1.5
 				},
 				{
-					"keycode": "CONTROL_R",
+					"keycode": "CONTROL",
 					"display": "Ctrl",
 					"toggle": true,
-					"width": 1.5,
-					"gap": 0.5
-				},
-				{
-					"keycode": "LEFT",
-					"display": "\n<"
-				},
-				{
-					"keycode": "DOWN",
-					"display": "\nv"
-				},
-				{
-					"keycode": "RIGHT",
-					"display": "\n>"
+					"width": 1.5
 				}
 			]
 		}
