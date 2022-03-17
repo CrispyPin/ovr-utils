@@ -68,8 +68,8 @@
 		{
 			"keys": [
 				{
-					"keycode": "ASCIIGRAVE",
-					"display": "`"
+					"keycode": "SECTION",
+					"display": "§"
 				},
 				{
 					"keycode": "1"
