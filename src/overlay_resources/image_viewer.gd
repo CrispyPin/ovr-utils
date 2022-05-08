@@ -1,7 +1,7 @@
 extends Control
 
 const OVERLAY_PROPERTIES = {
-	"has_cursor": true,
+	"clickable": true,
 }
 
 

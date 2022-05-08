@@ -155,19 +155,16 @@ func _update_target():
 
 # called by overlay_instance after properties are loaded and before overlay scene enters the tree
 func spawn_modules():
-	# grab module
-	if get_parent().get_property("has_grab"):
-		var module = preload("res://addons/openvr_overlay/OverlayGrab.tscn")
+	if get_parent().get_property("grabbable"):
+		var module = preload("res://addons/openvr_overlay/interaction/mod/Grabbable.tscn")
 		add_child(module.instance())
 
-	# cursor module
-	if get_parent().get_property("has_cursor"):
-		var module = preload("res://addons/openvr_overlay/OverlayCursor.tscn")
+	if get_parent().get_property("clickable"):
+		var module = preload("res://addons/openvr_overlay/interaction/mod/Clickable.tscn")
 		add_child(module.instance())
-	
-	# cursor module
-	if get_parent().get_property("has_touch"):
-		var module = preload("res://addons/openvr_overlay/OverlayTouchCursor.tscn")
+
+	if get_parent().get_property("touchable"):
+		var module = preload("res://addons/openvr_overlay/interaction/mod/Touchable.tscn")
 		add_child(module.instance())
 
 

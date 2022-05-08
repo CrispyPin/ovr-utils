@@ -4,10 +4,9 @@ extends Node
 const OVERLAY_PROPERTIES_DEFAULT = {
 	"allow_delete": true,
 	"allow_hide": true,
-#	"interaction": true,
-	"has_cursor": false,
-	"has_touch": false,
-	"has_grab": true,
+	"clickable": false,
+	"touchable": false,
+	"grabbable": true,
 }
 
 var ovr_interface: ARVRInterface
@@ -21,7 +20,6 @@ var trackers = {
 }
 
 func _init() -> void:
-#	OS.window_minimized = true
 	ovr_config.set_application_type(2) # Set to OVERLAY MODE
 	ovr_config.set_tracking_universe(1) # Set to SEATED MODE = 0, STANDING MODE = 1, RAW MODE = 2
 
@@ -32,11 +30,12 @@ func _init() -> void:
 
 
 func _ready() -> void:
+	OS.window_minimized = true
 	ARVRServer.connect("tracker_added", self, "_tracker_added")
 	ARVRServer.connect("tracker_removed", self, "_tracker_removed")
 	update_hand_ids()
 	#Input.set_use_accumulated_input(true)
-	
+
 
 func _tracker_added(tracker_name: String, type: int, id: int):
 	update_hand_ids()

@@ -1,7 +1,7 @@
 extends Control
 
 const OVERLAY_PROPERTIES = {
-	"has_touch": true,
+	"touchable": true,
 }
 
 export var key_size := 100

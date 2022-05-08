@@ -3,8 +3,7 @@ extends Control
 const OVERLAY_PROPERTIES = {
 	"allow_hide": false,
 	"allow_delete": false,
-	"has_cursor": true,
-	"has_grab": true,
+	"clickable": true,
 }
 
 

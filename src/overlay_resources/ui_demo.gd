@@ -1,8 +1,8 @@
 extends Control
 
 const OVERLAY_PROPERTIES = {
-	"has_cursor": true,
-	"has_touch": true,
+	"clickable": true,
+	"touchable": true,
 }
 
 var grabber
