@@ -30,7 +30,10 @@ func _init() -> void:
 
 
 func _ready() -> void:
+	OS.window_size = Vector2(16, 16)
+	OS.window_position = Vector2(32, 32)
 	OS.window_minimized = true
+
 	ARVRServer.connect("tracker_added", self, "_tracker_added")
 	ARVRServer.connect("tracker_removed", self, "_tracker_removed")
 	update_hand_ids()
